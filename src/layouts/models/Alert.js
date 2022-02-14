@@ -1,9 +1,29 @@
-import React from 'react'
+import React, { Fragment } from 'react'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types';
 
-const Alert = () => {
+const Alert = ({alert}) => {
   return (
-    <div>Alert</div>
+    <Fragment>
+      {
+        alert !== null && alert.length > 0 && 
+        alert.map(alert => (
+          <div key={alert.id} className={`alert-${alert.type}`}>
+            {alert.msg}
+          </div>
+        ))
+      }
+    </Fragment>
   )
 }
 
-export default Alert
+
+Alert.propTypes = {
+  alert: PropTypes.array.isRequired
+}
+
+const mapStateToProps = state => ({
+  alert: state.alert
+});
+
+export default connect(mapStateToProps)(Alert)

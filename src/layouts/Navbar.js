@@ -12,7 +12,7 @@ const Navbar = ({isAuthenticated, logout}) => {
         <div className='nav-item1'>
           <Link to='/dashboard'>
             <button className='nav-btn'>
-              Reciger<i className="fa fa-th"></i>
+              Reciger<i className="fa fa-folder-open"></i>
             </button>
           </Link>
         </div>
@@ -64,7 +64,8 @@ const Navbar = ({isAuthenticated, logout}) => {
 }
 
 Navbar.propTypes = {
-  isAuthenticated: PropTypes.bool.isRequired
+  isAuthenticated: PropTypes.bool.isRequired,
+  logout: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({

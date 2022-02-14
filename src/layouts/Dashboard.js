@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Navigate } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
 import { getIngredients } from '../actions/ingredient';
 import { getCategories } from '../actions/category';
 import { getRecipes } from '../actions/recipe';
@@ -15,13 +15,10 @@ const Dashboard = ({isAuthenticated, category, ingredient, recipe, getCategories
     getRecipes(false);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  console.log(isAuthenticated);
   return (
     <Fragment>
       {!isAuthenticated ? <Navigate to='/login' /> : 
-        <div>
-          
-        </div>
+        <Outlet />
       }
     </Fragment>
   )
@@ -31,7 +28,10 @@ Dashboard.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
   category: PropTypes.object.isRequired,
   ingredient: PropTypes.object.isRequired,
-  recipe: PropTypes.object.isRequired
+  recipe: PropTypes.object.isRequired,
+  getCategories: PropTypes.func.isRequired,
+  getIngredients: PropTypes.func.isRequired,
+  getRecipes: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({

@@ -21,12 +21,12 @@ export const getIngredients = (all = false, id)  => async (dispatch) => {
         });
         const msgs = res.data.msgs;
         if (msgs) {
-            msgs.forEach(msg => dispatch(setAlert(msg, 'success', 5000)));
+            msgs.forEach(msg => dispatch(setAlert(msg.msg, 'success', 5000)));
         }
     } catch (err) {
         const msgs = err.response.data.msgs;
         if (msgs) {
-            msgs.forEach((msg) => dispatch(setAlert(msg, 'error', 7500)));
+            msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'error', 7500)));
         } 
         dispatch({
             type: GET_INGREDIENTS_FAIL,
@@ -51,12 +51,12 @@ export const postIngredient = (formData, noNut = false, update = false) => async
         });
         const msgs = res.data.msgs;
         if (msgs) {
-            msgs.forEach(msg => dispatch(setAlert(msg, 'success', 5000)));
+            msgs.forEach(msg => dispatch(setAlert(msg.msg, 'success', 5000)));
         }
     } catch (err) {
         const msgs = err.response.data.msgs;
         if (msgs) {
-            msgs.forEach((msg) => dispatch(setAlert(msg, 'error', 7500)));
+            msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'error', 7500)));
         } 
         dispatch({
             type: GET_INGREDIENTS_FAIL,
@@ -75,12 +75,12 @@ export const deleteIngredient = (id) => async dispatch => {
         });
         const msgs = res.data.msgs;
         if (msgs) {
-            msgs.forEach(msg => dispatch(setAlert(msg, 'success', 5000)));
+            msgs.forEach(msg => dispatch(setAlert(msg.msg, 'success', 5000)));
         }
     } catch (err) {
         const msgs = err.response.data.msgs;
         if (msgs) {
-            msgs.forEach((msg) => dispatch(setAlert(msg, 'error', 7500)));
+            msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'error', 7500)));
         }
         dispatch({
             type: GET_INGREDIENTS_FAIL,

@@ -7,7 +7,6 @@ import setAlert from "./alert";
 
 export const getCategories = () => async (dispatch) => {
     try {
-        console.log(`getting }`);
         const res = await axios.get('/api/category');
 
         dispatch({
@@ -16,16 +15,16 @@ export const getCategories = () => async (dispatch) => {
         });
         const msgs = res.data.msgs;
         if (msgs) {
-            msgs.forEach((msg) => dispatch(setAlert(msg, 'success', 5000)));
+            msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'success', 5000)));
         }
     } catch (err) {
         const msgs = err.response.data.msgs;
         if (msgs) {
-            msgs.forEach((msg) => dispatch(setAlert(msg, 'error', 7500)));
+            msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'error', 7500)));
         }
         dispatch({
             type: GET_CATEGORIES_FAIL,
-            payload: {msg: err.res, status: err.response.status}
+            payload: {msg: err.response, status: err.response.status}
         });
     }
 };
@@ -41,12 +40,12 @@ export const postCategory = (formData) => async dispatch => {
 
         const msgs = res.data.msgs;
         if (msgs) {
-            msgs.forEach((msg) => dispatch(setAlert(msg, 'success', 5000)));
+            msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'success', 5000)));
         }
     } catch (err) {
         const msgs = err.response.data.msgs;
         if (msgs) {
-            msgs.forEach((msg) => dispatch(setAlert(msg, 'error', 7500)));
+            msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'error', 7500)));
         }
         dispatch({
             type: GET_CATEGORIES_FAIL,
@@ -65,12 +64,12 @@ export const deleteCategory = (id) => async dispatch => {
         });
         const msgs = res.data.msgs;
         if (msgs) {
-            msgs.forEach((msg) => dispatch(setAlert(msg, 'success', 5000)));
+            msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'success', 5000)));
         }
     } catch (err) {
         const msgs = err.response.data.msgs;
         if (msgs) {
-            msgs.forEach((msg) => dispatch(setAlert(msg, 'error', 7500)));
+            msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'error', 7500)));
         }
         dispatch({
             type: GET_CATEGORIES_FAIL,

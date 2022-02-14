@@ -22,12 +22,12 @@ export const getRecipes = (all = false, id) => async (dispatch) => {
         });
         const msgs = res.data.msgs;
         if (msgs) {
-            msgs.forEach((msg) => dispatch(setAlert(msg, 'success', 5000)));
+            msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'success', 5000)));
         }
     } catch (err) {
         const msgs = err.response.data.msgs;
         if (msgs) {
-            msgs.forEach((msg) => dispatch(setAlert(msg, 'error', 7500)));
+            msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'error', 7500)));
         }
         dispatch({
             type: GET_RECIPES_FAIL,
@@ -46,12 +46,12 @@ export const postRecipe = (formData, update = false) => async dispatch => {
         });
         const msgs = res.data.msgs;
         if (msgs) {
-            msgs.forEach((msg) => dispatch(setAlert(msg, 'success', 5000)));
+            msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'success', 5000)));
         }
     } catch (err) {
         const msgs = err.response.data.msgs;
         if (msgs) {
-            msgs.forEach((msg) => dispatch(setAlert(msg, 'error', 7500)));
+            msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'error', 7500)));
         }
         dispatch({
             type: GET_RECIPES_FAIL,
@@ -70,12 +70,12 @@ export const deleteRecipe = (id) => async dispatch => {
         });
         const msgs = res.data.msgs;
         if (msgs) {
-            msgs.forEach((msg) => dispatch(setAlert(msg, 'success', 5000)));
+            msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'success', 5000)));
         }
     } catch (err) {
         const msgs = err.response.data.msgs;
         if (msgs) {
-            msgs.forEach((msg) => dispatch(setAlert(msg, 'error', 7500)));
+            msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'error', 7500)));
         }
         dispatch({
             type: GET_RECIPES_FAIL,
