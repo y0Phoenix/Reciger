@@ -1,4 +1,5 @@
 import { 
+    CLEAR_RECIPES,
     GET_RECIPES,
     GET_RECIPES_FAIL 
 } from "../actions/types";
@@ -18,6 +19,7 @@ export default function(state = initialState, action) {
             state = {...state, recipes: payload, loading: false}
             return state;
         case GET_RECIPES_FAIL:
+        case CLEAR_RECIPES:
             state = {...state, recipes: [], error: payload, loading: false}
             return state;
         default:

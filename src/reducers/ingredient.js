@@ -1,4 +1,5 @@
 import { 
+    CLEAR_INGREDIENTS,
     GET_INGREDIENTS,
     GET_INGREDIENTS_FAIL,
 } from "../actions/types";
@@ -18,6 +19,7 @@ export default function(state = initialState, action) {
             state = {...state, ingredients: payload, loading: false}
             return state;
         case GET_INGREDIENTS_FAIL:
+        case CLEAR_INGREDIENTS:
             state = {...state, ingredients: [], loading: false, error: payload}
             return state;
         default:

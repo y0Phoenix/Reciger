@@ -1,4 +1,5 @@
 import {
+    CLEAR_CATEGORIES,
     GET_CATEGORIES,
     GET_CATEGORIES_FAIL,
 } from '../actions/types';
@@ -19,8 +20,9 @@ export default function (state = initialState, action) {
             state = {...state, ingredient: payload.ingredient, recipe: payload.recipe, loading: false}; 
             return state;
         case GET_CATEGORIES_FAIL:
-            state = {...state, error: payload, loading: false}
-            return 
+        case CLEAR_CATEGORIES:
+            state = {...state, loading: false}
+            return state;
         default:
             return state;
     }
