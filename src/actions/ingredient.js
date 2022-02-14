@@ -65,7 +65,7 @@ export const postIngredient = (formData, noNut = false, update = false) => async
     }
 }
 
-export const deleteIngredient = (id) => dispatch => {
+export const deleteIngredient = (id) => async dispatch => {
     try {
         const res = await axios.delete(`/api/ingredient/${id}`);
 

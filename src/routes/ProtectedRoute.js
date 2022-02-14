@@ -1,19 +1,17 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
-import { Navigate, Outlet } from 'react-router-dom'
+import { Outlet } from 'react-router-dom'
 import { connect } from 'react-redux'
 import Category from '../layouts/models/Category'
 import Ingredient from '../layouts/models/Ingredient'
 
-const ProtectedRoute = (isAuthenticated) => {
-    if (!isAuthenticated.isAuthenticated) {
-        return <Navigate to='/login'/>;
-    }
+const ProtectedRoute = ({isAuthenticated}) => {
+    console.log(isAuthenticated);
     return (
         <Fragment>
             <Category />
             <Ingredient />
-            <Outlet/>
+            <Outlet />
         </Fragment>
     );
 }
@@ -23,7 +21,7 @@ ProtectedRoute.propTypes = {
 }
 
 const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated
+    isAuthenticated: state.user.isAuthenticated
 })
 
 export default connect(mapStateToProps)(ProtectedRoute);

@@ -28,6 +28,10 @@ import {
                 setAuthToken(localStorage.token);
                 state = { ...state, ...payload, isAuthenticated: true, loading: false }; 
                 return state;
+            case USER_LOADED:
+                setAuthToken(localStorage.token);
+                state = {...state, isAuthenticated: payload.isAuthenticated, loading: false}
+                return state;
             case USER_UPDATED:
                 state = {...state, isAuthenticated: true, loading: false};
                 return state;

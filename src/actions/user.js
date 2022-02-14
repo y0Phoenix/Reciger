@@ -1,5 +1,4 @@
-import axios from "axios"
-import setAuthToken from "../utils/setAuthToken";
+import axios from "axios";
 import setAlert from "./alert";
 import {
   REGISTER_SUCCESS,
@@ -12,6 +11,8 @@ import {
   CLEAR_RECIPES,
   USER_UPDATED,
   USER_UPDATED_FAIL,
+  USER_LOADED,
+  AUTH_ERROR,
 } from "./types";
 
 // load user if local storage token exists
@@ -33,7 +34,7 @@ export const login = (formData) => async (dispatch) => {
 
 export const register = (formData) => async dispatch => {
     try {
-        const res = await axios.post('/api/user');
+        const res = await axios.post('/api/user', formData);
 
         dispatch({
             type: REGISTER_SUCCESS,
@@ -89,3 +90,27 @@ export const logout = () => async dispatch => {
         type: CLEAR_RECIPES
     });
 };
+
+export const loadUser = () => async dispatch => {
+    try {
+        const token = localStorage.token;
+        console.log(token);
+        var res;
+        if (!token) {
+            res = await axios.get('/api/auth');
+        }
+        else {
+            res = await axios.get(`/api/auth/${token}`);
+        }
+
+        dispatch({
+            type: USER_LOADED,
+            payload: res.data
+        });
+    } catch (err) {
+        dispatch({
+            type: AUTH_ERROR,
+            payload: {msg: err.res, status: err.response.status}
+        });
+    }
+}

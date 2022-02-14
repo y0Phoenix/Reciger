@@ -7,6 +7,7 @@ import setAlert from "./alert";
 
 export const getCategories = () => async (dispatch) => {
     try {
+        console.log(`getting }`);
         const res = await axios.get('/api/category');
 
         dispatch({

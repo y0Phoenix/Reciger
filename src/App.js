@@ -6,7 +6,7 @@ import store from './store';
 import Navbar from './layouts/Navbar';
 import Loading from './layouts/models/Loading';
 import Alert from './layouts/models/Alert';
-import Home from './layouts/Landing';
+import Landing from './layouts/Landing';
 import Container from './routes/Container';
 import Register from './layouts/auth/Register';
 import Login from './layouts/auth/Login';
@@ -32,7 +32,7 @@ function App() {
           <Loading />
           <Alert />
           <Routes>
-            <Route  exact path='/' element={<Home />}/>
+            <Route  exact path='/' element={<Landing />}/>
             <Route element={<Container />}/>
               <Route  exact path='/register' element={<Register />}/>
               <Route  exact path='/login' element={<Login />}/>
