@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Navigate } from 'react-router-dom';
 import { login } from '../../actions/user';
 
-const Login = ({isAuthenticated, login}) => {
+const Login = ({isAuthenticated, login, setShowModal}) => {
 const [formData, setFormData] = useState({
 	email: '',
 	password: ''
@@ -19,7 +19,7 @@ const onchange = e => setFormData({...formData, [e.target.name]: e.target.value}
 
 const onsubmit = e => {
 	e.preventDefault();
-	login({email, password});
+	login({email, password}, setShowModal);
 }
 
 return (

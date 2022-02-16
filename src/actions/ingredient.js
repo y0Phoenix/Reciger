@@ -3,9 +3,9 @@ import {
     GET_INGREDIENTS_FAIL
 } from "./types";
 import axios from "axios";
-import setAlert from "./alert";
+import {setAlert} from "./alert";
 
-export const getIngredients = (all = false, id)  => async (dispatch) => {
+export const getIngredients = (all = false, id, setShowModal)  => async (dispatch) => {
     try {
         var res;
         if (id) {
@@ -21,12 +21,12 @@ export const getIngredients = (all = false, id)  => async (dispatch) => {
         });
         const msgs = res.data.msgs;
         if (msgs) {
-            msgs.forEach(msg => dispatch(setAlert(msg.msg, 'success', 5000)));
+            msgs.forEach(msg => dispatch(setAlert(msg.msg, 'success', setShowModal)));
         }
     } catch (err) {
         const msgs = err.response.data.msgs;
         if (msgs) {
-            msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'error', 7500)));
+            msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'error', setShowModal)));
         } 
         dispatch({
             type: GET_INGREDIENTS_FAIL,
@@ -35,7 +35,7 @@ export const getIngredients = (all = false, id)  => async (dispatch) => {
     }
 };
 
-export const postIngredient = (formData, noNut = false, update = false) => async dispatch => {
+export const postIngredient = (formData, noNut = false, update = false, setShowModal) => async dispatch => {
     try {
         var res;
         if (update) {
@@ -51,12 +51,12 @@ export const postIngredient = (formData, noNut = false, update = false) => async
         });
         const msgs = res.data.msgs;
         if (msgs) {
-            msgs.forEach(msg => dispatch(setAlert(msg.msg, 'success', 5000)));
+            msgs.forEach(msg => dispatch(setAlert(msg.msg, 'success', setShowModal)));
         }
     } catch (err) {
         const msgs = err.response.data.msgs;
         if (msgs) {
-            msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'error', 7500)));
+            msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'error', setShowModal)));
         } 
         dispatch({
             type: GET_INGREDIENTS_FAIL,
@@ -65,7 +65,7 @@ export const postIngredient = (formData, noNut = false, update = false) => async
     }
 }
 
-export const deleteIngredient = (id) => async dispatch => {
+export const deleteIngredient = (id, setShowModal) => async dispatch => {
     try {
         const res = await axios.delete(`/api/ingredient/${id}`);
 
@@ -75,12 +75,12 @@ export const deleteIngredient = (id) => async dispatch => {
         });
         const msgs = res.data.msgs;
         if (msgs) {
-            msgs.forEach(msg => dispatch(setAlert(msg.msg, 'success', 5000)));
+            msgs.forEach(msg => dispatch(setAlert(msg.msg, 'success', setShowModal)));
         }
     } catch (err) {
         const msgs = err.response.data.msgs;
         if (msgs) {
-            msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'error', 7500)));
+            msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'error', setShowModal)));
         }
         dispatch({
             type: GET_INGREDIENTS_FAIL,

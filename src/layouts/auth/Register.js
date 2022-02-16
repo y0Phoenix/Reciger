@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import { register } from '../../actions/user';
 import PropTypes from 'prop-types';
 import { Navigate } from 'react-router-dom';
-import setAlert from '../../actions/alert';
+import {setAlert} from '../../actions/alert';
 
-const Register = ({isAuthenticated, register, setAlert}) => {
+const Register = ({isAuthenticated, register, setAlert, setShowModal}) => {
   const pass2 = useRef();
   const [formData, setFormData] = useState({
     email: '',
@@ -27,12 +27,11 @@ const Register = ({isAuthenticated, register, setAlert}) => {
 
   const onsubmit = e => {
     e.preventDefault();
-    console.log(password, pass2.current.value);
     if (password === pass2.current.value) {
-      register(formData);
+      register(formData, setShowModal);
     }
     else {
-      setAlert('Passwords Must Match', 'error', 7500);
+      setAlert('Passwords Must Match', 'error', setShowModal);
     }
   }
 

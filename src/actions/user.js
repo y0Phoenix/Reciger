@@ -1,5 +1,5 @@
 import axios from "axios";
-import setAlert from "./alert";
+import {setAlert} from "./alert";
 import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
@@ -16,7 +16,7 @@ import {
 } from "./types";
 
 // load user if local storage token exists
-export const login = (formData) => async (dispatch) => {
+export const login = (formData, setShowModal) => async (dispatch) => {
     try {
         const res = await axios.post('/api/auth', formData);
 
@@ -27,7 +27,7 @@ export const login = (formData) => async (dispatch) => {
     } catch (err) {
         const msgs = err.response.data.msgs;
         if (msgs) {
-            msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'error', 7500)));  
+            msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'error', setShowModal)));  
         }
         dispatch({
             type: LOGIN_FAIL,
@@ -36,14 +36,13 @@ export const login = (formData) => async (dispatch) => {
     }
 };
 
-export const register = (formData) => async dispatch => {
+export const register = (formData, setShowModal) => async dispatch => {
     try {
         formData.preference = {};
         formData.preference.measurements = [];
         formData.preference.measurements.push(formData.preferedV, formData.preferedW);
         delete formData.preferedV;
         delete formData.preferedW;
-        console.log(formData);
         const res = await axios.post('/api/user', formData);
 
         dispatch({
@@ -53,7 +52,7 @@ export const register = (formData) => async dispatch => {
     } catch (err) {
         const msgs = err.response.data.msgs;
         if (msgs) {
-            msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'error', 7500)));
+            msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'error', setShowModal)));
         }
         dispatch({
             type: REGISTER_FAIL,
@@ -62,7 +61,7 @@ export const register = (formData) => async dispatch => {
     }
 };
 
-export const updateUser = (formData) => async dispatch => {
+export const updateUser = (formData, setShowModal) => async dispatch => {
     try {
         const res = await axios.post('/api/user/update', formData);
 
@@ -72,12 +71,12 @@ export const updateUser = (formData) => async dispatch => {
         });
         const msgs = res.data.msgs;
         if (msgs) {
-            msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'success', 5000)));
+            msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'success', setShowModal)));
         }
     } catch (err) {
         const msgs = err.response.data.msgs;
         if (msgs) {
-            msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'error', 7500)));
+            msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'error', setShowModal)));
         }
         dispatch({
             type: USER_UPDATED_FAIL,

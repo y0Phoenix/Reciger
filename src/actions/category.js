@@ -3,9 +3,9 @@ import {
     GET_CATEGORIES_FAIL,
 } from "./types";
 import axios from "axios";
-import setAlert from "./alert";
+import {setAlert} from "./alert";
 
-export const getCategories = () => async (dispatch) => {
+export const getCategories = (setShowModal) => async (dispatch) => {
     try {
         const res = await axios.get('/api/category');
 
@@ -15,12 +15,12 @@ export const getCategories = () => async (dispatch) => {
         });
         const msgs = res.data.msgs;
         if (msgs) {
-            msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'success', 5000)));
+            msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'success', setShowModal)));
         }
     } catch (err) {
         const msgs = err.response.data.msgs;
         if (msgs) {
-            msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'error', 7500)));
+            msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'error', setShowModal)));
         }
         dispatch({
             type: GET_CATEGORIES_FAIL,
@@ -29,7 +29,7 @@ export const getCategories = () => async (dispatch) => {
     }
 };
 
-export const postCategory = (formData) => async dispatch => {
+export const postCategory = (formData, setShowModal) => async dispatch => {
     try {
         const res = await axios.post('/api/category', formData);
 
@@ -40,12 +40,12 @@ export const postCategory = (formData) => async dispatch => {
 
         const msgs = res.data.msgs;
         if (msgs) {
-            msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'success', 5000)));
+            msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'success', setShowModal)));
         }
     } catch (err) {
         const msgs = err.response.data.msgs;
         if (msgs) {
-            msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'error', 7500)));
+            msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'error', setShowModal)));
         }
         dispatch({
             type: GET_CATEGORIES_FAIL,
@@ -54,7 +54,7 @@ export const postCategory = (formData) => async dispatch => {
     }
 };
 
-export const deleteCategory = (id) => async dispatch => {
+export const deleteCategory = (id, setShowModal) => async dispatch => {
     try {
         const res = await axios.delete(`/api/category/${id}`);
 
@@ -64,12 +64,12 @@ export const deleteCategory = (id) => async dispatch => {
         });
         const msgs = res.data.msgs;
         if (msgs) {
-            msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'success', 5000)));
+            msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'success', setShowModal)));
         }
     } catch (err) {
         const msgs = err.response.data.msgs;
         if (msgs) {
-            msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'error', 7500)));
+            msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'error', setShowModal)));
         }
         dispatch({
             type: GET_CATEGORIES_FAIL,

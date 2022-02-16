@@ -1,17 +1,20 @@
 import { 
     SET_ALERT,
-    REMOVE_ALERT 
+    REMOVE_ALERT
 } from "./types";
 import {v4 as uuid} from 'uuid';
 
-const setAlert = (msg, type, time) => dispatch => {
+export const setAlert = (msg, type, setShowModal) => dispatch => {
     const id = uuid();
+    setShowModal(true);
     dispatch({
         type: SET_ALERT,
         payload: {msg, type, id}
     });
+};
 
-    setTimeout(() => dispatch({type: REMOVE_ALERT, payload: id}), time);
+export const removeAlert = () => dispatch => {
+    dispatch({
+        type: REMOVE_ALERT,
+    })
 }
-
-export default setAlert;
