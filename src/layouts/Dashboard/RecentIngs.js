@@ -1,6 +1,7 @@
 import React from 'react';
 
 const RecentIngs = ({user}) => 
+    user.recents.ingredients.length > 0 ?
     user.recents.ingredients.map((ing, i, arr) => {
         i = i + 1;
         let cats = ``;
@@ -22,6 +23,7 @@ const RecentIngs = ({user}) =>
                 </div>
             </div>
         )
-    })
+    }) :
+    <h5>No Recent Ingredients</h5>
 
 export default RecentIngs

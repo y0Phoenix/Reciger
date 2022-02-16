@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react'
 
 const RecentRecs = ({user}) => 
+    user.recents.recipes.length > 0 ?
     user.recents.recipes.map((rec, i, arr) => {
         i = i + 1;
         let cats = ``;
@@ -25,6 +26,7 @@ const RecentRecs = ({user}) =>
             </div>
             </Fragment>
         )
-    })
+    }) : 
+    <h5>No Recent Recipes</h5>
 
 export default RecentRecs;
