@@ -27,7 +27,7 @@ export const login = (formData) => async (dispatch) => {
     } catch (err) {
         const msgs = err.response.data.msgs;
         if (msgs) {
-            msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'error', 7500)));
+            msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'error', 7500)));  
         }
         dispatch({
             type: LOGIN_FAIL,

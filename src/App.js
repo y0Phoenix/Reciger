@@ -11,7 +11,7 @@ import Container from './routes/Container';
 import Register from './layouts/auth/Register';
 import Login from './layouts/auth/Login';
 import ProtectedRoute from './routes/ProtectedRoute';
-import Dashboard from './layouts/Dashboard';
+import Dashboard from './layouts/Dashboard/Dashboard';
 import Recipes from './layouts/Recipes';
 import Ingredients from './layouts/Ingredients';
 import Ingredient from './layouts/Ingredient';
@@ -19,6 +19,7 @@ import NewIngredient from './layouts/NewIngredient';
 import NewRecipe from './layouts/NewRecipe';
 import Recipe from './layouts/Recipe';
 import { loadUser } from './actions/user';
+import Footer from './layouts/Footer';
 
 function App() {
   useEffect(() => {
@@ -45,6 +46,7 @@ function App() {
                 <Route  exact path='/newingredient' element={<NewIngredient />}/>
                 <Route  exact path='/newrecipe' element={<NewRecipe />}/>
           </Routes>
+          <Footer />
         </Fragment>
       </Router>
     </Provider>

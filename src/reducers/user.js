@@ -14,7 +14,8 @@ import {
     const initialState = {
         token: localStorage.getItem('token'),
         isAuthenticated: false,
-        loading: true
+        loading: true,
+        user: null
     };
     
     // eslint-disable-next-line import/no-anonymous-default-export
@@ -24,13 +25,11 @@ import {
         switch (type) {
             case REGISTER_SUCCESS:
             case LOGIN_SUCCESS:
+            case USER_LOADED:
                 localStorage.setItem('token', payload.token);
                 setAuthToken(localStorage.token);
-                state = { ...state, ...payload, isAuthenticated: true, loading: false }; 
-                return state;
-            case USER_LOADED:
-                setAuthToken(localStorage.token);
-                state = {...state, isAuthenticated: payload.isAuthenticated, loading: false}
+                console.log(payload.token);
+                state = { ...state, isAuthenticated: payload.isAuthenticated, loading: false, user: payload.data, token: payload.token }; 
                 return state;
             case USER_UPDATED:
                 state = {...state, isAuthenticated: true, loading: false};
