@@ -45,7 +45,8 @@ a {
 .new-ingredient {
 	display: grid;
 	grid-template-areas: 
-	'new-ingredient-form new-ingredient-h new-ingredient-nutdata';
+	'new-ingredient-form new-ingredient-h new-ingredient-nutdata'
+	'. reset-ingredient-btn .';
 	margin: auto;
 	text-align: center;
 	max-width: 1250px;
@@ -122,4 +123,7 @@ a {
 }
 .close-icon:hover {
 	background-color: rgb(156, 0, 156);
+}
+.reset-ingredient-btn {
+	grid-area: reset-ingredient-btn;
 }

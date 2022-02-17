@@ -94,7 +94,7 @@ const IngredientM = ({showModal, setShowModal, postIngredient, getIngredients, l
 	return (
 		<>
 		{showModal.IngredientM && (
-            <AnimatePresence exitBeforeEnter>
+            <AnimatePresence exitBeforeEnter onExitComplete={e => exit()}>
                 <motion.div className='background'
                     variants={background}
                     initial="initial"
@@ -136,11 +136,13 @@ const IngredientM = ({showModal, setShowModal, postIngredient, getIngredients, l
 									<input className='new-ingredient-checkbox' type='checkbox' value={noNut} name='noNut' onChange={e => onChange(e)}></input>
 									<span className='new-ingredient-p'>No Nutritional Data</span>
 								</div>
-								<input type='submit' value='Submit New Ingredient' className='new-ingredient-btn'></input>
+								<button type='submit' className='new-ingredient-btn'>
+									Submit <i className="fa-solid fa-arrow-up"></i>
+								</button>
 							</form>
 						</div>
 						<div className='new-ingredient-nutdata'>
-							<h2 style={{"paddingRight": "40px"}}>Nutritional Data</h2>
+							<h2 style={{"paddingLeft": "40px"}}>Nutritional Data</h2>
 							<div ref={calories}>No Nutritional Data</div>
 							<div ref={iron}>Create An Ingredient</div>
 							<div ref={sodium}>In Order To Retrieve</div>
@@ -151,6 +153,12 @@ const IngredientM = ({showModal, setShowModal, postIngredient, getIngredients, l
 							<div ref={fat}></div>
 							<div ref={protein}></div>
 						</div>
+						<button className='new-ingredient-btn reset-ingredient-btn' onClick={e => {
+							exit();
+							setShowModal({...showModal, IngredientM: true});
+						}}>
+							Reset Form <i className="fa-solid fa-arrow-rotate-left"></i>
+						</button>
 					</motion.div>
                 </motion.div>
 			</AnimatePresence>
