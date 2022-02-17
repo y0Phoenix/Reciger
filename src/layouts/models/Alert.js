@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types';
 import { motion, AnimatePresence } from 'framer-motion';
 import { removeAlert } from '../../actions/alert';
+import {v4 as uuid} from 'uuid';
 
 const Alert = ({alert, showModal, setShowModal, removeAlert}) => {
   const background = {
@@ -33,7 +34,7 @@ const Alert = ({alert, showModal, setShowModal, removeAlert}) => {
 
   return (
     <Fragment>
-      {showModal && alert !== null && alert.length > 0 && (
+      {showModal.Alert && alert !== null && alert.length > 0 && (
             <AnimatePresence exitBeforeEnter={true}>
                 <motion.div className='background'
                     variants={background}
@@ -41,24 +42,24 @@ const Alert = ({alert, showModal, setShowModal, removeAlert}) => {
                     animate="enter"
                     exit="exit"
                     key='background'>
+                  <motion.div className='modal' key="alert"
+                  variants={modal}
+                  initial="initial"
+                  animate="enter">
+                    <p className='modal-p'>Errors</p>
+                    {alert.map(alert => (
+                      <div key={alert.id} className={`alert-${alert.type}`}>
+                        <p className='modal-p' key={alert.id}>
+                          {alert.msg}
+                        </p>
+                      </div>
+                    ))}
+                    <button onClick={e => {
+                        setShowModal({...showModal, Alert: false});
+                        removeAlert();
+                      }} className="modal-btn">Okay</button>
+                  </motion.div>
                 </motion.div> 
-                <motion.div className='modal' key="alert"
-                variants={modal}
-                initial="initial"
-                animate="enter">
-                  <p className='modal-p'>Errors</p>
-                  {alert.map(alert => (
-                    <div key={alert.id} className={`alert-${alert.type}`}>
-                      <p className='modal-p'>
-                        {alert.msg}
-                      </p>
-                    </div>
-                  ))}
-                  <button onClick={e => {
-                      setShowModal(false);
-                      removeAlert();
-                    }} className="modal-btn">Okay</button>
-                </motion.div>
             </AnimatePresence>
         )}
     </Fragment>

@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 import spinner from '../../images/spinner.gif';
 import {motion, AnimatePresence} from 'framer-motion'
 
-const Loading = ({user}) => {
+const Loading = ({loading}) => {
+  console.log(loading);
   const background = {
     initial: {
       opacity: 0
@@ -16,7 +17,7 @@ const Loading = ({user}) => {
       opacity: 0
     }, 
   };
-  if (user) {
+  if (loading) {
     return (
       <> 
         <AnimatePresence exitBeforeEnter>
@@ -32,6 +33,7 @@ const Loading = ({user}) => {
           initial='initial'
           animate='animate'
           exit='exit'
+          key='loading'
           >
             <img
             src={spinner}
@@ -48,11 +50,11 @@ const Loading = ({user}) => {
 }
 
 Loading.propTypes = {
-  user: PropTypes.bool.isRequired,
+  loading: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
-  user: state.user.loading,
+  loading: state.loading
 });
 
 export default connect(mapStateToProps)(Loading);

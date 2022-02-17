@@ -1,4 +1,5 @@
-import React, { Fragment } from 'react'
+import React, { Fragment } from 'react';
+import {v4 as uuid} from 'uuid';
 
 const RecentRecs = ({user}) => 
     user.recents.recipes.length > 0 ?
@@ -13,9 +14,10 @@ const RecentRecs = ({user}) =>
                 cats += `${cat}, `;
             }
         });
+        const one = uuid();
         return (
             <Fragment>
-            <div className={`recent-recs${i}`}>
+            <div className={`recent-recs${i}`} key={one}>
                 <div className={`recent-recs${i}1`}>
                     <p className='recent-recs-name'>{rec.name}</p>
                     <p className='recent-recs-categories'>Categories: {cats}</p>
@@ -27,6 +29,6 @@ const RecentRecs = ({user}) =>
             </Fragment>
         )
     }) : 
-    <h5>No Recent Recipes</h5>
+    <h5 key='norec'>No Recent Recipes</h5>
 
 export default RecentRecs;

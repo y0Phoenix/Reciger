@@ -1,4 +1,5 @@
 import React from 'react';
+import {v4 as uuid} from 'uuid';
 
 const RecentIngs = ({user}) => 
     user.recents.ingredients.length > 0 ?
@@ -13,8 +14,9 @@ const RecentIngs = ({user}) =>
                 cats += `${cat}, `;
             }
         });
+        const one = uuid();
         return (
-            <div className={`recent-ings${i}`}>
+            <div className={`recent-ings${i}`} key={one}>
                 <div className={`recent-ings${i}1`}>
                     <p className='recent-ings-name'>{ing.name}</p>
                     <p className='recent-ings-categories'>Categories: {cats}</p>
@@ -24,6 +26,6 @@ const RecentIngs = ({user}) =>
             </div>
         )
     }) :
-    <h5>No Recent Ingredients</h5>
+    <h5 key='noing'>No Recent Ingredients</h5>
 
 export default RecentIngs

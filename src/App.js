@@ -21,12 +21,23 @@ import Alert from './layouts/models/Alert';
 import Loading from './layouts/models/Loading';
 import Category from './layouts/models/Category';
 import IngredientM from './layouts/models/IngredientM';
+import {loading, stopLoading} from './actions/loading';
 
 
 function App() {
-  const [showModal, setShowModal] = useState(true);
+  const [showModal, setShowModal] = useState({
+    Alert: false,
+    Category: false,
+    IngredientM: false,
+    Loading: false
+  });
   useEffect(() => {
-    store.dispatch(loadUser());
+    const load = async () => {
+      store.dispatch(loading());
+      await store.dispatch(await loadUser());
+      store.dispatch(stopLoading());
+    }
+    load();
   }, []);
   return (
     <Provider store={store}>

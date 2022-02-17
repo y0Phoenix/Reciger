@@ -7,6 +7,7 @@ import {setAlert} from "./alert";
 
 export const getCategories = (setShowModal) => async (dispatch) => {
     try {
+        dispatch({})
         const res = await axios.get('/api/category');
 
         dispatch({

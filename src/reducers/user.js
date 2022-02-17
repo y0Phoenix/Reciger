@@ -14,7 +14,6 @@ import {
     const initialState = {
         token: localStorage.getItem('token'),
         isAuthenticated: false,
-        loading: true,
         user: null
     };
     
@@ -29,10 +28,10 @@ import {
                 localStorage.setItem('token', payload.token);
                 setAuthToken(localStorage.token);
                 console.log(payload.token);
-                state = { ...state, isAuthenticated: payload.isAuthenticated, loading: false, user: payload.data, token: payload.token }; 
+                state = { ...state, isAuthenticated: payload.isAuthenticated, user: payload.data, token: payload.token }; 
                 return state;
             case USER_UPDATED:
-                state = {...state, isAuthenticated: true, loading: false};
+                state = {...state, isAuthenticated: true};
                 return state;
             case REGISTER_FAIL:
             case USER_UPDATED_FAIL:
@@ -41,7 +40,7 @@ import {
             case LOGOUT:
                 localStorage.removeItem('token');
                 setAuthToken(null);
-                state = { ...state, token: null, isAuthenticated: false, loading: false, user: null };
+                state = { ...state, token: null, isAuthenticated: false, user: null };
                 return state;
             default:
                 return state;

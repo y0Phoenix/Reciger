@@ -1,13 +1,13 @@
 import { 
     CLEAR_INGREDIENTS,
     GET_INGREDIENTS,
-    GET_INGREDIENTS_FAIL,
+    GET_INGREDIENTS_FAIL
 } from "../actions/types";
 
 const initialState = {
     ingredients: [],
     error: {},
-    loading: true,   
+    loading: false,   
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export
@@ -16,11 +16,11 @@ export default function(state = initialState, action) {
 
     switch (type) {
         case GET_INGREDIENTS:
-            state = {...state, ingredients: payload, loading: false}
+            state = {...state, ingredients: payload}
             return state;
         case GET_INGREDIENTS_FAIL:
         case CLEAR_INGREDIENTS:
-            state = {...state, ingredients: [], loading: false, error: payload}
+            state = {...state, ingredients: [], error: payload}
             return state;
         default:
             return state;

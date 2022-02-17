@@ -1,17 +1,17 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Link, Navigate, Outlet } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import RecentRecs from './RecentRecs';
 import RecentIngs from './RecentIngs';
 
-const Dashboard = ({user}) => {
+const Dashboard = ({user, showModal, setShowModal}) => {
   const {isAuthenticated, user: _user} = user;
   
   return (
     <Fragment>
       {!isAuthenticated ? <Navigate to='/login' /> : 
-        <Fragment>
+        <>
           <div className='dashboard-head'>
             <h1>{_user.name}'s Recipes</h1>
           </div>
@@ -28,14 +28,12 @@ const Dashboard = ({user}) => {
             <div className='recent-ingredients'>
               <h3>Recent Ingredients</h3>
               <RecentIngs user={_user}/>
-                <Link to='/newingredient'>
-                  <button className='btn'>
-                    Create Ingredient<i className="fa-solid fa-carrot"></i>
-                  </button>
-                </Link>
+                <button className='btn' onClick={e => setShowModal({IngredientM: true})}>
+                  Create Ingredient<i className="fa-solid fa-carrot"></i>
+                </button>
             </div>
           </div>
-        </Fragment>
+        </>
       }
     </Fragment>
   )
