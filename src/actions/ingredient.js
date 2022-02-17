@@ -5,7 +5,7 @@ import {
 import axios from "axios";
 import {setAlert} from "./alert";
 
-export const getIngredients = (all = false, id, setShowModal)  => async (dispatch) => {
+export const getIngredients = (all = false, id, setShowModal, showModal, state)  => async (dispatch) => {
     try {
         var res;
         if (id) {
@@ -14,58 +14,66 @@ export const getIngredients = (all = false, id, setShowModal)  => async (dispatc
         else {
             res = await axios.get(`/api/ingredient?all=${all}`);
         }
-
-        dispatch({
-            type: GET_INGREDIENTS,
-            payload: res.data.data
-        });
-        const msgs = res.data.msgs;
-        if (msgs) {
-            msgs.forEach(msg => dispatch(setAlert(msg.msg, 'success', setShowModal)));
+        if (state) {
+            dispatch({
+                type: GET_INGREDIENTS,
+                payload: res.data.data
+            });
         }
+        return res.data.data;
     } catch (err) {
         const msgs = err.response.data.msgs;
         if (msgs) {
-            msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'error', setShowModal)));
+            msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'error', setShowModal, showModal)));
         } 
+        else {
+            dispatch(setAlert('Server Error Try Again Later', 'error', setShowModal, showModal));
+        }
         dispatch({
             type: GET_INGREDIENTS_FAIL,
             payload: {msg: err.res, status: err.response.status}
         });
+        return null;
     }
 };
 
-export const postIngredient = (formData, noNut = false, update = false, setShowModal) => async dispatch => {
+export const postIngredient = (formData, noNut = false, update = false, setShowModal, showModal, state, all = false) => async dispatch => {
     try {
         var res;
         if (update) {
-            res = await axios.post(`/api/ingredient/update`, formData);
+            res = await axios.post(`/api/ingredient/update?all=${all}`, formData);
         }
         else {
-            res = await axios.post(`/api/ingredient?noNut=${noNut}`, formData);
+            res = await axios.post(`/api/ingredient?noNut=${noNut}&all=${all}`, formData);
         }
-
-        dispatch({
-            type: GET_INGREDIENTS,
-            payload: res.data.data
-        });
-        const msgs = res.data.msgs;
-        if (msgs) {
-            msgs.forEach(msg => dispatch(setAlert(msg.msg, 'success', setShowModal)));
+        if (state) {
+            dispatch({
+                type: GET_INGREDIENTS,
+                payload: res.data.data
+            });
+            const msgs = res.data.msgs;
+            if (msgs) {
+                msgs.forEach(msg => dispatch(setAlert(msg.msg, 'success', setShowModal, showModal)));
+            }
         }
+        return res.data.data;
     } catch (err) {
         const msgs = err.response.data.msgs;
         if (msgs) {
-            msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'error', setShowModal)));
+            msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'error', setShowModal, showModal)));
+        }
+        else {
+            dispatch(setAlert('Server Error Try Again Later', 'error', setShowModal, showModal));
         } 
         dispatch({
             type: GET_INGREDIENTS_FAIL,
             payload: {msg: err.res, status: err.response.status}
         });
+        return null
     }
 }
 
-export const deleteIngredient = (id, setShowModal) => async dispatch => {
+export const deleteIngredient = (id, setShowModal, showModal) => async dispatch => {
     try {
         const res = await axios.delete(`/api/ingredient/${id}`);
 
@@ -75,12 +83,15 @@ export const deleteIngredient = (id, setShowModal) => async dispatch => {
         });
         const msgs = res.data.msgs;
         if (msgs) {
-            msgs.forEach(msg => dispatch(setAlert(msg.msg, 'success', setShowModal)));
+            msgs.forEach(msg => dispatch(setAlert(msg.msg, 'success', setShowModal, showModal)));
         }
     } catch (err) {
         const msgs = err.response.data.msgs;
         if (msgs) {
-            msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'error', setShowModal)));
+            msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'error', setShowModal, showModal)));
+        }
+        else {
+            dispatch(setAlert('Server Error Try Again Later', 'error', setShowModal, showModal));
         }
         dispatch({
             type: GET_INGREDIENTS_FAIL,

@@ -27,7 +27,6 @@ import {
             case USER_LOADED:
                 localStorage.setItem('token', payload.token);
                 setAuthToken(localStorage.token);
-                console.log(payload.token);
                 state = { ...state, isAuthenticated: payload.isAuthenticated, user: payload.data, token: payload.token }; 
                 return state;
             case USER_UPDATED:

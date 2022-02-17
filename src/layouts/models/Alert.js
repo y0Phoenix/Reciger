@@ -35,8 +35,8 @@ const Alert = ({alert, showModal, setShowModal, removeAlert}) => {
   return (
     <Fragment>
       {showModal.Alert && alert !== null && alert.length > 0 && (
-            <AnimatePresence exitBeforeEnter={true}>
-                <motion.div className='background'
+            <AnimatePresence exitBeforeEnter>
+                <motion.div className='background' style={{zIndex: 5}}
                     variants={background}
                     initial="initial"
                     animate="enter"

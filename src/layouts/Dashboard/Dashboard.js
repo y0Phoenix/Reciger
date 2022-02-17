@@ -28,7 +28,7 @@ const Dashboard = ({user, showModal, setShowModal}) => {
             <div className='recent-ingredients'>
               <h3>Recent Ingredients</h3>
               <RecentIngs user={_user}/>
-                <button className='btn' onClick={e => setShowModal({IngredientM: true})}>
+                <button className='btn' onClick={e => setShowModal({...showModal, IngredientM: true})}>
                   Create Ingredient<i className="fa-solid fa-carrot"></i>
                 </button>
             </div>

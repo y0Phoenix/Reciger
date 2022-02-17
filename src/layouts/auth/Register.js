@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { Navigate } from 'react-router-dom';
 import {setAlert} from '../../actions/alert';
 
-const Register = ({isAuthenticated, register, setAlert, setShowModal}) => {
+const Register = ({isAuthenticated, register, setAlert, setShowModal, showModal}) => {
   const pass2 = useRef();
   const [formData, setFormData] = useState({
     email: '',
@@ -28,10 +28,10 @@ const Register = ({isAuthenticated, register, setAlert, setShowModal}) => {
   const onsubmit = e => {
     e.preventDefault();
     if (password === pass2.current.value) {
-      register(formData, setShowModal);
+      register(formData, setShowModal, showModal);
     }
     else {
-      setAlert('Passwords Must Match', 'error', setShowModal);
+      setAlert('Passwords Must Match', 'error', setShowModal, showModal);
     }
   }
 

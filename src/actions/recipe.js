@@ -6,7 +6,7 @@ import axios from "axios";
 import {setAlert} from "./alert";
 
 // get recipes with all as the query for recieving all the recipe data or just the id, name, categories, user
-export const getRecipes = (all = false, id, setShowModal) => async (dispatch) => {
+export const getRecipes = (all = false, id, setShowModal, showModal) => async (dispatch) => {
     try {
         var res;
         if (id) {
@@ -22,12 +22,15 @@ export const getRecipes = (all = false, id, setShowModal) => async (dispatch) =>
         });
         const msgs = res.data.msgs;
         if (msgs) {
-            msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'success', setShowModal)));
+            msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'success', setShowModal, showModal)));
         }
     } catch (err) {
         const msgs = err.response.data.msgs;
         if (msgs) {
-            msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'error', setShowModal)));
+            msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'error', setShowModal, showModal)));
+        }
+        else {
+            dispatch(setAlert('Server Error Try Again Later', 'error', setShowModal, showModal));
         }
         dispatch({
             type: GET_RECIPES_FAIL,
@@ -36,7 +39,7 @@ export const getRecipes = (all = false, id, setShowModal) => async (dispatch) =>
     }
 };
 
-export const postRecipe = (formData, update = false, setShowModal) => async dispatch => {
+export const postRecipe = (formData, update = false, setShowModal, showModal) => async dispatch => {
     try {
         const res = await axios.post(`/api/recipe?update=${update}`, formData);
 
@@ -46,12 +49,15 @@ export const postRecipe = (formData, update = false, setShowModal) => async disp
         });
         const msgs = res.data.msgs;
         if (msgs) {
-            msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'success', setShowModal)));
+            msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'success', setShowModal, showModal)));
         }
     } catch (err) {
         const msgs = err.response.data.msgs;
         if (msgs) {
-            msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'error', setShowModal)));
+            msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'error', setShowModal, showModal)));
+        }
+        else {
+            dispatch(setAlert('Server Error Try Again Later', 'error', setShowModal, showModal));
         }
         dispatch({
             type: GET_RECIPES_FAIL,
@@ -60,7 +66,7 @@ export const postRecipe = (formData, update = false, setShowModal) => async disp
     }
 };
 
-export const deleteRecipe = (id, setShowModal) => async dispatch => {
+export const deleteRecipe = (id, setShowModal, showModal) => async dispatch => {
     try {
         const res = await axios.delete(`/api/recipe/${id}`);
 
@@ -70,12 +76,15 @@ export const deleteRecipe = (id, setShowModal) => async dispatch => {
         });
         const msgs = res.data.msgs;
         if (msgs) {
-            msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'success', setShowModal)));
+            msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'success', setShowModal, showModal)));
         }
     } catch (err) {
         const msgs = err.response.data.msgs;
         if (msgs) {
-            msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'error', setShowModal)));
+            msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'error', setShowModal, showModal)));
+        }
+        else {
+            dispatch(setAlert('Server Error Try Again Later', 'error', setShowModal, showModal));
         }
         dispatch({
             type: GET_RECIPES_FAIL,
