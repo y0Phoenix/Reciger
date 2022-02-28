@@ -87,13 +87,13 @@ const IngredientM = ({showModal, setShowModal, postIngredient, getIngredients, l
 	};
 	const exit = e => {
 		setFormData(data);
-		setShowModal({...showModal, IngredientM: false});
+		setShowModal({...showModal, IngredientM: {bool: false}});
 	}
 
 	const onChange = e => setFormData({...formData, [e.target.name]: e.target.name === 'noNut' ? e.target.checked : e.target.value});
 	return (
 		<>
-		{showModal.IngredientM && (
+		{showModal.IngredientM.bool && (
             <AnimatePresence exitBeforeEnter onExitComplete={e => exit()}>
                 <motion.div className='background'
                     variants={background}
@@ -155,7 +155,7 @@ const IngredientM = ({showModal, setShowModal, postIngredient, getIngredients, l
 						</div>
 						<button className='new-ingredient-btn reset-ingredient-btn' onClick={e => {
 							exit();
-							setShowModal({...showModal, IngredientM: true});
+							setShowModal({...showModal, IngredientM: {bool: true}});
 						}}>
 							Reset Form <i className="fa-solid fa-arrow-rotate-left"></i>
 						</button>

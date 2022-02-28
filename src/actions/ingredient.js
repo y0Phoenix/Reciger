@@ -12,7 +12,12 @@ export const getIngredients = (all = false, id, setShowModal, showModal, state) 
             res = await axios.get(`/api/ingredient/${id}`);
         }
         else {
-            res = await axios.get(`/api/ingredient?all=${all}`);
+            const token = localStorage.token;
+            res = await axios.get(`/api/ingredient?all=${all}`, {
+                headers: {
+                    "x-auth-token": token
+                }
+            });
         }
         if (state) {
             dispatch({

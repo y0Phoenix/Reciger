@@ -23,7 +23,7 @@ const Loading = ({loading}) => {
           <div className='loading-container'>
             <img
             src={spinner}
-            style={{ position: 'absolute' }}
+            style={{ position: 'absolute', zIndex: 4 }}
             alt='Loading...'
             key="background">
             </img>

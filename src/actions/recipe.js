@@ -39,8 +39,20 @@ export const getRecipes = (all = false, id, setShowModal, showModal) => async (d
     }
 };
 
-export const postRecipe = (formData, update = false, setShowModal, showModal) => async dispatch => {
+export const postRecipe = (FormData, update = false, setShowModal, showModal) => async dispatch => {
+    const {formData, ingData, ingredients} = FormData;
     try {
+        console.log(ingredients);
+        formData.ingredients = ingData.map((ing, i, arr) => {
+            console.log(ing);
+            const index = ingredients.map(ingredient => ingredient.name.toLowerCase()).indexOf(ing.ingName.toLowerCase());
+            console.log(index);
+            let ingredient = {...ingredients[index]};
+            ingredient.quantity = {amount: ing.amount, unit: ing.unit};
+            return ingredient;
+        });
+        formData.yield = {...formData.Yield};
+        console.log(formData);
         const res = await axios.post(`/api/recipe?update=${update}`, formData);
 
         dispatch({
@@ -52,6 +64,7 @@ export const postRecipe = (formData, update = false, setShowModal, showModal) =>
             msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'success', setShowModal, showModal)));
         }
     } catch (err) {
+        console.log(err);
         const msgs = err.response.data.msgs;
         if (msgs) {
             msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'error', setShowModal, showModal)));

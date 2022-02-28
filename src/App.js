@@ -28,7 +28,10 @@ function App() {
   const [showModal, setShowModal] = useState({
     Alert: false,
     Category: false,
-    IngredientM: false,
+    IngredientM: {
+      id: '',
+      bool: false
+    },
     Loading: false
   });
   useEffect(() => {
