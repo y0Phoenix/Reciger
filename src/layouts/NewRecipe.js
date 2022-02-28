@@ -98,7 +98,7 @@ const NewRecipe = ({ingredients, loading, stopLoading, postRecipe, showModal, se
       tempdatasuggs[i] = [];
       setIngData(tempdataing);
       setSuggs(tempdatasuggs);
-    }, 100)
+    }, 300)
   }
 
   const addIng = () => {

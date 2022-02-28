@@ -14,6 +14,7 @@ const Register = ({isAuthenticated, register, setAlert, setShowModal, showModal}
     preferedW: '',
     name: ''
   });
+  const [showPrefs, setShowPrefs] = useState(false);
 
   const {
     email,
@@ -41,32 +42,37 @@ const Register = ({isAuthenticated, register, setAlert, setShowModal, showModal}
         <div className='register'>
           <form className='register-form' onSubmit={e => onsubmit(e)}>
             <div className='register-form1'>
-              <input type='text' onChange={e => onchange(e)} value={email} placeholder='email' name='email'></input>
+              <input type='text' onChange={e => onchange(e)} value={name} placeholder='name' name='name'></input>
               <br></br>
             </div>
             <div className='register-form2'>
+              <input type='text' onChange={e => onchange(e)} value={email} placeholder='email' name='email'></input>
+              <br></br>
+            </div>
+            <div className='register-form3'>
               <input type='password' onChange={e => onchange(e)} value={password} placeholder="password" name='password'></input>
               <br></br>
               <small>Must Contain 6 Characters</small>
               <br></br>
             </div>
-            <div className='register-form3'>
+            <div className='register-form4'>
               <input type='password' onChange={e => onchange(e)} placeholder="password 2" ref={pass2}></input>
               <br></br>
               <small>Must Match</small>
               <br></br>
             </div>
-            <div className='register-form2'>
-              <input type='text' onChange={e => onchange(e)} value={name} placeholder='name' name='name'></input>
-              <br></br>
-            </div>
-            <div className='register-form4'>
-              <small>Prefered Measurements</small>
-              <br></br>
-              <input type='text' name='preferedV' onChange={e => onchange(e)} placeholder='prefered volume' value={preferedV}></input>
-              <br></br>
-              <input type='text' name='preferedW' onChange={e => onchange(e)} placeholder='prefered weight' value={preferedW}></input>
-            </div>
+            <div className='register-form5'>
+              <small>Prefered Measurements (defaults to standard oz, floz)</small>
+              <input type='checkbox' value={showPrefs} onChange={e => setShowPrefs(e.target.checked)}></input>
+              {showPrefs &&
+                <>
+                  <br></br>
+                  <input type='text' name='preferedV' onChange={e => onchange(e)} placeholder='prefered volume' value={preferedV}></input>
+                  <br></br>
+                  <input type='text' name='preferedW' onChange={e => onchange(e)} placeholder='prefered weight' value={preferedW}></input>
+                </>
+              }
+              </div>
             <input type='submit' value='Register'></input>
           </form>
         </div>
