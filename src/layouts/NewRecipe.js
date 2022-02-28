@@ -37,7 +37,6 @@ const NewRecipe = ({ingredients, loading, stopLoading, postRecipe, showModal, se
     Yield,
     instructions
   } = formData;
-  const refs = [];
   const getSuggs = value => {
     value = value.split('');
     const arr = ingredients.filter(ing => {
@@ -91,6 +90,17 @@ const NewRecipe = ({ingredients, loading, stopLoading, postRecipe, showModal, se
     stopLoading();
   }
 
+  const onblur = i => {
+    setTimeout(() => {
+      const tempdataing = [...ingData];
+      const tempdatasuggs = [...suggs];
+      tempdataing[i].show = false;
+      tempdatasuggs[i] = [];
+      setIngData(tempdataing);
+      setSuggs(tempdatasuggs);
+    }, 100)
+  }
+
   const addIng = () => {
     setIngData([...ingData, initIng]);
     setSuggs([...suggs, []]);
@@ -116,7 +126,7 @@ const NewRecipe = ({ingredients, loading, stopLoading, postRecipe, showModal, se
             <div className='new-reipce-ingredient'>
               {ingData.length > 0 ? ingData.map((ing, i, arr) => 
                 <div key={i} className='new-recipe-ingredient-item'>
-                  <input type='text' name='ing-ingName' value={ingData[i].ingName} onChange={e => onchange(e, i)} placeholder='name'></input>
+                  <input type='text' name='ing-ingName' value={ingData[i].ingName} onChange={e => onchange(e, i)} onBlur={e => onblur(i)} placeholder='name'></input>
                   {suggs[i].length > 0 ?
                     <>
                       <br></br>
