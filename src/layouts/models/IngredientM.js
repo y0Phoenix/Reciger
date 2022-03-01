@@ -1,11 +1,11 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { connect } from 'react-redux';
-import { postIngredient, getIngredients } from '../../actions/ingredient';
+import { postIngredient, getIngredients, updateIngredient } from '../../actions/ingredient';
 import { loading, stopLoading } from '../../actions/loading';
 import PropTypes from 'prop-types';
 
-const IngredientM = ({showModal, setShowModal, postIngredient, getIngredients, loading, stopLoading}) => {
+const IngredientM = ({showModal, setShowModal, postIngredient, getIngredients, loading, stopLoading, updateIngredient}) => {
 	const calories = useRef();
 	const iron = useRef();
 	const calcium = useRef();
@@ -23,31 +23,31 @@ const IngredientM = ({showModal, setShowModal, postIngredient, getIngredients, l
 		weight: '',
 		prefered: '',
 		noNut: false
-	}
+	};
 	const background = {
 		initial: {
-		  opacity: 0
+			opacity: 0
 		}, 
 		enter: {
-		  opacity: 1
+			opacity: 1
 		}, 
 		exit: {
-		  opacity: 0
+			opacity: 0
 		}, 
-	  };
-	  const modal = {
+	};
+	const modal = {
 		initial: {
-		  y: "-100vh",
-		  opacity: 0
+			y: "-100vh",
+			opacity: 0
 		},
 		enter: {
-		  y: "200px",
-		  opacity: 1,
-		  transition: {
-			delay: 0.5
-		  }
+			y: "200px",
+			opacity: 1,
+			transition: {
+				delay: 0.5
+			}
 		}
-	  }
+	}
 	const [formData, setFormData] = useState(data);
 	const [showPrefs, setShowPrefs] = useState(false);
 	const {
@@ -59,11 +59,42 @@ const IngredientM = ({showModal, setShowModal, postIngredient, getIngredients, l
 		prefered,
 		noNut
 	} = formData;
+	useEffect(() => {
+		const load = async () => {
+			if (showModal.IngredientM.id !== '') {
+				loading();
+				console.log(showModal.IngredientM.id)
+				const ingredient = await getIngredients(true, showModal.IngredientM.id, setShowModal, showModal, false);
+				stopLoading();
+				if (!ingredient) return;
+				console.log(ingredient)
+				setFormData({
+					name: ingredient.name,
+					categories: ingredient.categories.join(' '),
+					price: ingredient.price,
+					volume: ingredient.units.volume.join(' '),
+					weight: ingredient.units.weight.join(' '),
+					prefered: ingredient.units.prefered,
+					noNut: false
+				});
+				setNutrients(ingredient);
+			}
+		}
+		load();
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [showModal.IngredientM]);
 	const onSubmit = async e => {
 		e.preventDefault();
 		let cats = categories.replace(/s/g, '').split(',');
 		loading();
-		let ingredients = await postIngredient({name, categories: cats, price, units: {volume, weight, prefered}}, noNut, false, setShowModal, showModal, true, true);
+
+		let ingredients;
+		if (showModal.IngredientM.id !== '') {
+			ingredients = await updateIngredient({name, categories: cats, price, units: {volume, weight, prefered}, }, showModal.IngredientM.id, true, noNut, setShowModal, showModal)
+		}
+		else {
+			ingredients = await postIngredient({name, categories: cats, price, units: {volume, weight, prefered}}, noNut, setShowModal, showModal, true, true);
+		}
 		if (!ingredients) {
 			return stopLoading();
 		}
@@ -73,9 +104,16 @@ const IngredientM = ({showModal, setShowModal, postIngredient, getIngredients, l
 			return stopLoading();
 		}
 		stopLoading();
-		const nutrient = ingredient.nutrients;
-		const pref = ingredient.units.prefered
-		calories.current.innerHTML = `Calories per ${pref}: ${ingredient.calories.pref}`;
+		setNutrients(ingredient);
+	};
+	const exit = e => {
+		setFormData(data);
+		setShowModal({...showModal, IngredientM: {bool: false, id: ''}});
+	}
+	const setNutrients = ing => {
+		const nutrient = ing.nutrients;
+		const pref = ing.units.prefered
+		calories.current.innerHTML = `Calories per ${pref}: ${ing.calories.pref}`;
 		iron.current.innerHTML = `Iron per ${pref}: ${nutrient.iron.pref}${nutrient.iron.unit}`;
 		sodium.current.innerHTML = `Sodium per ${pref}: ${nutrient.sodium.pref}${nutrient.sodium.unit}`;
 		calcium.current.innerHTML = `Calcium per ${pref}: ${nutrient.calcium.pref}${nutrient.calcium.unit}`;
@@ -84,10 +122,6 @@ const IngredientM = ({showModal, setShowModal, postIngredient, getIngredients, l
 		carbs.current.innerHTML = `Carbs per ${pref}: ${nutrient.carbs.pref}${nutrient.carbs.unit}`;
 		fat.current.innerHTML = `Fat per ${pref}: ${nutrient.fat.pref}${nutrient.fat.unit}`;
 		protein.current.innerHTML = `Protein per ${pref}: ${nutrient.protein.pref}${nutrient.protein.unit}`;
-	};
-	const exit = e => {
-		setFormData(data);
-		setShowModal({...showModal, IngredientM: {bool: false}});
 	}
 
 	const onChange = e => setFormData({...formData, [e.target.name]: e.target.name === 'noNut' ? e.target.checked : e.target.value});
@@ -164,7 +198,7 @@ const IngredientM = ({showModal, setShowModal, postIngredient, getIngredients, l
 						</div>
 						<button className='new-ingredient-btn reset-ingredient-btn' onClick={e => {
 							exit();
-							setShowModal({...showModal, IngredientM: {bool: true}});
+							setShowModal({...showModal, IngredientM: {bool: true, id: showModal.IngredientM.id}});
 						}}>
 							Reset Form <i className="fa-solid fa-arrow-rotate-left"></i>
 						</button>
@@ -180,7 +214,12 @@ IngredientM.propTypes = {
 	postIngredient: PropTypes.func.isRequired,
 	getIngredients: PropTypes.func.isRequired,
 	loading: PropTypes.func.isRequired,
-	stopLoading: PropTypes.func.isRequired
+	stopLoading: PropTypes.func.isRequired,
+	ingredients: PropTypes.array.isRequired
 }
 
-export default connect(null, {postIngredient, getIngredients, loading, stopLoading})(IngredientM)
+const mapStateToProps = stats => ({
+	ingredients: stats.ingredient.ingredients
+})
+
+export default connect(mapStateToProps, {postIngredient, getIngredients, loading, stopLoading, updateIngredient})(IngredientM)

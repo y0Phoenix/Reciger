@@ -21,6 +21,7 @@ a {
 }
 .modal{
 	max-width: 400px;
+	max-height: 1000px;
 	padding: 40px 20px;
 	margin: auto;
 	background: black;

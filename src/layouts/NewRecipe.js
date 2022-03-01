@@ -121,7 +121,7 @@ const NewRecipe = ({ingredients, loading, stopLoading, postRecipe, showModal, se
             </div>
             <div className='new-recipe-yield'>
               <input type='text' value={Yield.string} name='string' onChange={e => onchange(e)} placeholder='unit'></input>
-              <input type='number' value={Yield.number} name='number' onChange={e => onchange(e)} placeholder='amount'></input>
+              <input type='text' value={Yield.number} name='number' onChange={e => onchange(e)} placeholder='amount'></input>
             </div>
             <div className='new-reipce-ingredient'>
               {ingData.length > 0 ? ingData.map((ing, i, arr) => 
@@ -149,7 +149,7 @@ const NewRecipe = ({ingredients, loading, stopLoading, postRecipe, showModal, se
                       {ingData[i].show === true &&
                         <div className='suggs'>
                           <button type='button' onClick={e => {
-                            setShowModal({...showModal, IngredientM: {bool: true}});
+                            setShowModal({...showModal, IngredientM: {bool: true, id: showModal.IngredientM.id}});
                             const tempdata = [...ingData];
                             tempdata[i].show = false;
                             setIngData(tempdata);
@@ -167,8 +167,16 @@ const NewRecipe = ({ingredients, loading, stopLoading, postRecipe, showModal, se
                       } 
                     </>
                   }
-                  <input type='number' name='ing-amount' onChange={e => onchange(e, i)} placeholder='amount'></input>
+                  <input type='text' name='ing-amount' onChange={e => onchange(e, i)} placeholder='amount'></input>
                   <input type='text' name='ing-unit' onChange={e => onchange(e, i)} placeholder='unit'></input>
+                  <button type='button' className='edit-btn' onClick={e => {
+                    const index = ingredients.map(ing => ing.name).indexOf(ingData[i].ingName);
+                    console.log(index, ingData[i].ingName, ingredients);
+                    if (index == -1) {
+                      return
+                    }
+                    setShowModal({...showModal, IngredientM: {bool: true, id: ingredients[index]._id}});
+                  }}>Edit</button>
                   <button className='remove-btn' type='button' onClick={e => removeIng(e, i)}>
                     <i className='fa-solid fa-x'></i>
                   </button>

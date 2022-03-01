@@ -15,6 +15,7 @@ const RecentRecs = ({user}) =>
             }
         });
         const one = uuid();
+        console.log(rec);
         return (
             <Fragment>
             <div className={`recent-recs${i}`} key={one}>

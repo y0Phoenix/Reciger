@@ -18,7 +18,7 @@ const Dashboard = ({user, showModal, setShowModal}) => {
           <div className='dashboard-container'>
             <div className='recent-recipes'>
               <h3>Recent Recipes</h3>
-              <RecentRecs user={_user}/>
+              <RecentRecs user={_user} setShowModal={setShowModal} showModal={showModal}/>
                 <Link to='/newrecipe'>
                   <button className='btn'>
                     Create Recipe<i className="fa-solid fa-book"></i>
@@ -27,8 +27,8 @@ const Dashboard = ({user, showModal, setShowModal}) => {
             </div>
             <div className='recent-ingredients'>
               <h3>Recent Ingredients</h3>
-              <RecentIngs user={_user}/>
-                <button className='btn' onClick={e => setShowModal({...showModal, IngredientM: {bool: true}})}>
+              <RecentIngs user={_user} setShowModal={setShowModal} showModal={showModal}/>
+                <button className='btn' onClick={e => setShowModal({...showModal, IngredientM: {bool: true, id: ''}})}>
                   Create Ingredient<i className="fa-solid fa-carrot"></i>
                 </button>
             </div>

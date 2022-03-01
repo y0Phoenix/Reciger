@@ -1,7 +1,7 @@
 import React from 'react';
 import {v4 as uuid} from 'uuid';
 
-const RecentIngs = ({user}) => 
+const RecentIngs = ({user, showModal, setShowModal}) => 
     user.recents.ingredients.length > 0 ?
     user.recents.ingredients.map((ing, i, arr) => {
         i = i + 1;
@@ -23,6 +23,7 @@ const RecentIngs = ({user}) =>
                     <p className='recent-ings-calories'>Calories: {ing.calories}</p>
                     <p className='recent-ings-price'>Price: {ing.price}</p>
                 </div>
+                <button onClick={e => setShowModal({...showModal, IngredientM: {bool: true, id: ing.ing}})}>Edit</button>
             </div>
         )
     }) :
