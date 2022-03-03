@@ -27,7 +27,10 @@ import {loading, stopLoading} from './actions/loading';
 function App() {
   const [showModal, setShowModal] = useState({
     Alert: false,
-    Category: false,
+    Category: {
+      name: '',
+      bool: false
+    },
     IngredientM: {
       id: '',
       bool: false
