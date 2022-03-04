@@ -10,7 +10,6 @@ export const getIngredients = (all = false, id, setShowModal, showModal, state =
         var res;
         const token = localStorage.token;
         if (id) {
-            console.log(id);
             res = await axios.get(`/api/ingredient/${id}`, {
                 headers: {
                     "x-auth-token": token
@@ -80,7 +79,7 @@ export const postIngredient = (formData, noNut = false, setShowModal, showModal,
 
 export const updateIngredient = (formData, id, all, noNut, setShowModal, showModal) => async dispatch => {
     try {
-        const res = await axios.post(`/api/ingredient/update/?all=${all}&noNut=${noNut}`, formData);
+        const res = await axios.post(`/api/ingredient/update/${id}?all=${all}&noNut=${noNut}`, formData);
         dispatch({
             type: GET_INGREDIENTS,
             payload: res.data.data

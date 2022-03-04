@@ -33,7 +33,8 @@ const NewRecipe = ({ingredients, loading, stopLoading, postRecipe, getRecipes, s
     Yield: {
       number: 0,
       string: ''
-    }
+    },
+    categories: ''
   });
   const [ingData, setIngData] = useState([]);
   const [suggs, setSuggs] = useState([[]]);
@@ -43,7 +44,7 @@ const NewRecipe = ({ingredients, loading, stopLoading, postRecipe, getRecipes, s
       if (id !== '/recipe') {
         loading();
         const recipe = await getRecipes(true, id, false, setShowModal, showModal);
-        setFormData({...formData, name: recipe.name, instructions: recipe.instructions, Yield: recipe.yield});
+        setFormData({...formData, name: recipe.name, instructions: recipe.instructions, Yield: recipe.yield, categories: recipe.categories});
         const ings = recipe.ingredients.map(ing => {
           return {name: ing.name, quantity: ing.quantity, show: false}
         });
@@ -57,7 +58,8 @@ const NewRecipe = ({ingredients, loading, stopLoading, postRecipe, getRecipes, s
   const {
     name,
     Yield,
-    instructions
+    instructions,
+    categories
   } = formData;
   const getSuggs = value => {
     value = value.split('');
@@ -211,6 +213,9 @@ const NewRecipe = ({ingredients, loading, stopLoading, postRecipe, getRecipes, s
                 )
               })}
                 <button className='btn' type='button'onClick={e => addIng(e)}>Add Ingredient</button>
+            </div>
+            <div className='new-recipe-categories'>
+              <input type='text' value={categories} name='categories' onChange={e => setFormData({...formData, categories: e.target.value})} placeholder='categories'></input>
             </div>
             <div className='new-recipe-instructions'>
               <textarea type='text' value={instructions} name='instructions' onChange={e => onchange(e)} rows="7" cols="60"></textarea>

@@ -63,11 +63,9 @@ const IngredientM = ({showModal, setShowModal, postIngredient, getIngredients, l
 		const load = async () => {
 			if (showModal.IngredientM.id) {
 				loading();
-				console.log(showModal.IngredientM.id)
 				const ingredient = await getIngredients(true, showModal.IngredientM.id, setShowModal, showModal, false);
 				stopLoading();
 				if (!ingredient) return;
-				console.log(ingredient)
 				setFormData({
 					name: ingredient.name,
 					categories: ingredient.categories.join(' '),

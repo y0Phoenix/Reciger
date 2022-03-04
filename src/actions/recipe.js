@@ -61,6 +61,7 @@ export const postRecipe = (FormData, update = false, setShowModal, showModal) =>
             return ingredient;
         });
         formData.yield = {...formData.Yield};
+        if (formData.categories.constructor !== Array) formData.categories = formData.categories.split(',');
         const res = await axios.post(`/api/recipe?update=${update}`, formData);
 
         dispatch({
