@@ -4,14 +4,14 @@ import {
 } from "../actions/types";
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default function(state = false, action) {
+export default function(state = {bool: false}, action) {
     const {type} = action;
     switch (type) {
         case LOADING:
-            state = true
+            state = {bool: true}
             return state;
         case STOP_LOADING:
-            state = false;
+            state = {bool: false};
             return state;
         default:
             return state;

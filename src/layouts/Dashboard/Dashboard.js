@@ -19,7 +19,7 @@ const Dashboard = ({user, showModal, setShowModal}) => {
             <div className='recent-recipes'>
               <h3>Recent Recipes</h3>
               <RecentRecs user={_user} setShowModal={setShowModal} showModal={showModal}/>
-                <Link to='/newrecipe'>
+                <Link to='/recipe'>
                   <button className='btn'>
                     Create Recipe<i className="fa-solid fa-book"></i>
                   </button>

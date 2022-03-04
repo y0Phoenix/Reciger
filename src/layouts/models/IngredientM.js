@@ -61,7 +61,7 @@ const IngredientM = ({showModal, setShowModal, postIngredient, getIngredients, l
 	} = formData;
 	useEffect(() => {
 		const load = async () => {
-			if (showModal.IngredientM.id !== '') {
+			if (showModal.IngredientM.id) {
 				loading();
 				console.log(showModal.IngredientM.id)
 				const ingredient = await getIngredients(true, showModal.IngredientM.id, setShowModal, showModal, false);
@@ -89,7 +89,7 @@ const IngredientM = ({showModal, setShowModal, postIngredient, getIngredients, l
 		loading();
 
 		let ingredients;
-		if (showModal.IngredientM.id !== '') {
+		if (showModal.IngredientM.id) {
 			ingredients = await updateIngredient({name, categories: cats, price, units: {volume, weight, prefered}, }, showModal.IngredientM.id, true, noNut, setShowModal, showModal)
 		}
 		else {
@@ -108,7 +108,7 @@ const IngredientM = ({showModal, setShowModal, postIngredient, getIngredients, l
 	};
 	const exit = e => {
 		setFormData(data);
-		setShowModal({...showModal, IngredientM: {bool: false, id: ''}});
+		setShowModal({...showModal, IngredientM: {bool: false, id: null}});
 	}
 	const setNutrients = ing => {
 		const nutrient = ing.nutrients;

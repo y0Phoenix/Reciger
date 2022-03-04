@@ -7,8 +7,15 @@ import {setAlert} from "./alert";
 
 export const getCategories = (setShowModal, showModal) => async (dispatch) => {
     try {
-        dispatch({})
-        const res = await axios.get('/api/category');
+        const token = localStorage.token;
+        if (!token) {
+            return;
+        }
+        const res = await axios.get('/api/category', {
+            headers: {
+                "x-auth-token": token
+            }
+        });
 
         dispatch({
             type: GET_CATEGORIES,
@@ -35,6 +42,7 @@ export const getCategories = (setShowModal, showModal) => async (dispatch) => {
 
 export const postCategory = (formData, setShowModal, showModal) => async dispatch => {
     try {
+        console.log(formData);
         const res = await axios.post('/api/category', formData);
 
         dispatch({
@@ -61,9 +69,9 @@ export const postCategory = (formData, setShowModal, showModal) => async dispatc
     }
 };
 
-export const deleteCategory = (id, setShowModal, showModal) => async dispatch => {
+export const deleteCategory = (formData, setShowModal, showModal) => async dispatch => {
     try {
-        const res = await axios.delete(`/api/category/${id}`);
+        const res = await axios.delete(`/api/category`, formData);
 
         dispatch({
             type: GET_CATEGORIES,

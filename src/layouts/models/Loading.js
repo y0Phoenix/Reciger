@@ -1,21 +1,10 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import spinner from '../../images/spinner.gif';
 
 const Loading = ({loading}) => {
-  const background = {
-    initial: {
-      opacity: 0
-    }, 
-    enter: {
-      opacity: 1
-    }, 
-    exit: {
-      opacity: 0
-    }, 
-  };
-  if (loading) {
+  if (loading.bool) {
     return (
       <> 
           <div className='background'>
@@ -35,7 +24,7 @@ const Loading = ({loading}) => {
 }
 
 Loading.propTypes = {
-  loading: PropTypes.bool.isRequired,
+  loading: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({

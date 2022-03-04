@@ -80,7 +80,7 @@ export const postIngredient = (formData, noNut = false, setShowModal, showModal,
 
 export const updateIngredient = (formData, id, all, noNut, setShowModal, showModal) => async dispatch => {
     try {
-        const res = await axios.post(`/api/ingredient/update/${id}?all=${all}&noNut=${noNut}`, formData);
+        const res = await axios.post(`/api/ingredient/update/?all=${all}&noNut=${noNut}`, formData);
         dispatch({
             type: GET_INGREDIENTS,
             payload: res.data.data

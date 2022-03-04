@@ -14,10 +14,9 @@ const RecentIngs = ({user, showModal, setShowModal}) =>
                 cats += `${cat}, `;
             }
         });
-        const one = uuid();
         return (
-            <div className={`recent-ings${i}`} key={one}>
-                <div className={`recent-ings${i}1`}>
+            <div className={`recent-ings${i}`} key={i}>
+                <div className={`recent-ings${i}1`} key={i + 10}>
                     <p className='recent-ings-name'>{ing.name}</p>
                     <p className='recent-ings-categories'>Categories: {cats}</p>
                     <p className='recent-ings-calories'>Calories: {ing.calories}</p>
