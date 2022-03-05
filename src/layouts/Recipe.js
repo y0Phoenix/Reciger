@@ -1,13 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState} from 'react';
 import { connect } from 'react-redux';
-import { Navigate, useLocation } from 'react-router';
+import { Navigate, useLocation, useParams } from 'react-router';
 import { loading, stopLoading } from '../actions/loading';
 import { getRecipes, postRecipe } from '../actions/recipe';
 import PropTypes from 'prop-types';
 import { getIngredients } from '../actions/ingredient';
 
-const NewRecipe = ({ingredients, loading, stopLoading, postRecipe, getRecipes, showModal, setShowModal, getIngredients, isAuthenticated, _loading}) => {
+const Recipe = ({ingredients, loading, stopLoading, postRecipe, getRecipes, showModal, setShowModal, getIngredients, isAuthenticated, _loading, recipe}) => {
+  const params = useParams();
   const location = useLocation();
   // useEffect(() => {
   //   const load = async () => {
@@ -39,22 +40,22 @@ const NewRecipe = ({ingredients, loading, stopLoading, postRecipe, getRecipes, s
   const [ingData, setIngData] = useState([]);
   const [suggs, setSuggs] = useState([[]]);
   useEffect(() => {
-    const id = location.pathname.replace(/\/recipe\//g, '');
-    const load = async () => {
-      if (id !== '/recipe') {
-        loading();
-        const recipe = await getRecipes(true, id, false, setShowModal, showModal);
-        setFormData({...formData, name: recipe.name, instructions: recipe.instructions, Yield: recipe.yield, categories: recipe.categories});
-        const ings = recipe.ingredients.map(ing => {
-          return {name: ing.name, quantity: ing.quantity, show: false}
-        });
-        setIngData(ings);
-        stopLoading();
+      if (params.id !== 'new') {
+        getRecipes(true, params.id, true, setShowModal, showModal);
       }
-      await getIngredients(true, null, setShowModal, showModal, true);
-    }
-    load();
+      getIngredients(true, null, setShowModal, showModal, true);
   }, []);
+  useEffect(() => {
+    if (params.id !== 'new') {
+      if (!recipe) return;
+      if (recipe.constructor === Array) return;
+      setFormData({...formData, name: recipe.name, instructions: recipe.instructions, Yield: recipe.yield, categories: recipe.categories});
+      const ings = recipe.ingredients.map(ing => {
+        return {name: ing.name, quantity: ing.quantity, show: false}
+      });
+      setIngData(ings);
+    }
+  }, [recipe])
   const {
     name,
     Yield,
@@ -231,19 +232,20 @@ const NewRecipe = ({ingredients, loading, stopLoading, postRecipe, getRecipes, s
   )
 }
 
-NewRecipe.propTypes = {
+Recipe.propTypes = {
   ingredients: PropTypes.array.isRequired,
   loading: PropTypes.func.isRequired,
   stopLoading: PropTypes.func.isRequired,
   postRecipe: PropTypes.func.isRequired,
   getIngredients: PropTypes.func.isRequired,
-  _loading: PropTypes.object.isRequired
+  _loading: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = state => ({
   ingredients: state.ingredient.ingredients,
   isAuthenticated: state.user.isAuthenticated,
-  _loading: state.loading
+  _loading: state.loading,
+  recipe: state.recipe.recipes
 })
 
-export default connect(mapStateToProps, {loading, stopLoading, postRecipe, getIngredients, getRecipes})(NewRecipe);
+export default connect(mapStateToProps, {loading, stopLoading, postRecipe, getIngredients, getRecipes})(Recipe);

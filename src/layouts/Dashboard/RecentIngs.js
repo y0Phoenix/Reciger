@@ -1,5 +1,4 @@
 import React from 'react';
-import {v4 as uuid} from 'uuid';
 
 const RecentIngs = ({user, showModal, setShowModal}) => 
     user.recents.ingredients.length > 0 ?

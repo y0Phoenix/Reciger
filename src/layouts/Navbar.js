@@ -17,7 +17,7 @@ const Navbar = ({isAuthenticated, logout}) => {
           </Link>
         </div>
         <div className='nav-item2'>
-          <Link to='/recipes'>
+          <Link to='/recipes/1'>
             <button className='nav-btn'>
               Recipes<i className='fa-solid fa-book'></i>
             </button>

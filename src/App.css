@@ -199,3 +199,9 @@ a {
 .category-x:hover {
 	background-color: rgb(228, 213, 194);
 }
+.recipe-search-box {
+	position: relative;
+}
+.recipe-search-result {
+	cursor: pointer;
+}

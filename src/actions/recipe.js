@@ -4,6 +4,7 @@ import {
 } from "./types";
 import axios from "axios";
 import {setAlert} from "./alert";
+import { loading, stopLoading } from "./loading";
 
 // get recipes with all as the query for recieving all the recipe data or just the id, name, categories, user
 export const getRecipes = (all = false, id, state, setShowModal, showModal) => async (dispatch) => {
@@ -18,12 +19,14 @@ export const getRecipes = (all = false, id, state, setShowModal, showModal) => a
             }
         };
         var res;
+        dispatch(loading());
         if (id) {
             res = await axios.get(`/api/recipe/${id}`, headers);
         }
         else {
             res = await axios.get(`/api/recipe?all=${all}`, headers);
         }
+        dispatch(stopLoading());
         if (state) {
             dispatch({
                 type: GET_RECIPES,
@@ -36,6 +39,7 @@ export const getRecipes = (all = false, id, state, setShowModal, showModal) => a
         }
         return res.data.data
     } catch (err) {
+        dispatch(stopLoading());
         const msgs = err.response.data.msgs;
         if (msgs) {
             msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'error', setShowModal, showModal)));
@@ -47,6 +51,7 @@ export const getRecipes = (all = false, id, state, setShowModal, showModal) => a
             type: GET_RECIPES_FAIL,
             payload: {msg: err.res, status: err.response.status}
         });
+        return null;
     }
 };
 
@@ -62,7 +67,9 @@ export const postRecipe = (FormData, update = false, setShowModal, showModal) =>
         });
         formData.yield = {...formData.Yield};
         if (formData.categories.constructor !== Array) formData.categories = formData.categories.split(',');
+        dispatch(loading());
         const res = await axios.post(`/api/recipe?update=${update}`, formData);
+        dispatch(stopLoading());
 
         dispatch({
             type: GET_RECIPES,
@@ -73,7 +80,7 @@ export const postRecipe = (FormData, update = false, setShowModal, showModal) =>
             msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'success', setShowModal, showModal)));
         }
     } catch (err) {
-        console.log(err);
+        dispatch(stopLoading());
         const msgs = err.response.data.msgs;
         if (msgs) {
             msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'error', setShowModal, showModal)));
@@ -88,9 +95,11 @@ export const postRecipe = (FormData, update = false, setShowModal, showModal) =>
     }
 };
 
-export const deleteRecipe = (id, setShowModal, showModal) => async dispatch => {
+export const deleteRecipe = ({id, setShowModal, showModal}) => async dispatch => {
     try {
+        dispatch(loading());
         const res = await axios.delete(`/api/recipe/${id}`);
+        dispatch(stopLoading());
 
         dispatch({
             type: GET_RECIPES,
@@ -102,6 +111,7 @@ export const deleteRecipe = (id, setShowModal, showModal) => async dispatch => {
         }
     } catch (err) {
         const msgs = err.response.data.msgs;
+        dispatch(stopLoading());
         if (msgs) {
             msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'error', setShowModal, showModal)));
         }

@@ -1,5 +1,6 @@
 import axios from "axios";
 import {setAlert} from "./alert";
+import { loading, stopLoading } from "./loading";
 import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
@@ -18,7 +19,9 @@ import {
 // load user if local storage token exists
 export const login = (formData, setShowModal, showModal) => async (dispatch) => {
     try {
+        dispatch(loading());
         const res = await axios.post('/api/auth', formData);
+        dispatch(stopLoading());
 
         dispatch({
             type: LOGIN_SUCCESS,
@@ -26,6 +29,7 @@ export const login = (formData, setShowModal, showModal) => async (dispatch) => 
         });
     } catch (err) {
         const msgs = err.response.data.msgs;
+        dispatch(stopLoading());
         if (msgs) {
             msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'error', setShowModal, showModal)));  
         }
@@ -46,7 +50,9 @@ export const register = (formData, setShowModal, showModal) => async dispatch =>
         formData.preference.measurements.push(formData.preferedV, formData.preferedW);
         delete formData.preferedV;
         delete formData.preferedW;
+        dispatch(loading());
         const res = await axios.post('/api/user', formData);
+        dispatch(stopLoading());
 
         dispatch({
             type: REGISTER_SUCCESS,
@@ -54,6 +60,7 @@ export const register = (formData, setShowModal, showModal) => async dispatch =>
         });
     } catch (err) {
         const msgs = err.response.data.msgs;
+        dispatch(stopLoading());
         if (msgs) {
             msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'error', setShowModal, showModal)));
         }
@@ -69,8 +76,9 @@ export const register = (formData, setShowModal, showModal) => async dispatch =>
 
 export const updateUser = (formData, setShowModal, showModal) => async dispatch => {
     try {
+        dispatch(loading());
         const res = await axios.post('/api/user/update', formData);
-
+        dispatch(stopLoading());
         dispatch({
             type: USER_UPDATED,
             payload: res.data
@@ -81,6 +89,7 @@ export const updateUser = (formData, setShowModal, showModal) => async dispatch 
         }
     } catch (err) {
         const msgs = err.response.data.msgs;
+        dispatch(stopLoading());
         if (msgs) {
             msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'error', setShowModal, showModal)));
         }
@@ -113,18 +122,20 @@ export const loadUser = () => async dispatch => {
     try {
         const token = localStorage.token;
         var res;
+        dispatch(loading());
         if (!token) {
             res = await axios.get('/api/auth');
         }
         else {
             res = await axios.get(`/api/auth/${token}`);
         }
-
+        dispatch(stopLoading());
         dispatch({
             type: USER_LOADED,
             payload: res.data
         });
     } catch (err) {
+        dispatch(stopLoading());
         dispatch({
             type: AUTH_ERROR,
             payload: {msg: err.res, status: err.response.status}

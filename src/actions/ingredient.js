@@ -4,11 +4,13 @@ import {
 } from "./types";
 import axios from "axios";
 import {setAlert} from "./alert";
+import { loading, stopLoading } from "./loading";
 
 export const getIngredients = (all = false, id, setShowModal, showModal, state = false)  => async (dispatch) => {
     try {
         var res;
         const token = localStorage.token;
+        dispatch(loading());
         if (id) {
             res = await axios.get(`/api/ingredient/${id}`, {
                 headers: {
@@ -23,6 +25,7 @@ export const getIngredients = (all = false, id, setShowModal, showModal, state =
                 }
             });
         }
+        dispatch(stopLoading());
         if (state) {
             dispatch({
                 type: GET_INGREDIENTS,
@@ -32,7 +35,7 @@ export const getIngredients = (all = false, id, setShowModal, showModal, state =
         return res.data.data;
     } catch (err) {
         const msgs = err.response.data.msgs;
-        console.log(msgs);
+        dispatch(stopLoading());
         if (msgs) {
             msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'error', setShowModal, showModal)));
         } 
@@ -49,7 +52,9 @@ export const getIngredients = (all = false, id, setShowModal, showModal, state =
 
 export const postIngredient = (formData, noNut = false, setShowModal, showModal, state, all = false) => async dispatch => {
     try {
+        dispatch(loading());
         const res = await axios.post(`/api/ingredient?noNut=${noNut}&all=${all}`, formData);
+        dispatch(stopLoading());
         if (state) {
             dispatch({
                 type: GET_INGREDIENTS,
@@ -62,6 +67,7 @@ export const postIngredient = (formData, noNut = false, setShowModal, showModal,
         }
         return res.data.data;
     } catch (err) {
+        dispatch(stopLoading());
         const msgs = err.response.data.msgs;
         if (msgs) {
             msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'error', setShowModal, showModal)));
@@ -79,7 +85,9 @@ export const postIngredient = (formData, noNut = false, setShowModal, showModal,
 
 export const updateIngredient = (formData, id, all, noNut, setShowModal, showModal) => async dispatch => {
     try {
+        dispatch(loading());
         const res = await axios.post(`/api/ingredient/update/${id}?all=${all}&noNut=${noNut}`, formData);
+        dispatch(stopLoading());
         dispatch({
             type: GET_INGREDIENTS,
             payload: res.data.data
@@ -89,6 +97,7 @@ export const updateIngredient = (formData, id, all, noNut, setShowModal, showMod
             msgs.forEach(msg => dispatch(setAlert(msg.msg, 'success', setShowModal, showModal)));
         }
     } catch (err) {
+        dispatch(stopLoading());
         const msgs = err.response.data.msgs;
         if (msgs) {
             msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'error', setShowModal, showModal)));
@@ -105,7 +114,9 @@ export const updateIngredient = (formData, id, all, noNut, setShowModal, showMod
 
 export const deleteIngredient = (id, setShowModal, showModal) => async dispatch => {
     try {
+        dispatch(loading());
         const res = await axios.delete(`/api/ingredient/${id}`);
+        dispatch(stopLoading());
 
         dispatch({
             type: GET_INGREDIENTS,
@@ -116,6 +127,7 @@ export const deleteIngredient = (id, setShowModal, showModal) => async dispatch 
             msgs.forEach(msg => dispatch(setAlert(msg.msg, 'success', setShowModal, showModal)));
         }
     } catch (err) {
+        dispatch(stopLoading());
         const msgs = err.response.data.msgs;
         if (msgs) {
             msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'error', setShowModal, showModal)));

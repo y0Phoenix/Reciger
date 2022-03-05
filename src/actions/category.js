@@ -4,6 +4,7 @@ import {
 } from "./types";
 import axios from "axios";
 import {setAlert} from "./alert";
+import { loading, stopLoading } from "./loading";
 
 export const getCategories = (setShowModal, showModal) => async (dispatch) => {
     try {
@@ -11,11 +12,13 @@ export const getCategories = (setShowModal, showModal) => async (dispatch) => {
         if (!token) {
             return;
         }
+        dispatch(loading());
         const res = await axios.get('/api/category', {
             headers: {
                 "x-auth-token": token
             }
         });
+        dispatch(stopLoading());
 
         dispatch({
             type: GET_CATEGORIES,
@@ -26,6 +29,7 @@ export const getCategories = (setShowModal, showModal) => async (dispatch) => {
             msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'success', setShowModal, showModal)));
         }
     } catch (err) {
+        dispatch(stopLoading());
         const msgs = err.response.data.msgs;
         if (msgs) {
             msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'error', setShowModal, showModal)));
@@ -42,9 +46,9 @@ export const getCategories = (setShowModal, showModal) => async (dispatch) => {
 
 export const postCategory = (formData, setShowModal, showModal) => async dispatch => {
     try {
-        console.log(formData);
+        dispatch(loading());
         const res = await axios.post('/api/category', formData);
-
+        dispatch(stopLoading());
         dispatch({
             type: GET_CATEGORIES,
             payload: res.data.data
@@ -56,6 +60,7 @@ export const postCategory = (formData, setShowModal, showModal) => async dispatc
         }
     } catch (err) {
         const msgs = err.response.data.msgs;
+        dispatch(stopLoading());
         if (msgs) {
             msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'error', setShowModal, showModal)));
         }
@@ -71,7 +76,9 @@ export const postCategory = (formData, setShowModal, showModal) => async dispatc
 
 export const deleteCategory = (formData, setShowModal, showModal) => async dispatch => {
     try {
+        dispatch(loading());
         const res = await axios.delete(`/api/category`, formData);
+        dispatch(stopLoading());
 
         dispatch({
             type: GET_CATEGORIES,
@@ -83,6 +90,7 @@ export const deleteCategory = (formData, setShowModal, showModal) => async dispa
         }
     } catch (err) {
         const msgs = err.response.data.msgs;
+        dispatch(stopLoading());
         if (msgs) {
             msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'error', setShowModal, showModal)));
         }

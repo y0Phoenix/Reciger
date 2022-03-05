@@ -4,8 +4,9 @@ import { connect } from 'react-redux';
 import { postIngredient, getIngredients, updateIngredient } from '../../actions/ingredient';
 import { loading, stopLoading } from '../../actions/loading';
 import PropTypes from 'prop-types';
+import { background, modal } from './types';
 
-const IngredientM = ({showModal, setShowModal, postIngredient, getIngredients, loading, stopLoading, updateIngredient}) => {
+const IngredientM = ({showModal, setShowModal, postIngredient, getIngredients, loading, stopLoading, updateIngredient, ingredients}) => {
 	const calories = useRef();
 	const iron = useRef();
 	const calcium = useRef();
@@ -24,30 +25,6 @@ const IngredientM = ({showModal, setShowModal, postIngredient, getIngredients, l
 		prefered: '',
 		noNut: false
 	};
-	const background = {
-		initial: {
-			opacity: 0
-		}, 
-		enter: {
-			opacity: 1
-		}, 
-		exit: {
-			opacity: 0
-		}, 
-	};
-	const modal = {
-		initial: {
-			y: "-100vh",
-			opacity: 0
-		},
-		enter: {
-			y: "200px",
-			opacity: 1,
-			transition: {
-				delay: 0.5
-			}
-		}
-	}
 	const [formData, setFormData] = useState(data);
 	const [showPrefs, setShowPrefs] = useState(false);
 	const {
@@ -60,27 +37,28 @@ const IngredientM = ({showModal, setShowModal, postIngredient, getIngredients, l
 		noNut
 	} = formData;
 	useEffect(() => {
-		const load = async () => {
-			if (showModal.IngredientM.id) {
-				loading();
-				const ingredient = await getIngredients(true, showModal.IngredientM.id, setShowModal, showModal, false);
-				stopLoading();
-				if (!ingredient) return;
-				setFormData({
-					name: ingredient.name,
-					categories: ingredient.categories.join(' '),
-					price: ingredient.price,
-					volume: ingredient.units.volume.join(' '),
-					weight: ingredient.units.weight.join(' '),
-					prefered: ingredient.units.prefered,
-					noNut: false
-				});
-				setNutrients(ingredient);
-			}
+		if (showModal.IngredientM.id) {
+			getIngredients(true, showModal.IngredientM.id, setShowModal, showModal, true);
+			
 		}
-		load();
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [showModal.IngredientM]);
+	useEffect(() => {
+		if (!ingredients) return;
+		if (!ingredients[0]) return;
+		if (!ingredients[1]) {
+			setFormData({
+				name: ingredients[0].name,
+				categories: ingredients[0].categories.join(' '),
+				price: ingredients[0].price,
+				volume: ingredients[0].units.volume.join(' '),
+				weight: ingredients[0].units.weight.join(' '),
+				prefered: ingredients[0].units.prefered,
+				noNut: false
+			});
+			setNutrients(ingredients[0]);
+		}
+	}, [ingredients])
 	const onSubmit = async e => {
 		e.preventDefault();
 		let cats = categories.replace(/s/g, '').split(',');
@@ -110,7 +88,8 @@ const IngredientM = ({showModal, setShowModal, postIngredient, getIngredients, l
 	}
 	const setNutrients = ing => {
 		const nutrient = ing.nutrients;
-		const pref = ing.units.prefered
+		const pref = ing.units.prefered;
+		if (!calories.current) return;
 		calories.current.innerHTML = `Calories per ${pref}: ${ing.calories.pref}`;
 		iron.current.innerHTML = `Iron per ${pref}: ${nutrient.iron.pref}${nutrient.iron.unit}`;
 		sodium.current.innerHTML = `Sodium per ${pref}: ${nutrient.sodium.pref}${nutrient.sodium.unit}`;

@@ -5,31 +5,7 @@ import {getCategories, deleteCategory, postCategory} from '../../actions/categor
 import { loading, stopLoading } from '../../actions/loading';
 import { setAlert } from '../../actions/alert';
 import { motion, AnimatePresence } from 'framer-motion';
-
-const background = {
-  initial: {
-    opacity: 0
-  }, 
-  enter: {
-    opacity: 1
-  }, 
-  exit: {
-    opacity: 0
-  }, 
-};
-const modal = {
-  initial: {
-    y: "-100vh",
-    opacity: 0
-  },
-  enter: {
-    y: "200px",
-    opacity: 1,
-    transition: {
-      delay: 0.5
-    }
-  }
-}
+import { background, modal } from './types';
 
 const Category = ({loading, stopLoading, showModal, setShowModal, getCategories, postCategory, deleteCategory, categories, setAlert}) => {
   const nameRef = useRef(null);
@@ -71,10 +47,6 @@ const Category = ({loading, stopLoading, showModal, setShowModal, getCategories,
     name,
     type
   } = formData;
-
-  const getSuggs = (value) => {
-    const ret = categories[type]
-  }
 
   const checkType = (type) => {
     if (type.toLowerCase() !== 'recipe') {

@@ -10,7 +10,7 @@ import Register from './layouts/auth/Register';
 import Login from './layouts/auth/Login';
 import Dashboard from './layouts/Dashboard/Dashboard';
 import Ingredients from './layouts/Ingredients';
-import NewRecipe from './layouts/Recipe';
+import Recipes from './layouts/Recipes';
 import Recipe from './layouts/Recipe';
 import { loadUser } from './actions/user';
 import Footer from './layouts/Footer';
@@ -19,6 +19,7 @@ import Loading from './layouts/models/Loading';
 import Category from './layouts/models/Category';
 import IngredientM from './layouts/models/IngredientM';
 import {loading, stopLoading} from './actions/loading';
+import YesorNo from './layouts/models/YesorNo';
 
 
 function App() {
@@ -33,7 +34,18 @@ function App() {
       id: null,
       bool: false
     },
-    Loading: false
+    Loading: false,
+    YesorNo: {
+      direct: null,
+      bool: false,
+      params: {}
+    },
+    Filter: {
+      typeOf: null,
+      bool: false,
+      filter: null,
+      type: null
+    }
   });
   useEffect(() => {
     const load = async () => {
@@ -52,6 +64,7 @@ function App() {
           <Category {...{showModal, setShowModal}}/>
           <IngredientM {...{showModal, setShowModal}}/>
           <Loading {...{showModal, setShowModal}}/>
+          <YesorNo {...{showModal, setShowModal}} />
           <Routes>
             <Route  exact path='/' element={<Landing {...{showModal, setShowModal}}/>}/>
             <Route element={<Container {...{showModal, setShowModal}}/>}/>
@@ -60,7 +73,7 @@ function App() {
               <Route  exact path='/dashboard' element={<Dashboard {...{showModal, setShowModal}}/>}/>
               <Route  exact path='/ingredients' element={<Ingredients {...{showModal, setShowModal}}/>}/>
               <Route  exact path='/recipe/:id' element={<Recipe {...{showModal, setShowModal}}/>}/>
-              <Route  exact path='/recipe' element={<NewRecipe {...{showModal, setShowModal}}/>}/>
+              <Route  exact path='/recipes/:page' element={<Recipes {...{showModal, setShowModal}}/>}/>
           </Routes>
           <Footer />
         </Fragment>

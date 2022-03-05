@@ -3,35 +3,13 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types';
 import { motion, AnimatePresence } from 'framer-motion';
 import { removeAlert } from '../../actions/alert';
-import {v4 as uuid} from 'uuid';
+import { background, modal } from './types';
 
 const Alert = ({alert, showModal, setShowModal, removeAlert}) => {
-  const background = {
-    initial: {
-      opacity: 0
-    }, 
-    enter: {
-      opacity: 1
-    }, 
-    exit: {
-      opacity: 0
-    }, 
-  };
-
-  const modal = {
-    initial: {
-      y: "-100vh",
-      opacity: 0
-    },
-    enter: {
-      y: "200px",
-      opacity: 1,
-      transition: {
-        delay: 0.5
-      }
-    }
+  const exit = () => {
+    setShowModal({...showModal, Alert: false});
+    removeAlert();
   }
-
   return (
     <Fragment>
       {showModal.Alert && alert !== null && alert.length > 0 && (
@@ -42,7 +20,7 @@ const Alert = ({alert, showModal, setShowModal, removeAlert}) => {
                     animate="enter"
                     exit="exit"
                     key='background'>
-                  <motion.div className='modal' key="alert"
+                  <motion.div className='modal' key="alert" onBlur={() => exit()}
                   variants={modal}
                   initial="initial"
                   animate="enter">
@@ -54,10 +32,7 @@ const Alert = ({alert, showModal, setShowModal, removeAlert}) => {
                         </p>
                       </div>
                     ))}
-                    <button onClick={e => {
-                        setShowModal({...showModal, Alert: false});
-                        removeAlert();
-                      }} className="modal-btn">Okay</button>
+                    <button onClick={() => exit()} className="modal-btn" style={{cursor: "pointer"}}>Okay</button>
                   </motion.div>
                 </motion.div> 
             </AnimatePresence>
