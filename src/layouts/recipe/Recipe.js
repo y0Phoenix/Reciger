@@ -6,7 +6,7 @@ import { loading, stopLoading } from '../../actions/loading';
 import { getRecipes, postRecipe } from '../../actions/recipe';
 import PropTypes from 'prop-types';
 import { getIngredients } from '../../actions/ingredient';
-import Ingredients from '../Ingredients';
+import Ingredients from './Ingredients';
 import Scale from './Scale';
 
 const Recipe = ({ingredients, navigate, setNavigate, postRecipe, getRecipes, showModal, setShowModal, getIngredients, isAuthenticated, _loading, recipe}) => {
@@ -30,8 +30,23 @@ const Recipe = ({ingredients, navigate, setNavigate, postRecipe, getRecipes, sho
     categories: ''
   });
   const [ingData, setIngData] = useState([]);
+  const [initAmounts, setInitAmounts] = useState({
+    Recipe: 0,
+    Ingredients: []
+  });
   const [suggs, setSuggs] = useState([[]]);
   const [scale, setScale] = useState(1);
+  useEffect(() => {
+    if (!ingData[0]) return;
+    const arr = ingData.map(ing =>  {
+      const i = initAmounts.Ingredients.map(amount => amount.name).indexOf(ing.name);
+      ing.quantity.amount = initAmounts.Ingredients[i].amount * scale;
+      return ing;
+    });
+    setIngData(arr);
+    const setValue = {...Yield, number: initAmounts.Recipe * scale}
+    setFormData({...formData, Yield: setValue})
+  }, [scale])
   useEffect(() => {
       if (params.id !== 'new') {
         getRecipes(true, params.id, true, setShowModal, showModal);
@@ -43,9 +58,13 @@ const Recipe = ({ingredients, navigate, setNavigate, postRecipe, getRecipes, sho
       if (!recipe) return;
       if (recipe.constructor === Array) return;
       setFormData({...formData, name: recipe.name, instructions: recipe.instructions, Yield: recipe.yield, categories: recipe.categories});
+      const temp = {...initAmounts};
+      temp.Recipe = recipe.yield.number;
       const ings = recipe.ingredients.map(ing => {
+        temp.Ingredients.push({amount: ing.quantity.amount, name: ing.name});
         return {name: ing.name, quantity: ing.quantity, show: false}
       });
+      setInitAmounts(temp);
       setIngData(ings);
     }
   }, [recipe]);
