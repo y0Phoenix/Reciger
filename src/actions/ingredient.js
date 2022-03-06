@@ -112,7 +112,7 @@ export const updateIngredient = (formData, id, all, noNut, setShowModal, showMod
     }
 }
 
-export const deleteIngredient = (id, setShowModal, showModal) => async dispatch => {
+export const deleteIngredient = ({id, setShowModal, showModal}) => async dispatch => {
     try {
         dispatch(loading());
         const res = await axios.delete(`/api/ingredient/${id}`);

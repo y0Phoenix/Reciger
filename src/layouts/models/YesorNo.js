@@ -26,7 +26,10 @@ const YesorNo = ({showModal, setShowModal}) => {
                                 Are You Sure?
                             </div> 
                             <div className='yesorno-yes'>
-                                <button type='button' onClick={() => showModal.YesorNo.direct(showModal.YesorNo.params)}>Yes</button>    
+                                <button type='button' onClick={() => {
+                                    showModal.YesorNo.direct(showModal.YesorNo.params);
+                                    setShowModal({...showModal, YesorNo: {id: null, bool: false, params: null}})
+                                }}>Yes</button>    
                             </div>
                             <div className='yesorno-no'>
                                 <button type='button' onClick={() => setShowModal({...showModal, YesorNo: {bool: false, direct: null, params: null}})}>No</button>    
