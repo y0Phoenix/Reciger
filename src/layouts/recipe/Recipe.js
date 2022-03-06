@@ -2,24 +2,16 @@
 import React, { useEffect, useState} from 'react';
 import { connect } from 'react-redux';
 import { Navigate, useLocation, useParams } from 'react-router';
-import { loading, stopLoading } from '../actions/loading';
-import { getRecipes, postRecipe } from '../actions/recipe';
+import { loading, stopLoading } from '../../actions/loading';
+import { getRecipes, postRecipe } from '../../actions/recipe';
 import PropTypes from 'prop-types';
-import { getIngredients } from '../actions/ingredient';
+import { getIngredients } from '../../actions/ingredient';
+import Ingredients from '../Ingredients';
+import Scale from './Scale';
 
-const Recipe = ({ingredients, loading, stopLoading, postRecipe, getRecipes, showModal, setShowModal, getIngredients, isAuthenticated, _loading, recipe}) => {
+const Recipe = ({ingredients, navigate, setNavigate, postRecipe, getRecipes, showModal, setShowModal, getIngredients, isAuthenticated, _loading, recipe}) => {
   const params = useParams();
   const location = useLocation();
-  // useEffect(() => {
-  //   const load = async () => {
-  //     loading();
-      
-  //     stopLoading();
-  //   }
-  //   load();
-  // // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
-  
   const initIng = {
     name: '', 
     quantity: {
@@ -39,6 +31,7 @@ const Recipe = ({ingredients, loading, stopLoading, postRecipe, getRecipes, show
   });
   const [ingData, setIngData] = useState([]);
   const [suggs, setSuggs] = useState([[]]);
+  const [scale, setScale] = useState(1);
   useEffect(() => {
       if (params.id !== 'new') {
         getRecipes(true, params.id, true, setShowModal, showModal);
@@ -55,7 +48,7 @@ const Recipe = ({ingredients, loading, stopLoading, postRecipe, getRecipes, show
       });
       setIngData(ings);
     }
-  }, [recipe])
+  }, [recipe]);
   const {
     name,
     Yield,
@@ -109,13 +102,15 @@ const Recipe = ({ingredients, loading, stopLoading, postRecipe, getRecipes, show
     return setFormData({...formData, name: e.target.value});
   }
 
-  const onsubmit = e => {
+  const onsubmit = async e => {
     e.preventDefault();
-    loading();
     let update = false;
     if (location.pathname.replace(/\/recipe\//g, '') !== '') update = true
-    postRecipe({formData, ingData, ingredients}, update, setShowModal, showModal);
-    stopLoading();
+    const recipes = await postRecipe({formData, ingData, ingredients}, update, setShowModal, showModal);
+    const i = recipes.map(rec => rec.name).indexOf(formData.name);
+    if (i === -1) return;
+    const id = recipes[i]._id
+    setNavigate(`/recipe/${id}`);
   }
 
   const onblur = (i) => {
@@ -149,75 +144,14 @@ const Recipe = ({ingredients, loading, stopLoading, postRecipe, getRecipes, show
               <input type='text' value={name} name='name' onChange={e => onchange(e)} placeholder='name'></input>
             </div>
             <div className='new-recipe-yield'>
-              <input type='text' value={Yield.string} name='string' onChange={e => onchange(e)} placeholder='unit'></input>
               <input type='text' value={Yield.number} name='number' onChange={e => onchange(e)} placeholder='amount'></input>
+              <input type='text' value={Yield.string} name='string' onChange={e => onchange(e)} placeholder='unit'></input>
             </div>
-            <div className='new-reipce-ingredient'>
-              {ingData.length > 0 && !_loading.bool && ingData.map((ing, i, arr) => {
-                if (!suggs[i]) setSuggs([...suggs, []]);
-                return (
-                  <div key={i} className='new-recipe-ingredient-item'>
-                    <input type='text' name='ing-name' value={ingData[i].name} onChange={e => onchange(e, i)} onBlur={e => onblur(i, ing.name)} placeholder='name'></input>
-                    {suggs[i]?.length > 0 ?
-                      <>
-                        <br></br>
-                        <div className='suggs'>
-                          <ul>
-                            {suggs[i].map(sugg => 
-                              <li key={sugg.name} onClick={e => {
-                                const tempdataing = [...ingData];
-                                const tempdatasuggs = [...suggs];
-                                tempdataing[i].name = sugg.name;
-                                tempdataing[i].show = false;
-                                tempdatasuggs[i] = [];
-                                setIngData(tempdataing);
-                                setSuggs(tempdatasuggs);
-                              }}>{sugg.name}</li>)}
-                          </ul>
-                        </div>
-                      </> :
-                      <>
-                        {ingData[i].show === true &&
-                          <div className='suggs'>
-                            <button type='button' onClick={e => {
-                              setShowModal({...showModal, IngredientM: {bool: true, id: showModal.IngredientM.id}});
-                              const tempdata = [...ingData];
-                              tempdata[i].show = false;
-                              setIngData(tempdata);
-                            }}>
-                              Ingredient Doesn't Exist Want To Create It
-                            </button>
-                            <button onClick={e => {
-                              const tempdata = [...ingData];
-                              tempdata[i].show = false;
-                              setIngData(tempdata);
-                            }}>
-                              <i className='fa-solid fa-x'></i>
-                            </button>
-                          </div>
-                        } 
-                      </>
-                    }
-                    <input type='text' name='ing-amount' value={ingData[i].quantity.amount} onChange={e => onchange(e, i)} placeholder='amount'></input>
-                    <input type='text' name='ing-unit' value={ingData[i].quantity.unit} onChange={e => onchange(e, i)} placeholder='unit'></input>
-                    <button type='button' className='edit-btn' onClick={e => {
-                      const index = ingredients.map(ing => ing.name).indexOf(ingData[i].name);
-                      if (index === -1) {
-                        return
-                      }
-                      setShowModal({...showModal, IngredientM: {bool: true, id: ingredients[index]._id}});
-                    }}>Edit</button>
-                    <button className='remove-btn' type='button' onClick={e => removeIng(e, i)}>
-                      <i className='fa-solid fa-x'></i>
-                    </button>
-                  </div>
-                )
-              })}
-                <button className='btn' type='button'onClick={e => addIng(e)}>Add Ingredient</button>
-            </div>
+            <Ingredients {...{ingData, setIngData, onchange, suggs, setSuggs, _loading, onblur, showModal, setShowModal, ingredients, removeIng, addIng}}/>
             <div className='new-recipe-categories'>
               <input type='text' value={categories} name='categories' onChange={e => setFormData({...formData, categories: e.target.value})} placeholder='categories'></input>
             </div>
+            <Scale {...{params, setScale}}/>
             <div className='new-recipe-instructions'>
               <textarea type='text' value={instructions} name='instructions' onChange={e => onchange(e)} rows="7" cols="60"></textarea>
             </div>

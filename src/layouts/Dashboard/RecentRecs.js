@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Navigate } from 'react-router';
 import { deleteRecipe } from '../../actions/recipe';
 
-const RecentRecs = ({user, setShowModal, showModal}) => {
+const RecentRecs = ({user, setShowModal, showModal, deleteRecipe}) => {
     const [navigate, setNavigate] = useState({
         bool: false,
         id: ''

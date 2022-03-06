@@ -34,7 +34,10 @@ export const getRecipes = (all = false, id, state, setShowModal, showModal) => a
             });
             const msgs = res.data.msgs;
             if (msgs) {
-                msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'success', setShowModal, showModal)));
+                msgs.forEach((msg) => {
+                    if (msg.msg.includes('Successfully')) return;
+                    dispatch(setAlert(msg.msg, 'success', setShowModal, showModal))
+                });
             }
         }
         return res.data.data
@@ -79,6 +82,7 @@ export const postRecipe = (FormData, update = false, setShowModal, showModal) =>
         if (msgs) {
             msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'success', setShowModal, showModal)));
         }
+        return res.data.data
     } catch (err) {
         dispatch(stopLoading());
         const msgs = err.response.data.msgs;
@@ -92,6 +96,7 @@ export const postRecipe = (FormData, update = false, setShowModal, showModal) =>
             type: GET_RECIPES_FAIL,
             payload: {msg: err.res, status: err.response.status}
         });
+        return null;
     }
 };
 

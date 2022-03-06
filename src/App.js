@@ -11,7 +11,7 @@ import Login from './layouts/auth/Login';
 import Dashboard from './layouts/Dashboard/Dashboard';
 import Ingredients from './layouts/Ingredients';
 import Recipes from './layouts/Recipes';
-import Recipe from './layouts/Recipe';
+import Recipe from './layouts/recipe/Recipe';
 import { loadUser } from './actions/user';
 import Footer from './layouts/Footer';
 import Alert from './layouts/models/Alert';
@@ -20,6 +20,7 @@ import Category from './layouts/models/Category';
 import IngredientM from './layouts/models/IngredientM';
 import {loading, stopLoading} from './actions/loading';
 import YesorNo from './layouts/models/YesorNo';
+import Redirect from './layouts/utils/Redirect';
 
 
 function App() {
@@ -47,6 +48,7 @@ function App() {
       type: null
     }
   });
+  const [navigate, setNavigate] = useState(null);
   useEffect(() => {
     const load = async () => {
       store.dispatch(loading());
@@ -65,6 +67,7 @@ function App() {
           <IngredientM {...{showModal, setShowModal}}/>
           <Loading {...{showModal, setShowModal}}/>
           <YesorNo {...{showModal, setShowModal}} />
+          <Redirect {...{navigate, setNavigate}}/>
           <Routes>
             <Route  exact path='/' element={<Landing {...{showModal, setShowModal}}/>}/>
             <Route element={<Container {...{showModal, setShowModal}}/>}/>
@@ -72,8 +75,8 @@ function App() {
               <Route  exact path='/login' element={<Login {...{showModal, setShowModal}}/>}/>
               <Route  exact path='/dashboard' element={<Dashboard {...{showModal, setShowModal}}/>}/>
               <Route  exact path='/ingredients' element={<Ingredients {...{showModal, setShowModal}}/>}/>
-              <Route  exact path='/recipe/:id' element={<Recipe {...{showModal, setShowModal}}/>}/>
-              <Route  exact path='/recipes/:page' element={<Recipes {...{showModal, setShowModal}}/>}/>
+              <Route  exact path='/recipe/:id' element={<Recipe {...{showModal, setShowModal, navigate, setNavigate}}/>}/>
+              <Route  exact path='/recipes/:page' element={<Recipes {...{showModal, setShowModal, navigate, setNavigate}}/>}/>
           </Routes>
           <Footer />
         </Fragment>

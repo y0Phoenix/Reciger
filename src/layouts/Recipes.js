@@ -6,7 +6,7 @@ import { Link, Navigate, useParams } from 'react-router-dom';
 import RecentRecs from './Dashboard/RecentRecs';
 import { setAlert } from '../actions/alert';
 
-const Recipes = ({showModal, setShowModal, getRecipes, deleteRecipe, _loading, user, recipes}) => {
+const Recipes = ({showModal, setShowModal, getRecipes, deleteRecipe, _loading, user, recipes, navigate, setNavigate}) => {
   const params = useParams();
   const [search, setSearch] = useState('');
   const [suggs, setSuggs] = useState({
@@ -15,7 +15,6 @@ const Recipes = ({showModal, setShowModal, getRecipes, deleteRecipe, _loading, u
   });
   const [results, setResults] = useState([]);
   const [pageResults, setPageResults] = useState([]);
-  const [navigate, setNavigate] = useState(null);
   useEffect(() => {
       getRecipes(false, null, true, setShowModal, showModal);
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -47,7 +46,7 @@ const Recipes = ({showModal, setShowModal, getRecipes, deleteRecipe, _loading, u
   const filterResults = () => {
     const type = showModal.Filter.type;
     const filter = showModal.Filter.filter; 
-    const arr = results.filter(res => {
+    const arr = recipes.filter(res => {
       let returnValue;
       const price = parseInt(res.price.replace(/\$/g, ''));
       const calories = res.calories;
@@ -119,10 +118,8 @@ const Recipes = ({showModal, setShowModal, getRecipes, deleteRecipe, _loading, u
     setShowModal({...showModal, YesorNo: {direct: deleteRecipe, bool: true, params: {id: recipe, setShowModal, showModal}}})
   }
   return (
-    <>
-      {!navigate ?
         <>
-        {(!_loading.bool && pageResults) ? 
+        {(!_loading.bool && pageResults) && 
           <>
             {pageResults !== [] &&
               <div className='recipe-main'>
@@ -180,13 +177,9 @@ const Recipes = ({showModal, setShowModal, getRecipes, deleteRecipe, _loading, u
                 </div>  
               </div> 
             }
-          </> :
-          // <Navigate to={`recipes/${(parseInt(params.page) - 1)}`}/>
-          <></>
+          </>
         }
-        </> : <Navigate to={navigate}/>
-      }
-    </>
+      </>
   )
 };
 
