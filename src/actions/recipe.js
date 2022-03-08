@@ -59,7 +59,7 @@ export const getRecipes = (all = false, id, state, setShowModal, showModal) => a
 };
 
 export const postRecipe = (FormData, update = false, setShowModal, showModal) => async dispatch => {
-    const {formData, ingData, ingredients} = FormData;
+    const {formData, ingData, ingredients,} = FormData;
     try {
         formData.ingredients = ingData.map((ing, i, arr) => {
             const index = ingredients.map(ingredient => {
@@ -71,7 +71,7 @@ export const postRecipe = (FormData, update = false, setShowModal, showModal) =>
         formData.yield = {...formData.Yield};
         if (formData.categories.constructor !== Array) formData.categories = formData.categories.split(',');
         dispatch(loading());
-        const res = await axios.post(`/api/recipe?update=${update}`, formData);
+        const res = await axios.post(`/api/recipe?update=${update}&correlative=${formData.Correlative}`, formData);
         dispatch(stopLoading());
 
         dispatch({

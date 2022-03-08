@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import { getIngredients } from '../../actions/ingredient';
 import Ingredients from './Ingredients';
 import Scale from './Scale';
+import Nutrients from './Nutrients';
 
 const Recipe = ({ingredients, navigate, setNavigate, postRecipe, getRecipes, showModal, setShowModal, getIngredients, isAuthenticated, _loading, recipe}) => {
   const params = useParams();
@@ -27,7 +28,8 @@ const Recipe = ({ingredients, navigate, setNavigate, postRecipe, getRecipes, sho
       number: 0,
       string: ''
     },
-    categories: ''
+    categories: '',
+    Correlative: false
   });
   const [ingData, setIngData] = useState([]);
   const [initAmounts, setInitAmounts] = useState({
@@ -57,13 +59,11 @@ const Recipe = ({ingredients, navigate, setNavigate, postRecipe, getRecipes, sho
     if (params.id !== 'new') {
       if (!recipe) return;
       if (recipe.constructor === Array) return;
-      setFormData({...formData, name: recipe.name, instructions: recipe.instructions, Yield: recipe.yield, categories: recipe.categories});
+      setFormData({...formData, name: recipe.name, instructions: recipe.instructions, Yield: recipe.yield, categories: recipe.categories, Correlative: recipe.type === 'ingredient'});
       const temp = {...initAmounts};
       temp.Recipe = recipe.yield.number;
-      const ings = recipe.ingredients.map(ing => {
-        temp.Ingredients.push({amount: ing.quantity.amount, name: ing.name});
-        return {name: ing.name, quantity: ing.quantity, show: false}
-      });
+      temp.Ingredients = recipe.ingredients.map(ing => ({amount: ing.quantity.amount, name: ing.name}))
+      const ings = recipe.ingredients.map(ing => ({name: ing.name, quantity: ing.quantity, show: false}));
       setInitAmounts(temp);
       setIngData(ings);
     }
@@ -72,7 +72,8 @@ const Recipe = ({ingredients, navigate, setNavigate, postRecipe, getRecipes, sho
     name,
     Yield,
     instructions,
-    categories
+    categories,
+    Correlative
   } = formData;
   const getSuggs = value => {
     value = value.split('');
@@ -126,9 +127,7 @@ const Recipe = ({ingredients, navigate, setNavigate, postRecipe, getRecipes, sho
     let update = false;
     if (location.pathname.replace(/\/recipe\//g, '') !== '') update = true
     const recipes = await postRecipe({formData, ingData, ingredients}, update, setShowModal, showModal);
-    const i = recipes.map(rec => rec.name).indexOf(formData.name);
-    if (i === -1) return;
-    const id = recipes[i]._id
+    const id = recipes._id;
     setNavigate(`/recipe/${id}`);
   }
 
@@ -165,12 +164,14 @@ const Recipe = ({ingredients, navigate, setNavigate, postRecipe, getRecipes, sho
             <div className='new-recipe-yield'>
               <input type='text' value={Yield.number} name='number' onChange={e => onchange(e)} placeholder='amount'></input>
               <input type='text' value={Yield.string} name='string' onChange={e => onchange(e)} placeholder='unit'></input>
+              <Scale {...{params, setScale}}/>
             </div>
             <Ingredients {...{ingData, setIngData, onchange, suggs, setSuggs, _loading, onblur, showModal, setShowModal, ingredients, removeIng, addIng}}/>
             <div className='new-recipe-categories'>
               <input type='text' value={categories} name='categories' onChange={e => setFormData({...formData, categories: e.target.value})} placeholder='categories'></input>
+              <input type='checkbox' value={Correlative} name='Correlative' onChange={e => setFormData({...formData, Correlative: e.target.checked})}></input>
+              <span>Check If This Recipe Will Be Used In Other Recipes</span>
             </div>
-            <Scale {...{params, setScale}}/>
             <div className='new-recipe-instructions'>
               <textarea type='text' value={instructions} name='instructions' onChange={e => onchange(e)} rows="7" cols="60"></textarea>
             </div>
@@ -178,6 +179,9 @@ const Recipe = ({ingredients, navigate, setNavigate, postRecipe, getRecipes, sho
               <input type='submit' value='Submit Recipe'></input>
             </div>
           </form>
+          <div className='recipe-nutrients'>
+            <Nutrients {...{recipe, scale, setScale}}/>
+          </div>
         </div>
       </div> : <Navigate to='/login' />
     }

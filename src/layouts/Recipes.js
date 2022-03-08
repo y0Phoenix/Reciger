@@ -2,11 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux';
 import { getRecipes, deleteRecipe } from '../actions/recipe';
 import PropTypes from 'prop-types';
-import { Link, Navigate, useParams } from 'react-router-dom';
-import RecentRecs from './Dashboard/RecentRecs';
+import { useParams } from 'react-router-dom';
 import { setAlert } from '../actions/alert';
 
-const Recipes = ({showModal, setShowModal, getRecipes, deleteRecipe, _loading, user, recipes, navigate, setNavigate}) => {
+const Recipes = ({showModal, setShowModal, getRecipes, deleteRecipe, _loading, user, recipes, navigate, setNavigate, setAlert}) => {
   const params = useParams();
   const [search, setSearch] = useState('');
   const [suggs, setSuggs] = useState({
@@ -43,6 +42,7 @@ const Recipes = ({showModal, setShowModal, getRecipes, deleteRecipe, _loading, u
     return i <= lessthan && i >= greterthan ? rec : null;
   }
 
+  // eslint-disable-next-line no-unused-vars
   const filterResults = () => {
     const type = showModal.Filter.type;
     const filter = showModal.Filter.filter; 
@@ -76,7 +76,8 @@ const Recipes = ({showModal, setShowModal, getRecipes, deleteRecipe, _loading, u
     setPageResults(arr.filter(filterByPage))
   };
 
-  const initSearch = () => {
+  const initSearch = (e) => {
+    e.preventDefault();
     const regex = new RegExp(search, 'gi');
     const arr = results.filter(res => {
       const returnValue = regex.test(res.name.toLowerCase()) ? res : null
@@ -125,31 +126,33 @@ const Recipes = ({showModal, setShowModal, getRecipes, deleteRecipe, _loading, u
               <div className='recipe-main'>
                 <div className='recipe-search'>
                   <div className='recipe-search-box'>
-                    <input type='text' value={search} name='search' onChange={e => onchange(e)} onBlur={() => setTimeout(setSuggs, 250, {suggs: [], show: false})} autoComplete="off"></input>
-                    {suggs.suggs.length > 0 && suggs.show &&
-                      <div className='suggs'>
-                        <ul>
-                          {suggs.suggs.map((sug, i) =>
-                            <li key={i} onClick={() => {
-                              setSearch(sug.name);
-                              setSuggs({suggs: [], show: false})
-                            }}>{sug.name}</li>
-                          )}  
-                        </ul>  
-                      </div>
-                    }
-                    <button type='button' className='recipe-search-i' onClick={() => initSearch()}>
-                      <i className='fa-solid fa-magnifying-glass'></i>  
-                    </button>
-                    <button type='button' className='recipe-search-x' onClick={() => setSearch('')}>
-                      <i className='fa-solid fa-x'></i>  
-                    </button>
-                    <button type='button' className='recipe-search-filter' onClick={() => {
-                      setAlert('Filter Functionality Is Not Avalible Yet', 'error', setShowModal, showModal);
-                      // setShowModal({...showModal, Filter: {typeOf: 'recipe', bool: true, filter: null, type: null}})
-                    }}>
-                      <i className='fa-solid fa-filter'></i>
-                    </button>
+                    <form>
+                      <input type='text' value={search} name='search' onChange={e => onchange(e)} onBlur={() => setTimeout(setSuggs, 250, {suggs: [], show: false})} autoComplete="off"></input>
+                      {suggs.suggs.length > 0 && suggs.show &&
+                        <div className='suggs'>
+                          <ul>
+                            {suggs.suggs.map((sug, i) =>
+                              <li key={i} onClick={() => {
+                                setSearch(sug.name);
+                                setSuggs({suggs: [], show: false})
+                              }}>{sug.name}</li>
+                            )}  
+                          </ul>  
+                        </div>
+                      }
+                      <button type='submit' className='recipe-search-i' onClick={(e) => initSearch(e)}>
+                        <i className='fa-solid fa-magnifying-glass'></i>  
+                      </button>
+                      <button type='button' className='recipe-search-x' onClick={() => setSearch('')}>
+                        <i className='fa-solid fa-x'></i>  
+                      </button>
+                      <button type='button' className='recipe-search-filter' onClick={() => {
+                        setAlert('Filter Functionality Is Not Avalible Yet', 'error', setShowModal, showModal);
+                        // setShowModal({...showModal, Filter: {typeOf: 'recipe', bool: true, filter: null, type: null}})
+                      }}>
+                        <i className='fa-solid fa-filter'></i>
+                      </button>
+                    </form>
                   </div>
                   <div className='results'>
                     {pageResults.length > 0 && pageResults.map((res, i) => 
