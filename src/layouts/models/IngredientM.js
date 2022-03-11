@@ -41,7 +41,6 @@ const IngredientM = ({showModal, setShowModal, postIngredient, getIngredients, l
 	useEffect(() => {
 		if (showModal.IngredientM.id) {
 			getIngredients(true, showModal.IngredientM.id, setShowModal, showModal, true);
-			
 		}
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [showModal.IngredientM]);

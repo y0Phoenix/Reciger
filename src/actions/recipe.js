@@ -132,7 +132,7 @@ export const deleteRecipe = ({id, setShowModal, showModal}) => async dispatch =>
         }
         dispatch({
             type: GET_RECIPES_FAIL,
-            payload: {msg: err.res, status: err.response.status}
+            payload: {msg: err.res}
         });
     }
 };

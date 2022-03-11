@@ -5,7 +5,6 @@ import { Provider } from 'react-redux';
 import store from './store';
 import Navbar from './layouts/Navbar';
 import Landing from './layouts/Landing';
-import Container from './routes/Container';
 import Register from './layouts/auth/Register';
 import Login from './layouts/auth/Login';
 import Dashboard from './layouts/Dashboard/Dashboard';
@@ -18,7 +17,6 @@ import Alert from './layouts/models/Alert';
 import Loading from './layouts/models/Loading';
 import Category from './layouts/models/Category';
 import IngredientM from './layouts/models/IngredientM';
-import {loading, stopLoading} from './actions/loading';
 import YesorNo from './layouts/models/YesorNo';
 import Redirect from './layouts/utils/Redirect';
 
@@ -49,14 +47,8 @@ function App() {
     }
   });
   const [navigate, setNavigate] = useState(null);
-  useEffect(() => {
-    const load = async () => {
-      store.dispatch(loading());
-      await store.dispatch(await loadUser());
-      store.dispatch(stopLoading());
-    }
-    load();
-  }, []);
+  const location =  window.location.pathname;
+  useEffect(() => store.dispatch(loadUser()), [location]);
   return (
     <Provider store={store}>
       <Router>
@@ -70,13 +62,12 @@ function App() {
           <Redirect {...{navigate, setNavigate}}/>
           <Routes>
             <Route  exact path='/' element={<Landing {...{showModal, setShowModal}}/>}/>
-            <Route element={<Container {...{showModal, setShowModal}}/>}/>
-              <Route  exact path='/register' element={<Register {...{showModal, setShowModal}}/>}/>
-              <Route  exact path='/login' element={<Login {...{showModal, setShowModal}}/>}/>
-              <Route  exact path='/dashboard' element={<Dashboard {...{showModal, setShowModal}}/>}/>
-              <Route  exact path='/ingredients' element={<Ingredients {...{showModal, setShowModal}}/>}/>
-              <Route  exact path='/recipe/:id' element={<Recipe {...{showModal, setShowModal, setNavigate}}/>}/>
-              <Route  exact path='/recipes/:page' element={<Recipes {...{showModal, setShowModal, setNavigate}}/>}/>
+            <Route  exact path='/register' element={<Register {...{showModal, setShowModal}}/>}/>
+            <Route  exact path='/login' element={<Login {...{showModal, setShowModal}}/>}/>
+            <Route  exact path='/dashboard' element={<Dashboard {...{showModal, setShowModal}}/>}/>
+            <Route  exact path='/ingredients' element={<Ingredients {...{showModal, setShowModal}}/>}/>
+            <Route  exact path='/recipe/:id' element={<Recipe {...{showModal, setShowModal, setNavigate}}/>}/>
+            <Route  exact path='/recipes/:page' element={<Recipes {...{showModal, setShowModal, setNavigate}}/>}/>
           </Routes>
           <Footer />
         </Fragment>

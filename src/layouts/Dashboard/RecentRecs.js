@@ -24,7 +24,6 @@ const RecentRecs = ({user, setShowModal, showModal, deleteRecipe}) => {
                         }
                     });
                     return (
-                        <Fragment>
                         <div className={`recent-recs${i}`} key={i}>
                             <div className={`recent-recs${i}1`} key={i + 10}>
                                 <p className='recent-recs-name'>{rec.name}</p>
@@ -40,7 +39,6 @@ const RecentRecs = ({user, setShowModal, showModal, deleteRecipe}) => {
                                 </button>
                             </div>
                         </div>
-                        </Fragment>
                     )
                 }) :
                 <>
