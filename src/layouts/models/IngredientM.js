@@ -5,8 +5,10 @@ import { postIngredient, getIngredients, updateIngredient } from '../../actions/
 import { loading, stopLoading } from '../../actions/loading';
 import PropTypes from 'prop-types';
 import { background, modal } from './types';
+import { setAlert } from '../../actions/alert';
+import axios from 'axios';
 
-const IngredientM = ({showModal, setShowModal, postIngredient, getIngredients, loading, stopLoading, updateIngredient, ingredients}) => {
+const IngredientM = ({showModal, setShowModal, postIngredient, getIngredients, loading, stopLoading, updateIngredient, ingredients, setNavigate, setAlert}) => {
 	const calories = useRef();
 	const iron = useRef();
 	const calcium = useRef();
@@ -43,10 +45,25 @@ const IngredientM = ({showModal, setShowModal, postIngredient, getIngredients, l
 		}
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [showModal.IngredientM]);
+	const getRecipe = async name => {
+		try {
+			const res = await axios.get(`/api/ingredient?all=true&recipe=true&name=${name}`);
+			setNavigate(`/recipe/${res.data.data._id}`);
+			setShowModal({...showModal, IngredientM: {bool: false, id: null}});
+		} catch (error) {
+			if (!error.response.data.msgs) {
+				return setAlert('Error While Getting Ingredient', 'error', setShowModal, showModal);
+			}
+			error.response.data.msgs.forEach(msg => setAlert(msg, 'error', setShowModal, showModal));
+		}
+	}
 	useEffect(() => {
 		if (!ingredients) return;
 		if (!ingredients[0]) return;
 		if (!ingredients[1]) {
+			if (ingredients[0]?.type === 'recipe') {
+				getRecipe(ingredients[0].name);
+			}
 			setFormData({
 				name: ingredients[0].name,
 				categories: ingredients[0].categories.join(' '),
@@ -199,4 +216,4 @@ const mapStateToProps = stats => ({
 	ingredients: stats.ingredient.ingredients
 })
 
-export default connect(mapStateToProps, {postIngredient, getIngredients, loading, stopLoading, updateIngredient})(IngredientM)
+export default connect(mapStateToProps, {postIngredient, getIngredients, loading, stopLoading, updateIngredient, setAlert})(IngredientM)

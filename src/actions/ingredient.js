@@ -19,7 +19,7 @@ export const getIngredients = (all = false, id, setShowModal, showModal, state =
             });
         }
         else {
-            res = await axios.get(`/api/ingredient?all=${all}`, {
+            res = await axios.get(`/api/ingredient?all=${all}&recipe=false&name=none`, {
                 headers: {
                     "x-auth-token": token
                 }

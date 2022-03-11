@@ -1,5 +1,13 @@
 import React from 'react'
 import Suggestions from './Suggestions';
+/*
+|----------------------------------------------|
+|-----------------Legacy Code------------------|
+|------------Breaks App Don't Use--------------|
+|------Check Comments In Recipe Component------|
+|----------------For More Info-----------------|
+|----------------------------------------------|
+*/
 
 const Ingredients = ({ingData, onchange, suggs, _loading, onblur, showModal, ingredients, setStateChange, addIng, removeIng}) => {
     return (

@@ -64,7 +64,7 @@ function App() {
           <Navbar />
           <Alert {...{showModal, setShowModal}}/>
           <Category {...{showModal, setShowModal}}/>
-          <IngredientM {...{showModal, setShowModal}}/>
+          <IngredientM {...{showModal, setShowModal, setNavigate}}/>
           <Loading {...{showModal, setShowModal}}/>
           <YesorNo {...{showModal, setShowModal}} />
           <Redirect {...{navigate, setNavigate}}/>
@@ -75,8 +75,8 @@ function App() {
               <Route  exact path='/login' element={<Login {...{showModal, setShowModal}}/>}/>
               <Route  exact path='/dashboard' element={<Dashboard {...{showModal, setShowModal}}/>}/>
               <Route  exact path='/ingredients' element={<Ingredients {...{showModal, setShowModal}}/>}/>
-              <Route  exact path='/recipe/:id' element={<Recipe {...{showModal, setShowModal, navigate, setNavigate}}/>}/>
-              <Route  exact path='/recipes/:page' element={<Recipes {...{showModal, setShowModal, navigate, setNavigate}}/>}/>
+              <Route  exact path='/recipe/:id' element={<Recipe {...{showModal, setShowModal, setNavigate}}/>}/>
+              <Route  exact path='/recipes/:page' element={<Recipes {...{showModal, setShowModal, setNavigate}}/>}/>
           </Routes>
           <Footer />
         </Fragment>

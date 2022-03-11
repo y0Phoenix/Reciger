@@ -58,7 +58,7 @@ const Recipe = ({ingredients, navigate, setNavigate, postRecipe, getRecipes, sho
         getRecipes(true, params.id, true, setShowModal, showModal);
       }
       getIngredients(true, null, setShowModal, showModal, true);
-  }, []);
+  }, [location]);
   useEffect(() => {
     if (params.id !== 'new') {
       if (!recipe) return;
@@ -72,6 +72,7 @@ const Recipe = ({ingredients, navigate, setNavigate, postRecipe, getRecipes, sho
       setIngData(ings);
     }
   }, [recipe]);
+  // incase updating state inside a child component breaks the app wrapping any rendered state change inside a useEffect is SUPPOSED to work 😭
   useEffect(() => {
     if (stateChange.newState) {
       setState(stateChange.newState, stateChange.type);
@@ -160,6 +161,7 @@ const Recipe = ({ingredients, navigate, setNavigate, postRecipe, getRecipes, sho
     setIngData(temp);
   };
 
+  // incase updating state inside a child component breaks the app wrapping any rendered state change inside a useEffect is SUPPOSED to work 😭
   const setState = (newState, type) => {
       switch (type) {
         case 'setShowModal':
@@ -188,6 +190,9 @@ const Recipe = ({ingredients, navigate, setNavigate, postRecipe, getRecipes, sho
               <input type='text' value={Yield.string} name='string' onChange={e => onchange(e)} placeholder='unit'></input>
               <Scale {...{params, setScale}}/>
             </div>
+            {/* code doesn't work with having Ingredients as a child component. Keeps saying 
+            (Cannot update a component (`Recipe`) while rendering a different component (`Ingredients`). To locate the bad setState() call inside `Ingredients`, 
+            follow the stack trace as described in https://reactjs.org/link/setstate-in-render)*/}
             {/* <Ingredients {...{ingData, onchange, suggs, _loading, onblur, showModal, ingredients, setStateChange, addIng, removeIng}}/> */}
             <div className='new-recipe-ingredients'>
                 {ingData.length > 0 && !_loading.bool && ingData.map((ing, i, arr) => {
