@@ -80,22 +80,27 @@ export const postRecipe = (FormData, update = false, setShowModal, showModal) =>
         });
         const msgs = res.data.msgs;
         if (msgs) {
-            msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'success', setShowModal, showModal)));
+            msgs.forEach((msg) => {
+                console.log(msg);
+                dispatch(setAlert(msg.msg, 'success', setShowModal, showModal))
+            });
         }
         return res.data.data
     } catch (err) {
         dispatch(stopLoading());
-        const msgs = err.response.data.msgs;
-        if (msgs) {
-            msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'error', setShowModal, showModal)));
+        if (err?.response) {
+            const msgs = err.response.data.msgs;
+            if (msgs) {
+                msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'error', setShowModal, showModal)));
+            }
+            else {
+                dispatch(setAlert('Server Error Try Again Later', 'error', setShowModal, showModal));
+            }
+            dispatch({
+                type: GET_RECIPES_FAIL,
+                payload: {msg: err.res, status: err.response.status}
+            });
         }
-        else {
-            dispatch(setAlert('Server Error Try Again Later', 'error', setShowModal, showModal));
-        }
-        dispatch({
-            type: GET_RECIPES_FAIL,
-            payload: {msg: err.res, status: err.response.status}
-        });
         return null;
     }
 };
@@ -115,13 +120,15 @@ export const deleteRecipe = ({id, setShowModal, showModal}) => async dispatch =>
             msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'success', setShowModal, showModal)));
         }
     } catch (err) {
-        const msgs = err.response.data.msgs;
         dispatch(stopLoading());
-        if (msgs) {
-            msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'error', setShowModal, showModal)));
-        }
-        else {
-            dispatch(setAlert('Server Error Try Again Later', 'error', setShowModal, showModal));
+        if (err.response) {
+            const msgs = err.response.data.msgs;
+            if (msgs) {
+                msgs.forEach((msg) => dispatch(setAlert(msg.msg, 'error', setShowModal, showModal)));
+            }
+            else {
+                dispatch(setAlert('Server Error Try Again Later', 'error', setShowModal, showModal));
+            }
         }
         dispatch({
             type: GET_RECIPES_FAIL,

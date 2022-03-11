@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-const Nutrients = ({recipe, scale, setScale}) => {
+const Nutrients = ({recipe, scale}) => {
     const initNuts = {
         iron: {
             amount: 0,
@@ -40,6 +40,7 @@ const Nutrients = ({recipe, scale, setScale}) => {
     const [calories, setCalories] = useState(0);
     const [initCalories, setInitCalories] = useState(0);
     useEffect(() => {
+        if (!recipe?.nutrients) return;
         setNutrients(recipe.nutrients.total);
         setInitAmounts(recipe.nutrients.total);
         setCalories(recipe.calories.total);

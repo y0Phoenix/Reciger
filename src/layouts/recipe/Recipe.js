@@ -6,9 +6,9 @@ import { loading, stopLoading } from '../../actions/loading';
 import { getRecipes, postRecipe } from '../../actions/recipe';
 import PropTypes from 'prop-types';
 import { getIngredients } from '../../actions/ingredient';
-import Ingredients from './Ingredients';
 import Scale from './Scale';
 import Nutrients from './Nutrients';
+import Suggestions from './Suggestions';
 
 const Recipe = ({ingredients, navigate, setNavigate, postRecipe, getRecipes, showModal, setShowModal, getIngredients, isAuthenticated, _loading, recipe}) => {
   const params = useParams();
@@ -38,6 +38,10 @@ const Recipe = ({ingredients, navigate, setNavigate, postRecipe, getRecipes, sho
   });
   const [suggs, setSuggs] = useState([[]]);
   const [scale, setScale] = useState(1);
+  const [stateChange, setStateChange] = useState({
+    type: '',
+    newState: null
+  });
   useEffect(() => {
     if (!ingData[0]) return;
     const arr = ingData.map(ing =>  {
@@ -68,6 +72,11 @@ const Recipe = ({ingredients, navigate, setNavigate, postRecipe, getRecipes, sho
       setIngData(ings);
     }
   }, [recipe]);
+  useEffect(() => {
+    if (stateChange.newState) {
+      setState(stateChange.newState, stateChange.type);
+    }
+  }, [stateChange])
   const {
     name,
     Yield,
@@ -151,6 +160,19 @@ const Recipe = ({ingredients, navigate, setNavigate, postRecipe, getRecipes, sho
     setIngData(temp);
   };
 
+  const setState = (newState, type) => {
+      switch (type) {
+        case 'setShowModal':
+          return setShowModal(newState);
+        case 'setSuggs':
+          return setSuggs(newState);
+        case 'setIngData':
+          return setIngData(newState);
+        default:
+          console.log('incorrect type sent to setState function in Recipe');
+      }
+  }
+
   return (
     <>
     {isAuthenticated ?
@@ -166,7 +188,29 @@ const Recipe = ({ingredients, navigate, setNavigate, postRecipe, getRecipes, sho
               <input type='text' value={Yield.string} name='string' onChange={e => onchange(e)} placeholder='unit'></input>
               <Scale {...{params, setScale}}/>
             </div>
-            <Ingredients {...{ingData, setIngData, onchange, suggs, setSuggs, _loading, onblur, showModal, setShowModal, ingredients, removeIng, addIng}}/>
+            {/* <Ingredients {...{ingData, onchange, suggs, _loading, onblur, showModal, ingredients, setStateChange, addIng, removeIng}}/> */}
+            <div className='new-recipe-ingredients'>
+                {ingData.length > 0 && !_loading.bool && ingData.map((ing, i, arr) => {
+                    if (!suggs[i]) setSuggs([...suggs, []]);
+                    return (
+                        <div key={i} className='new-recipe-ingredient-item'>
+                            <input type='text' name='ing-name' value={ingData[i].name} onChange={e => onchange(e, i)} onBlur={e => onblur(i, ing.name)} placeholder='name'></input>
+                            <Suggestions {...{suggs, ingData, i, showModal, setStateChange}}/>
+                            <input type='text' name='ing-amount' value={ingData[i].quantity.amount} onChange={e => onchange(e, i)} placeholder='amount'></input>
+                            <input type='text' name='ing-unit' value={ingData[i].quantity.unit} onChange={e => onchange(e, i)} placeholder='unit'></input>
+                            <button type='button' className='edit-btn' onClick={e => {
+                                const index = ingredients.map(ing => ing.name).indexOf(ingData[i].name);
+                                if (index === -1) return;
+                               setShowModal({...showModal, IngredientM: {bool: true, id: ingredients[index]._id}});
+                            }}>Edit</button>
+                            <button className='remove-btn' type='button' onClick={e => removeIng(e, i)}>
+                                <i className='fa-solid fa-x'></i>
+                            </button>
+                        </div>
+                    )
+                })}
+            </div>
+            <button className='btn' type='button'onClick={e => addIng(e)}>Add Ingredient</button>
             <div className='new-recipe-categories'>
               <input type='text' value={categories} name='categories' onChange={e => setFormData({...formData, categories: e.target.value})} placeholder='categories'></input>
               <input type='checkbox' value={Correlative} name='Correlative' onChange={e => setFormData({...formData, Correlative: e.target.checked})}></input>

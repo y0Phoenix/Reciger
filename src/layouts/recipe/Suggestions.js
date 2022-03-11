@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Suggestions = ({suggs, ingData, i, setIngData, setSuggs, setShowModal, showModal}) => {
+const Suggestions = ({suggs, ingData, i, showModal, setStateChange}) => {
     return (
         <>
             {suggs[i]?.length > 0 ?
@@ -15,8 +15,8 @@ const Suggestions = ({suggs, ingData, i, setIngData, setSuggs, setShowModal, sho
                                 tempdataing[i].name = sugg.name;
                                 tempdataing[i].show = false;
                                 tempdatasuggs[i] = [];
-                                setIngData(tempdataing);
-                                setSuggs(tempdatasuggs);
+                                setStateChange({newState: tempdataing, type: 'setIngData'});
+                                setStateChange({newState: tempdatasuggs, type: 'setSuggs'});
                               }}>{sugg.name}</li>)}
                           </ul>
                         </div>
@@ -25,17 +25,17 @@ const Suggestions = ({suggs, ingData, i, setIngData, setSuggs, setShowModal, sho
                         {ingData[i].show === true &&
                           <div className='suggs'>
                             <button type='button' onClick={e => {
-                              setShowModal({...showModal, IngredientM: {bool: true, id: showModal.IngredientM.id}});
+                              setStateChange({newState: {...showModal, IngredientM: {bool: true, id: showModal.IngredientM.id}}, type: 'setShowModal'});
                               const tempdata = [...ingData];
                               tempdata[i].show = false;
-                              setIngData(tempdata);
+                              setStateChange({newState: tempdata, type: 'setIngData'});
                             }}>
                               Ingredient Doesn't Exist Want To Create It
                             </button>
                             <button onClick={e => {
                               const tempdata = [...ingData];
                               tempdata[i].show = false;
-                              setIngData(tempdata);
+                              setStateChange({newState: tempdata, type: 'setIngData'});
                             }}>
                               <i className='fa-solid fa-x'></i>
                             </button>

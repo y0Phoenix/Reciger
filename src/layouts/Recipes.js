@@ -159,7 +159,7 @@ const Recipes = ({showModal, setShowModal, getRecipes, deleteRecipe, _loading, u
                       <div key={i} className='recipe-search-result'>
                         <div className='recipe-result-number'>{i + 1}</div>
                         <div className='recipe-result-name'>{res.name}</div>
-                        <div className='recipe-result-calories'>{res.calories}</div>
+                        <div className='recipe-result-calories'>{res.calories.total}</div>
                         <div className='recipe-result-price'>{res.price}</div>
                         <div className='recipe-result-edit'>
                           <button type="button" onClick={() => setNavigate(`/recipe/${res._id}`)}>
