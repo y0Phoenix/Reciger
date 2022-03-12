@@ -58,6 +58,7 @@ const Nutrients = ({recipe, scale}) => {
             protein: {amount: initAmounts.protein.amount * scale},
         });
         setCalories(initCalories * scale);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [scale]);
 
     return (

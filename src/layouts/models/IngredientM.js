@@ -40,7 +40,24 @@ const IngredientM = ({showModal, setShowModal, postIngredient, getIngredients, l
 	} = formData;
 	useEffect(() => {
 		if (showModal.IngredientM.id) {
-			getIngredients(true, showModal.IngredientM.id, setShowModal, showModal, true);
+			const load = async () => {
+				const ing = await getIngredients(true, showModal.IngredientM.id, setShowModal, showModal, true);
+				if (!ing) return;
+				if (ing.type === 'recipe') {
+					getRecipe(ing.name);
+				}
+				setFormData({
+					name: ing.name,
+					categories: ing.categories.join(' '),
+					price: ing.price,
+					volume: ing.units.volume.join(' '),
+					weight: ing.units.weight.join(' '),
+					prefered: ing.units.prefered,
+					noNut: false
+				});
+				setNutrients(ing);
+			}
+			load();
 		}
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [showModal.IngredientM]);
@@ -56,25 +73,6 @@ const IngredientM = ({showModal, setShowModal, postIngredient, getIngredients, l
 			error.response.data.msgs.forEach(msg => setAlert(msg, 'error', setShowModal, showModal));
 		}
 	}
-	useEffect(() => {
-		if (!ingredients) return;
-		if (!ingredients[0]) return;
-		if (!ingredients[1]) {
-			if (ingredients[0]?.type === 'recipe') {
-				getRecipe(ingredients[0].name);
-			}
-			setFormData({
-				name: ingredients[0].name,
-				categories: ingredients[0].categories.join(' '),
-				price: ingredients[0].price,
-				volume: ingredients[0].units.volume.join(' '),
-				weight: ingredients[0].units.weight.join(' '),
-				prefered: ingredients[0].units.prefered,
-				noNut: false
-			});
-			setNutrients(ingredients[0]);
-		}
-	}, [ingredients])
 	const onSubmit = async e => {
 		e.preventDefault();
 		let cats = categories.replace(/s/g, '').split(',');

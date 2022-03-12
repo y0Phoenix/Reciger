@@ -1,4 +1,5 @@
 import { 
+    GET_INGREDIENT,
     GET_INGREDIENTS,
     GET_INGREDIENTS_FAIL
 } from "./types";
@@ -27,10 +28,18 @@ export const getIngredients = (all = false, id, setShowModal, showModal, state =
         }
         dispatch(stopLoading());
         if (state) {
-            dispatch({
-                type: GET_INGREDIENTS,
-                payload: id ? [res.data.data] : res.data.data
-            });
+            if (id) {
+                dispatch({
+                    type: GET_INGREDIENT,
+                    payload: res.data.data
+                });
+            }
+            else {
+                dispatch({
+                    type: GET_INGREDIENTS,
+                    payload: id ? [res.data.data] : res.data.data
+                });
+            }
         }
         return res.data.data;
     } catch (err) {

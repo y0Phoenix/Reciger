@@ -1,6 +1,7 @@
 import { 
     CLEAR_INGREDIENTS,
     GET_INGREDIENTS,
+    GET_INGREDIENT,
     GET_INGREDIENTS_FAIL
 } from "../actions/types";
 
@@ -17,6 +18,11 @@ export default function(state = initialState, action) {
     switch (type) {
         case GET_INGREDIENTS:
             state = {...state, ingredients: payload}
+            return state;
+        case GET_INGREDIENT:
+            const i = state.ingredients.map(ing => ing._id).indexOf(payload._id);
+            if (i > -1) state.ingredients[i] = payload;
+            else state.ingredients.push(payload);
             return state;
         case GET_INGREDIENTS_FAIL:
         case CLEAR_INGREDIENTS:

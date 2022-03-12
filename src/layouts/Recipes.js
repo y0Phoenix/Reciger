@@ -15,26 +15,19 @@ const Recipes = ({showModal, setShowModal, getRecipes, deleteRecipe, _loading, u
   const [results, setResults] = useState([]);
   const [pageResults, setPageResults] = useState([]);
   useEffect(() => {
-      getRecipes(false, null, true, setShowModal, showModal);
+    const load = async () => {
+      const Recipes = await getRecipes(false, null, true, setShowModal, showModal);
+      if (!Recipes) return;
+      setResults(Recipes);
+      setPageResults(Recipes.filter(filterByPage));
+    }
+    load();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   // useEffect(() => {
   //   if (showModal.Filter.filter) {
   //     filterResults();
   //   }
-  // // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [showModal.Filter]);
-  useEffect(() => {
-    if (recipes) {
-      if (recipes.constructor === Array) {
-        if (recipes[0]) {
-          setResults(recipes);
-          setPageResults(recipes && recipes.filter(filterByPage));
-        }
-      }
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [recipes]);
 
   const filterByPage = (rec, i) => {
     const lessthan = (25 * parseInt(params.page));
@@ -157,7 +150,6 @@ const Recipes = ({showModal, setShowModal, getRecipes, deleteRecipe, _loading, u
                   <div className='results'>
                     {pageResults.length > 0 && pageResults.map((res, i) => 
                       <div key={i} className='recipe-search-result'>
-                        <div className='recipe-result-number'>{i + 1}</div>
                         <div className='recipe-result-name'>{res.name}</div>
                         <div className='recipe-result-calories'>{res.calories.total}</div>
                         <div className='recipe-result-price'>{res.price}</div>
@@ -173,7 +165,21 @@ const Recipes = ({showModal, setShowModal, getRecipes, deleteRecipe, _loading, u
                         </div>
                       </div>
                     )}
-                  </div>  
+                  </div> 
+                  {(parseInt(params.page) * 24) <= recipes.length &&
+                    <div className='recipe-next'>
+                      <button type='button' onClick={() => setNavigate(`/recipes/${(parseInt(params.page) + 1)}`)}>
+                          <i className='fa-solid fa-arrow-right'></i>
+                      </button>
+                    </div>  
+                  }   
+                  {parseInt(params.page) > 1 &&
+                    <div className='recipe-previous'>
+                      <button type='button' onClick={() => setNavigate(`/recipes/${(parseInt(params.page) - 1)}`)}>
+                          <i className='fa-solid fa-arrow-left'></i>
+                      </button>
+                    </div>  
+                  } 
                 </div>  
                 <div className='recipe-recents'>
                   {/* <RecentRecs user={user} setShowModal={setShowModal} showModal={showModal}/> */}

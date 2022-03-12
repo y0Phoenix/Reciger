@@ -24,7 +24,7 @@ const Navbar = ({isAuthenticated, logout}) => {
           </Link>
         </div>
         <div className='nav-item3'>
-          <Link to='/ingredients'>
+          <Link to='/ingredients/1'>
             <button className='nav-btn'>
               Ingredients<i className='fa-solid fa-carrot'></i>
             </button>
