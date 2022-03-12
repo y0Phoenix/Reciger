@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { deleteIngredient } from '../../actions/ingredient';
 
 const RecentIngs = ({user, showModal, setShowModal, deleteIngredient}) => 
-    user.recents.ingredients.length > 0 ?
+    user && user?.recents.ingredients.length > 0 ?
     user.recents.ingredients.map((ing, i, arr) => {
         i = i + 1;
         let cats = ``;

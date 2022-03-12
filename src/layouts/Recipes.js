@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 import { setAlert } from '../actions/alert';
 import RecentRecs from './Dashboard/RecentRecs';
 
-const Recipes = ({showModal, setShowModal, getRecipes, deleteRecipe, _loading, user, recipes, navigate, setNavigate, setAlert}) => {
+const Recipes = ({showModal, setShowModal, getRecipes, deleteRecipe, _loading, user, recipes, navigate, setNavigate, setAlert, isAuthenticated}) => {
   const params = useParams();
   const [search, setSearch] = useState('');
   const [suggs, setSuggs] = useState({
@@ -113,86 +113,90 @@ const Recipes = ({showModal, setShowModal, getRecipes, deleteRecipe, _loading, u
     setShowModal({...showModal, YesorNo: {direct: deleteRecipe, bool: true, params: {id: recipe, setShowModal, showModal}}})
   }
   return (
-        <>
-        {(!_loading.bool && pageResults) && 
+      <>
+        {isAuthenticated ?
           <>
-            {pageResults !== [] &&
-              <div className='recipe-main'>
-                <div className='recipe-create'>
-                  <button type='button' onClick={() => setNavigate('/recipe/new')}>
-                    Create Recipe <i className='fa-solid fa-book'></i>
-                  </button>
-                </div>
-                <div className='recipe-search'>
-                  <div className='recipe-search-box'>
-                    <form>
-                      <input type='text' value={search} name='search' onChange={e => onchange(e)} onBlur={() => setTimeout(setSuggs, 250, {suggs: [], show: false})} autoComplete="off"></input>
-                      {suggs.suggs.length > 0 && suggs.show &&
-                        <div className='suggs'>
-                          <ul>
-                            {suggs.suggs.map((sug, i) =>
-                              <li key={i} onClick={() => {
-                                setSearch(sug.name);
-                                setSuggs({suggs: [], show: false})
-                              }}>{sug.name}</li>
-                            )}  
-                          </ul>  
-                        </div>
-                      }
-                      <button type='submit' className='recipe-search-i' onClick={(e) => initSearch(e)}>
-                        <i className='fa-solid fa-magnifying-glass'></i>  
-                      </button>
-                      <button type='button' className='recipe-search-x' onClick={() => setSearch('')}>
-                        <i className='fa-solid fa-x'></i>  
-                      </button>
-                      <button type='button' className='recipe-search-filter' onClick={() => {
-                        setAlert('Filter Functionality Is Not Avalible Yet', 'error', setShowModal, showModal);
-                        // setShowModal({...showModal, Filter: {typeOf: 'recipe', bool: true, filter: null, type: null}})
-                      }}>
-                        <i className='fa-solid fa-filter'></i>
-                      </button>
-                    </form>
+          {(!_loading.bool && pageResults) && 
+            <>
+              {pageResults !== [] &&
+                <div className='recipe-main'>
+                  <div className='recipe-create'>
+                    <button type='button' onClick={() => setNavigate('/recipe/new')}>
+                      Create Recipe <i className='fa-solid fa-book'></i>
+                    </button>
                   </div>
-                  <div className='results'>
-                    {pageResults.length > 0 && pageResults.map((res, i) => 
-                      <div key={i} className='recipe-search-result'>
-                        <div className='recipe-result-name'>{res.name}</div>
-                        <div className='recipe-result-calories'>{res.calories.total}</div>
-                        <div className='recipe-result-price'>{res.price}</div>
-                        <div className='recipe-result-edit'>
-                          <button type="button" onClick={() => setNavigate(`/recipe/${res._id}`)}>
-                              <i className='fa-solid fa-edit'></i>
-                          </button>  
+                  <div className='recipe-search'>
+                    <div className='recipe-search-box'>
+                      <form>
+                        <input type='text' value={search} name='search' onChange={e => onchange(e)} onBlur={() => setTimeout(setSuggs, 250, {suggs: [], show: false})} autoComplete="off"></input>
+                        {suggs.suggs.length > 0 && suggs.show &&
+                          <div className='suggs'>
+                            <ul>
+                              {suggs.suggs.map((sug, i) =>
+                                <li key={i} onClick={() => {
+                                  setSearch(sug.name);
+                                  setSuggs({suggs: [], show: false})
+                                }}>{sug.name}</li>
+                              )}  
+                            </ul>  
+                          </div>
+                        }
+                        <button type='submit' className='recipe-search-i' onClick={(e) => initSearch(e)}>
+                          <i className='fa-solid fa-magnifying-glass'></i>  
+                        </button>
+                        <button type='button' className='recipe-search-x' onClick={() => setSearch('')}>
+                          <i className='fa-solid fa-x'></i>  
+                        </button>
+                        <button type='button' className='recipe-search-filter' onClick={() => {
+                          setAlert('Filter Functionality Is Not Avalible Yet', 'error', setShowModal, showModal);
+                          // setShowModal({...showModal, Filter: {typeOf: 'recipe', bool: true, filter: null, type: null}})
+                        }}>
+                          <i className='fa-solid fa-filter'></i>
+                        </button>
+                      </form>
+                    </div>
+                    <div className='results'>
+                      {pageResults.length > 0 && pageResults.map((res, i) => 
+                        <div key={i} className='recipe-search-result'>
+                          <div className='recipe-result-name'>{res.name}</div>
+                          <div className='recipe-result-calories'>{res.calories.total}</div>
+                          <div className='recipe-result-price'>{res.price}</div>
+                          <div className='recipe-result-edit'>
+                            <button type="button" onClick={() => setNavigate(`/recipe/${res._id}`)}>
+                                <i className='fa-solid fa-edit'></i>
+                            </button>  
+                          </div>
+                          <div className='recipe-result-delete'>
+                            <button type='button' onClick={() => deleteRec(res._id)}>
+                              <i className='fa-solid fa-x'></i>  
+                            </button>  
+                          </div>
                         </div>
-                        <div className='recipe-result-delete'>
-                          <button type='button' onClick={() => deleteRec(res._id)}>
-                            <i className='fa-solid fa-x'></i>  
-                          </button>  
-                        </div>
-                      </div>
-                    )}
-                  </div> 
-                  {(parseInt(params.page) * 24) <= recipes.length &&
-                    <div className='recipe-next'>
-                      <button type='button' onClick={() => setNavigate(`/recipes/${(parseInt(params.page) + 1)}`)}>
-                          <i className='fa-solid fa-arrow-right'></i>
-                      </button>
-                    </div>  
-                  }   
-                  {parseInt(params.page) > 1 &&
-                    <div className='recipe-previous'>
-                      <button type='button' onClick={() => setNavigate(`/recipes/${(parseInt(params.page) - 1)}`)}>
-                          <i className='fa-solid fa-arrow-left'></i>
-                      </button>
-                    </div>  
-                  } 
-                </div>  
-                <div className='recipe-recents'>
-                  <RecentRecs user={user} setShowModal={setShowModal} showModal={showModal}/>
-                </div>  
-              </div> 
-            }
-          </>
+                      )}
+                    </div> 
+                    {(parseInt(params.page) * 24) <= recipes.length &&
+                      <div className='recipe-next'>
+                        <button type='button' onClick={() => setNavigate(`/recipes/${(parseInt(params.page) + 1)}`)}>
+                            <i className='fa-solid fa-arrow-right'></i>
+                        </button>
+                      </div>  
+                    }   
+                    {parseInt(params.page) > 1 &&
+                      <div className='recipe-previous'>
+                        <button type='button' onClick={() => setNavigate(`/recipes/${(parseInt(params.page) - 1)}`)}>
+                            <i className='fa-solid fa-arrow-left'></i>
+                        </button>
+                      </div>  
+                    } 
+                  </div>  
+                  <div className='recipe-recents'>
+                    <RecentRecs user={user} setShowModal={setShowModal} showModal={showModal}/>
+                  </div>  
+                </div> 
+              }
+            </>
+          }
+        </> : setNavigate('/login')
         }
       </>
   )
@@ -207,12 +211,14 @@ Recipes.protoTypes = {
   _loading: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
   setAlert: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = state => ({
   recipes: state.recipe.recipes,
   _loading: state.loading,
   user: state.user.user,
+  isAuthenticated: state.user.isAuthenticated
 });
 
 export default connect(mapStateToProps, {setAlert, getRecipes, deleteRecipe})(Recipes) ;

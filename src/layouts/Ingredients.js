@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import RecentIngs from './Dashboard/RecentIngs';
 
-const Ingredients = ({showModal, setShowModal, getIngredients, deleteIngredient, _loading, user, Ingredients, setNavigate, setAlert}) => {
+const Ingredients = ({showModal, setShowModal, getIngredients, deleteIngredient, _loading, user, Ingredients, setNavigate, setAlert, isAuthenticated}) => {
   const params = useParams();
   const [search, setSearch] = useState('');
   const [suggs, setSuggs] = useState({
@@ -122,6 +122,8 @@ const Ingredients = ({showModal, setShowModal, getIngredients, deleteIngredient,
   }
   return (
     <>
+      {isAuthenticated ? 
+    <>
         {(!_loading.bool && pageResults) && 
           <>
             {pageResults !== [] &&
@@ -205,7 +207,9 @@ const Ingredients = ({showModal, setShowModal, getIngredients, deleteIngredient,
             }
           </>
         }
-      </>
+      </> : setNavigate('/login')
+      }
+    </>
   )
 }
 
@@ -224,6 +228,7 @@ const mapStateToProps = state => ({
   Ingredients: state.ingredient.ingredients,
   _loading: state.loading,
   user: state.user.user,
+  isAuthenticated: state.user.isAuthenticated
 });
 
 export default connect(mapStateToProps, {setAlert, getIngredients, deleteIngredient})(Ingredients);
