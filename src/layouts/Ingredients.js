@@ -1,9 +1,10 @@
 import React, {useState, useEffect} from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { getIngredients, deleteIngredient } from '../actions/ingredient';
 import { setAlert } from '../actions/alert';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import RecentIngs from './Dashboard/RecentIngs';
 
 const Ingredients = ({showModal, setShowModal, getIngredients, deleteIngredient, _loading, user, Ingredients, setNavigate, setAlert}) => {
   const params = useParams();
@@ -119,15 +120,17 @@ const Ingredients = ({showModal, setShowModal, getIngredients, deleteIngredient,
   const deleteIng = (ing) => {
     setShowModal({...showModal, YesorNo: {direct: deleteIngredient, bool: true, params: {id: ing, setShowModal, showModal}}})
   }
-  const changePage = way => {
-    if ((parseInt(params.page) * 24) <= Ingredients.length) return;
-  } 
   return (
     <>
         {(!_loading.bool && pageResults) && 
           <>
             {pageResults !== [] &&
               <div className='ingredient-main'>
+                <div className='ingredient-create'>
+                  <button type='button' onClick={() => setShowModal({...showModal, IngredientM: {bool: true, id: null}})}>
+                    Create Ingredient <i className='fa-solid fa-carrot'></i>
+                  </button>
+                </div>
                 <div className='ingredient-search'>
                   <div className='ingredient-search-box'>
                     <form>
@@ -159,8 +162,7 @@ const Ingredients = ({showModal, setShowModal, getIngredients, deleteIngredient,
                     </form>
                   </div>
                   <div className='results'>
-                    {pageResults.length > 0 && pageResults.map((res, i) => { 
-                      console.log(res);
+                    {pageResults.length > 0 && pageResults.map((res, i) => {
                       if (!res.calories) return <></>;
                       return (
                         <div key={i} className='ingredient-search-result'>
@@ -197,7 +199,7 @@ const Ingredients = ({showModal, setShowModal, getIngredients, deleteIngredient,
                   }
                 </div>  
                 <div className='ingredient-recents'>
-                  {/* <RecentRecs user={user} setShowModal={setShowModal} showModal={showModal}/> */}
+                  <RecentIngs user={user} setShowModal={setShowModal} showModal={showModal}/>
                 </div>  
               </div> 
             }

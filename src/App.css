@@ -41,8 +41,6 @@ a {
 	color: white;
 	font-weight: bold;
 }
-.login {
-}
 .new-ingredient {
 	display: grid;
 	grid-template-areas: 

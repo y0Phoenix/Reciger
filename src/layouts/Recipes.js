@@ -4,6 +4,7 @@ import { getRecipes, deleteRecipe } from '../actions/recipe';
 import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
 import { setAlert } from '../actions/alert';
+import RecentRecs from './Dashboard/RecentRecs';
 
 const Recipes = ({showModal, setShowModal, getRecipes, deleteRecipe, _loading, user, recipes, navigate, setNavigate, setAlert}) => {
   const params = useParams();
@@ -117,6 +118,11 @@ const Recipes = ({showModal, setShowModal, getRecipes, deleteRecipe, _loading, u
           <>
             {pageResults !== [] &&
               <div className='recipe-main'>
+                <div className='recipe-create'>
+                  <button type='button' onClick={() => setNavigate('/recipe/new')}>
+                    Create Recipe <i className='fa-solid fa-book'></i>
+                  </button>
+                </div>
                 <div className='recipe-search'>
                   <div className='recipe-search-box'>
                     <form>
@@ -182,7 +188,7 @@ const Recipes = ({showModal, setShowModal, getRecipes, deleteRecipe, _loading, u
                   } 
                 </div>  
                 <div className='recipe-recents'>
-                  {/* <RecentRecs user={user} setShowModal={setShowModal} showModal={showModal}/> */}
+                  <RecentRecs user={user} setShowModal={setShowModal} showModal={showModal}/>
                 </div>  
               </div> 
             }
