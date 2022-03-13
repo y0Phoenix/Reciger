@@ -141,4 +141,46 @@ export const loadUser = () => async dispatch => {
             payload: {msg: err.res, status: err.response.status}
         });
     }
+};
+
+export const changePasswordReq = (email, setShowModal, showModal) => async dispatch => {
+    try {
+        const token = localStorage.token;
+        if (!token) return dispatch(setAlert('Error Try Again Later', 'error', setShowModal, showModal));
+        dispatch(loading());
+        await axios.get(`/api/auth/passwordreq/${token}?email=${email}`);
+        dispatch(stopLoading());
+        dispatch(setAlert('Please Check Your Email For A Link To Change Password', 'success', setShowModal, showModal));
+        return true;
+    } catch (err) {
+        dispatch(stopLoading());
+        if (!err?.response) return dispatch(setAlert('Error Try Again Later', 'error', setShowModal, showModal));
+        const msgs = err.response.data.msgs;
+        if (msgs.constructor !== Array) return dispatch(setAlert('Error Try Again Later', 'error', setShowModal, showModal));
+        msgs.forEach(msg => dispatch(setAlert(msg.msg, 'error', setShowModal, showModal)));
+        return null;
+    }
+};
+
+export const changePasswordToken = (token, newPass, oldPass, setShowModal, showModal) => async dispatch => {
+    try {
+        if (!token) return;
+        dispatch(loading());
+        const res = await axios.post(`/api/auth/changepassword/${token}`, 
+            {
+                newPass: newPass,
+                oldPass: oldPass 
+            }
+        );
+        dispatch(stopLoading());
+        res.data.msgs.forEach(msg => dispatch(setAlert(msg.msg, 'success', setShowModal, showModal)));
+        return true;
+    } catch (err) {
+        dispatch(stopLoading());
+        if (!err?.response) return dispatch(setAlert('Error Try Again Later', 'error', setShowModal, showModal));
+        const msgs = err.response.data.msgs;
+        if (msgs.constructor !== Array) return dispatch(setAlert('Error Try Again Later', 'error', setShowModal, showModal));
+        msgs.forEach(msg => dispatch(setAlert(msg.msg, 'success', setShowModal, showModal)));
+        return null;
+    }
 }

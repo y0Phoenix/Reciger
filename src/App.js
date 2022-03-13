@@ -19,6 +19,8 @@ import Category from './layouts/models/Category';
 import IngredientM from './layouts/models/IngredientM';
 import YesorNo from './layouts/models/YesorNo';
 import Redirect from './layouts/utils/Redirect';
+import Password from './layouts/Password';
+import Account from './layouts/Account';
 
 
 function App() {
@@ -53,7 +55,7 @@ function App() {
     <Provider store={store}>
       <Router>
         <Fragment>
-          <Navbar />
+          <Navbar {...{setNavigate}}/>
           <Alert {...{showModal, setShowModal}}/>
           <Category {...{showModal, setShowModal}}/>
           <IngredientM {...{showModal, setShowModal, setNavigate}}/>
@@ -68,6 +70,8 @@ function App() {
             <Route  exact path='/ingredients/:page' element={<Ingredients {...{showModal, setShowModal, setNavigate}}/>}/>
             <Route  exact path='/recipe/:id' element={<Recipe {...{showModal, setShowModal, setNavigate}}/>}/>
             <Route  exact path='/recipes/:page' element={<Recipes {...{showModal, setShowModal, setNavigate}}/>}/>
+            <Route exact path='/account' element={<Account {...{showModal, setShowModal, setNavigate}}/>}/>
+            <Route exact path='/password/:token' element={<Password {...{showModal, setShowModal, setNavigate}}/>}/>
           </Routes>
           <Footer />
         </Fragment>

@@ -1,62 +1,57 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import { logout } from '../actions/user';
 
-const Navbar = ({isAuthenticated, logout}) => {
+const Navbar = ({isAuthenticated, logout, setNavigate}) => {
   return (
     <Fragment>
       {isAuthenticated ? 
       <div className='nav-bar-container'>
         <div className='nav-item1'>
-          <Link to='/dashboard'>
-            <button className='nav-btn'>
-              Reciger<i className="fa fa-folder-open"></i>
-            </button>
-          </Link>
+          <button className='nav-btn' onClick={() => setNavigate('/dashboard')}>
+            Reciger<i className="fa fa-folder-open"></i>
+          </button>
         </div>
         <div className='nav-item2'>
-          <Link to='/recipes/1'>
-            <button className='nav-btn'>
-              Recipes<i className='fa-solid fa-book'></i>
-            </button>
-          </Link>
+          <button className='nav-btn' onClick={() => setNavigate('/recipes/1')}>
+            Recipes<i className='fa-solid fa-book'></i>
+          </button>
         </div>
         <div className='nav-item3'>
-          <Link to='/ingredients/1'>
-            <button className='nav-btn'>
-              Ingredients<i className='fa-solid fa-carrot'></i>
-            </button>
-          </Link>
+          <button className='nav-btn' onClick={() => setNavigate('/ingredients/1')}>
+            Ingredients<i className='fa-solid fa-carrot'></i>
+          </button>
+        </div>
+        <div className='nav-account'>
+          <button onClick={() => setNavigate('/account')}>
+            Account <i className='fa-solid fa-user'></i>
+          </button>
         </div>
         <div className='nav-logout'>
-          <button className='nav-btn' onClick={e => logout(e)}>
+          <button className='nav-btn' onClick={e => {
+              logout(e);
+              setNavigate('/');
+            }}>
             Logout<i className="fa-solid fa-right-from-bracket"></i>
           </button>
         </div>
       </div> : 
       <div className='navbar-container'>
         <div className='nav-item1'>
-          <Link to='/login'>
-            <button className='nav-btn'>
-              Login<i className='fa fa-user'></i>
-            </button>
-          </Link>
+          <button className='nav-btn' onClick={() => setNavigate('/login')}>
+            Login<i className='fa fa-user'></i>
+          </button>
         </div>
         <div className='nav-item2'>
-          <Link to='/register'>
-            <button className='nav-btn'>
-              Register<i className='fa fa-user-check'></i>
-            </button>
-          </Link>
+          <button className='nav-btn' onClick={() => setNavigate('/register')}>
+            Register<i className='fa fa-user-check'></i>
+          </button>
         </div>
         <div className='nan-item3'>
-          <Link to='/'>
-            <button className='nav-btn'>
-              Reciger<i className='fa fa-folder-open'></i>
-            </button>
-          </Link>
+          <button className='nav-btn' onClick={() => setNavigate('/')}>
+            Reciger<i className='fa fa-folder-open'></i>
+          </button>
         </div>
       </div>}
     </Fragment>
