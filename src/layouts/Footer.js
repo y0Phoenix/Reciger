@@ -1,5 +1,6 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 const Footer = () => {
   return (
@@ -7,9 +8,9 @@ const Footer = () => {
         <div className='footer-content'>
             <div className='footer-1'>
                 <Link to='#'>
-                    <button className='footer-btn'>
+                    <motion.button whileHover={{scale: 1.03}} className='footer-btn'>
                        <i className="fa-solid fa-address-book"></i> Contact 
-                    </button>
+                    </motion.button>
                 </Link>
             </div>
             <p className='footer-p'>

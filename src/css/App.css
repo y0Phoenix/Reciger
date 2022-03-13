@@ -34,6 +34,7 @@ a {
 	height: 30px;
 	color: white;
 	width: 75px;
+	border: none;
 }
 .btn:hover {
 	background-color: var(--theme-color-hover);

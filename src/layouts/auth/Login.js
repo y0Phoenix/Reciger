@@ -5,6 +5,10 @@ import { Navigate } from 'react-router-dom';
 import { login } from '../../actions/user';
 import toggleShow from '../../functions/toggleShow';
 import { setAlert } from '../../actions/alert';
+import { motion } from 'framer-motion';
+const animate = {
+	scale: 1.05
+};
 
 const Login = ({isAuthenticated, login, setShowModal, showModal, setAlert}) => {
 	const refs = {
@@ -47,9 +51,9 @@ const Login = ({isAuthenticated, login, setShowModal, showModal, setAlert}) => {
 				<div className='login-password'>
 					<input type='password' placeholder='password' onChange={e => onchange(e)} value={password} name='password' ref={pass}></input>
 					<div className='eye'>
-						<button type='button' onClick={() => toggleShow(refs, 'pass')} className="eye-btn">
+						<motion.button whileHover={animate} type='button' onClick={() => toggleShow(refs, 'pass')} className="eye-btn">
 								<i ref={passI} className='fa-solid fa-eye'></i>
-						</button>
+						</motion.button>
 					</div>
 				</div>
 				<br></br>
@@ -60,7 +64,7 @@ const Login = ({isAuthenticated, login, setShowModal, showModal, setAlert}) => {
 					Remeber Me <input type='checkbox' name='remeber' value={remeber} onChange={e => setFormData({...formData, remeber: e.target.checked})}></input>
 				</div>
 				<div className='login-submit'>
-					<input type='submit' value='Login' className='btn'></input>
+					<motion.input whileHover={animate} type='submit' value='Login' className='btn'></motion.input>
 				</div>
 			</form>
 		</div>}

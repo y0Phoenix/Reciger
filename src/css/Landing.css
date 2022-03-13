@@ -27,3 +27,7 @@
 .landing-btn:hover {
     background-color: var(--theme-color-hover);
 }
+.landing-btns {
+    display: flex;
+    justify-content: center;
+}

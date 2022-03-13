@@ -1,7 +1,11 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { motion } from 'framer-motion';
 import { logout } from '../actions/user';
+const animate = {
+  scale: 1.03
+};
 
 const Navbar = ({isAuthenticated, logout, setNavigate}) => {
   return (
@@ -9,49 +13,49 @@ const Navbar = ({isAuthenticated, logout, setNavigate}) => {
       {isAuthenticated ? 
       <div className='navbar-container'>
         <div className='nav-item nav-1'>
-          <button className='nav-btn' onClick={() => setNavigate('/dashboard')}>
+          <motion.button whileHover={animate} className='nav-btn' onClick={() => setNavigate('/dashboard')}>
            <i className="fa fa-folder-open"></i> Reciger 
-          </button>
+          </motion.button>
         </div>
         <div className='nav-item nav-2'>
-          <button className='nav-btn' onClick={() => setNavigate('/recipes/1')}>
+          <motion.button whileHover={animate} className='nav-btn' onClick={() => setNavigate('/recipes/1')}>
            <i className='fa-solid fa-book'></i> Recipes 
-          </button>
+          </motion.button>
         </div>
         <div className='nav-item nav-3'>
-          <button className='nav-btn' onClick={() => setNavigate('/ingredients/1')}>
+          <motion.button whileHover={animate} className='nav-btn' onClick={() => setNavigate('/ingredients/1')}>
            <i className='fa-solid fa-carrot'></i> Ingredients 
-          </button>
+          </motion.button>
         </div>
         <div className='nav-item nav-4'>
-          <button className='nav-btn' onClick={() => setNavigate('/account')}>
+          <motion.button whileHover={animate} className='nav-btn' onClick={() => setNavigate('/account')}>
            <i className='fa-solid fa-user'></i> Account 
-          </button>
+          </motion.button>
         </div>
         <div className='nav-item nav-5'>
-          <button className='nav-btn' onClick={e => {
+          <motion.button whileHover={animate} className='nav-btn' onClick={e => {
               logout(e);
               setNavigate('/');
             }}>
            <i className="fa-solid fa-right-from-bracket"></i> Logout 
-          </button>
+          </motion.button>
         </div>
       </div> : 
       <div className='navbar-container'>
         <div className='nav-item nav-1'>
-          <button className='nav-btn' onClick={() => setNavigate('/login')}>
+          <motion.button whileHover={animate} className='nav-btn' onClick={() => setNavigate('/login')}>
            <i className='fa fa-user'></i> Login 
-          </button>
+          </motion.button>
         </div>
         <div className='nav-item nav-2'>
-          <button className='nav-btn' onClick={() => setNavigate('/register')}>
+          <motion.button whileHover={animate} className='nav-btn' onClick={() => setNavigate('/register')}>
            <i className='fa fa-user-check'></i> Register 
-          </button>
+          </motion.button>
         </div>
         <div className='nan-item nav-3'>
-          <button className='nav-btn' onClick={() => setNavigate('/')}>
+          <motion.button whileHover={animate} className='nav-btn' onClick={() => setNavigate('/')}>
            <i className='fa fa-folder-open'></i> Reciger 
-          </button>
+          </motion.button>
         </div>
       </div>}
     </Fragment>
