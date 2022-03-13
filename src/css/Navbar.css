@@ -12,6 +12,8 @@
 	color: white;
 	background-color: gray;
 	height: 47px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: large;
 }
 .nav-btn:hover {
 	background-color: rgb(105, 105, 105);

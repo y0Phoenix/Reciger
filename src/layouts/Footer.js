@@ -4,14 +4,15 @@ import { Link } from 'react-router-dom'
 const Footer = () => {
   return (
     <div className='footer-container'>
+        <div className='footer-1'>
             <Link to='#'>
-                <button className='btn'>
+                <button className='footer-btn'>
                     Contact
                 </button>
             </Link>
-        <p className='footer-container-p'>
-            &copy;  
-            <a href='https://y0phoenix.github.io'>
+        </div>
+        <p className='footer-p'>
+            &copy; <a href='https://y0phoenix.github.io'>
                 Aaron Graybill
             </a> 2022
         </p>
