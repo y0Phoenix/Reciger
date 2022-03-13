@@ -43,6 +43,11 @@ const Landing = ({isAuthenticated}) => {
             <motion.img src={cooking} initial={initial} animate={{opacity: 0.7}} transition={{duration: 1}} className='landing-img'>
             </motion.img>
           </div>
+          <div className='landing-credit'>
+            <a href='https://dribbble.com/shots/11362056-COOKING-AT-HOME'>
+              <small>Credits: Tissa Tom at Dribble</small>
+            </a>
+          </div>
         </div>
       </AnimatePresence>
       </>
