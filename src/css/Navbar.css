@@ -1,0 +1,33 @@
+.navbar-container {
+	display: grid;
+	margin: 0 auto;
+	grid-template-areas: 
+	'nav-1 nav-2 nav-3 . . . . . . . . . . . . . . . . .nav-4 nav-5';
+	background-color: gray;
+	height: 50px;
+}
+.nav-btn {
+	border-radius: 4px;
+	border: none;
+	color: white;
+	background-color: gray;
+	height: 47px;
+}
+.nav-btn:hover {
+	background-color: rgb(105, 105, 105);
+}
+.nav-1 {
+	grid-area: nav-1;
+}
+.nav-2 {
+	grid-area: nav-2;
+}
+.nav-3 {
+	grid-area: nav-3;
+}
+.nav-4 {
+	grid-area: nav-4;
+}
+.nav-5 {
+	grid-area: nav-5;
+}
