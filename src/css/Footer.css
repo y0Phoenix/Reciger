@@ -1,4 +1,9 @@
 .footer-container {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+.footer-content {
     display: grid;
     margin: 0 auto;
     text-align: center;

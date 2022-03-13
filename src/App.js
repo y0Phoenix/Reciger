@@ -58,23 +58,25 @@ function App() {
       <Router>
         <Fragment>
           <Navbar {...{setNavigate}}/>
-          <Alert {...{showModal, setShowModal}}/>
-          <Category {...{showModal, setShowModal}}/>
-          <IngredientM {...{showModal, setShowModal, setNavigate}}/>
-          <Loading {...{showModal, setShowModal}}/>
-          <YesorNo {...{showModal, setShowModal}} />
-          <Redirect {...{navigate, setNavigate}}/>
-          <Routes>
-            <Route  exact path='/' element={<Landing {...{showModal, setShowModal}}/>}/>
-            <Route  exact path='/register' element={<Register {...{showModal, setShowModal}}/>}/>
-            <Route  exact path='/login' element={<Login {...{showModal, setShowModal}}/>}/>
-            <Route  exact path='/dashboard' element={<Dashboard {...{showModal, setShowModal}}/>}/>
-            <Route  exact path='/ingredients/:page' element={<Ingredients {...{showModal, setShowModal, setNavigate}}/>}/>
-            <Route  exact path='/recipe/:id' element={<Recipe {...{showModal, setShowModal, setNavigate}}/>}/>
-            <Route  exact path='/recipes/:page' element={<Recipes {...{showModal, setShowModal, setNavigate}}/>}/>
-            <Route exact path='/account' element={<Account {...{showModal, setShowModal, setNavigate}}/>}/>
-            <Route exact path='/password/:token' element={<Password {...{showModal, setShowModal, setNavigate}}/>}/>
-          </Routes>
+          <section className='container'>
+            <Alert {...{showModal, setShowModal}}/>
+            <Category {...{showModal, setShowModal}}/>
+            <IngredientM {...{showModal, setShowModal, setNavigate}}/>
+            <Loading {...{showModal, setShowModal}}/>
+            <YesorNo {...{showModal, setShowModal}} />
+            <Redirect {...{navigate, setNavigate}}/>
+            <Routes>
+              <Route  exact path='/' element={<Landing {...{showModal, setShowModal}}/>}/>
+              <Route  exact path='/register' element={<Register {...{showModal, setShowModal}}/>}/>
+              <Route  exact path='/login' element={<Login {...{showModal, setShowModal}}/>}/>
+              <Route  exact path='/dashboard' element={<Dashboard {...{showModal, setShowModal}}/>}/>
+              <Route  exact path='/ingredients/:page' element={<Ingredients {...{showModal, setShowModal, setNavigate}}/>}/>
+              <Route  exact path='/recipe/:id' element={<Recipe {...{showModal, setShowModal, setNavigate}}/>}/>
+              <Route  exact path='/recipes/:page' element={<Recipes {...{showModal, setShowModal, setNavigate}}/>}/>
+              <Route exact path='/account' element={<Account {...{showModal, setShowModal, setNavigate}}/>}/>
+              <Route exact path='/password/:token' element={<Password {...{showModal, setShowModal, setNavigate}}/>}/>
+            </Routes>
+          </section>
           <Footer />
         </Fragment>
       </Router>

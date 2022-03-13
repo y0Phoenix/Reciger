@@ -2,9 +2,14 @@ html body {
 	height: 100%;
 	margin:0;
 	padding:0;
+	line-height: 1.6;
 }
 a {
 	text-decoration: none;
+}
+.container {
+	position: relative;
+	margin-bottom: 130px;
 }
 .background {
 	position: fixed;
