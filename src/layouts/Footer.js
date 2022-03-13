@@ -8,7 +8,7 @@ const Footer = () => {
             <div className='footer-1'>
                 <Link to='#'>
                     <button className='footer-btn'>
-                        Contact
+                       <i className="fa-solid fa-address-book"></i> Contact 
                     </button>
                 </Link>
             </div>

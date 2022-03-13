@@ -130,7 +130,7 @@ const Ingredients = ({showModal, setShowModal, getIngredients, deleteIngredient,
               <div className='ingredient-main'>
                 <div className='ingredient-create'>
                   <button type='button' onClick={() => setShowModal({...showModal, IngredientM: {bool: true, id: null}})}>
-                    Create Ingredient <i className='fa-solid fa-carrot'></i>
+                   <i className='fa-solid fa-carrot'></i> Create Ingredient 
                   </button>
                 </div>
                 <div className='ingredient-search'>

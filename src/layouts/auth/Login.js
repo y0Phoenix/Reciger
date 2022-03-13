@@ -4,8 +4,9 @@ import PropTypes from 'prop-types';
 import { Navigate } from 'react-router-dom';
 import { login } from '../../actions/user';
 import toggleShow from '../../functions/toggleShow';
+import { setAlert } from '../../actions/alert';
 
-const Login = ({isAuthenticated, login, setShowModal, showModal}) => {
+const Login = ({isAuthenticated, login, setShowModal, showModal, setAlert}) => {
 	const refs = {
 		pass: useRef(null),
 		passI: useRef(null)
@@ -27,6 +28,7 @@ const Login = ({isAuthenticated, login, setShowModal, showModal}) => {
 
 	const onsubmit = e => {
 		e.preventDefault();
+		if (email === '' || password === '') return setAlert('Please Enter Credentials', 'error', setShowModal, showModal)
 		login({email, password, remeber}, setShowModal, showModal);
 	}
 
@@ -34,26 +36,31 @@ const Login = ({isAuthenticated, login, setShowModal, showModal}) => {
 		<Fragment>
 		{isAuthenticated ? <Navigate to='/dashboard'/> : 
 		<div className='login'>
-			<h3>Login</h3>
+			<h2>Login</h2>
 			<form onSubmit={e => onsubmit(e)}>
 				<div className='login-email'>
 					<input type='text' placeholder='email' onChange={e => onchange(e)} value={email} name='email'></input>
 				</div>
+				<br></br>
+				<small>example@gmail.com</small>
+				<br></br>
 				<div className='login-password'>
-					<small>example@gmail.com</small>
-					<br></br>
 					<input type='password' placeholder='password' onChange={e => onchange(e)} value={password} name='password' ref={pass}></input>
-					<button type='button' onClick={() => toggleShow(refs, 'pass')}>
-						<i ref={passI} className='fa-solid fa-eye'></i>
-					</button>
+					<div className='eye'>
+						<button type='button' onClick={() => toggleShow(refs, 'pass')} className="eye-btn">
+								<i ref={passI} className='fa-solid fa-eye'></i>
+						</button>
+					</div>
 				</div>
+				<br></br>
+				<small>must contain 6 characters</small>
+				<br></br>
+				<br></br>
 				<div className='login-remeber'>
 					Remeber Me <input type='checkbox' name='remeber' value={remeber} onChange={e => setFormData({...formData, remeber: e.target.checked})}></input>
 				</div>
 				<div className='login-submit'>
-					<small>must contain 6 characters</small>
-					<br></br>
-					<input type='submit' value='Login'></input>
+					<input type='submit' value='Login' className='btn'></input>
 				</div>
 			</form>
 		</div>}
@@ -70,4 +77,4 @@ const mapStateToProps = state => ({
 	isAuthenticated: state.user.isAuthenticated
 })
 
-export default connect(mapStateToProps, {login})(Login)
+export default connect(mapStateToProps, {login, setAlert})(Login)

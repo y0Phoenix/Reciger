@@ -122,7 +122,7 @@ const Recipes = ({showModal, setShowModal, getRecipes, deleteRecipe, _loading, u
                 <div className='recipe-main'>
                   <div className='recipe-create'>
                     <button type='button' onClick={() => setNavigate('/recipe/new')}>
-                      Create Recipe <i className='fa-solid fa-book'></i>
+                     <i className='fa-solid fa-book'></i> Create Recipe 
                     </button>
                   </div>
                   <div className='recipe-search'>

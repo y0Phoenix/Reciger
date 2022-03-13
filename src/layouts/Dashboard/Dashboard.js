@@ -21,7 +21,7 @@ const Dashboard = ({user, showModal, setShowModal}) => {
               <RecentRecs user={_user} setShowModal={setShowModal} showModal={showModal}/>
                 <Link to='/recipe/new'>
                   <button className='btn'>
-                    Create Recipe<i className="fa-solid fa-book"></i>
+                   <i className="fa-solid fa-book"></i> Create Recipe
                   </button>
                 </Link>
             </div>
@@ -29,7 +29,7 @@ const Dashboard = ({user, showModal, setShowModal}) => {
               <h3>Recent Ingredients</h3>
               <RecentIngs user={_user} setShowModal={setShowModal} showModal={showModal}/>
                 <button className='btn' onClick={e => setShowModal({...showModal, IngredientM: {bool: true, id: ''}})}>
-                  Create Ingredient<i className="fa-solid fa-carrot"></i>
+                 <i className="fa-solid fa-carrot"></i> Create Ingredient
                 </button>
             </div>
           </div>

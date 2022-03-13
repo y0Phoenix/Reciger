@@ -1,3 +1,5 @@
+@import './Colors.css';
+
 .footer-container {
     position: fixed;
     bottom: 0;
@@ -7,20 +9,21 @@
     display: grid;
     margin: 0 auto;
     text-align: center;
-    background-color: gray;
+    background-color: var(--theme-color);
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    border: 1px solid white;
 }
 .footer-btn {
     border-radius: 4px;
     border: none;
-    background-color: gray;
+    background-color: var(--theme-color);
     color: white;
     font-size: large;
     height: 40px;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 .footer-btn:hover {
-    background-color: rgb(104, 104, 104);
+    background-color: var(--theme-color-hover);
 }
 .footer-p {
     font-size: large;

@@ -1,8 +1,11 @@
+@import './Colors.css';
+
 html body {
 	height: 100%;
 	margin:0;
 	padding:0;
 	line-height: 1.6;
+	background-color: rgba(0,0,0,0.9);
 }
 a {
 	text-decoration: none;
@@ -10,6 +13,30 @@ a {
 .container {
 	position: relative;
 	margin-bottom: 130px;
+}
+.eye {
+	position: absolute;
+	right: 0;
+	top: 1px;
+}
+.eye-btn {
+	border-radius: 6px;
+	border: none;
+	height: 35px;
+	background-color: var(--theme-color);
+}
+.eye-btn:hover {
+	background-color: var(--theme-color-hover);
+}
+.btn {
+	border-radius: 8px;
+	background-color: var(--theme-color);
+	height: 30px;
+	color: white;
+	width: 75px;
+}
+.btn:hover {
+	background-color: var(--theme-color-hover);
 }
 .background {
 	position: fixed;
