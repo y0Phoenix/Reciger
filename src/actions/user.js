@@ -20,7 +20,7 @@ import {
 export const login = (formData, setShowModal, showModal) => async (dispatch) => {
     try {
         dispatch(loading());
-        const res = await axios.post('/api/auth', formData);
+        const res = await axios.post(`/api/auth?remember=${formData.remeber}`, formData);
         dispatch(stopLoading());
 
         dispatch({

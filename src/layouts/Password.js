@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { changePasswordReq, changePasswordToken } from '../actions/user';
 import { setAlert } from '../actions/alert';
+import toggleShow from '../functions/toggleShow';
 
 const initPasswords = {
     pass1: '',
@@ -11,6 +12,13 @@ const initPasswords = {
 
 const Password = ({setNavigate, setShowModal, showModal, user, changePasswordReq, changePasswordToken, setAlert}) => {
     const params = useParams();
+    const refs = {
+        pass1: useRef(null),
+        pass1I: useRef(null),
+        pass2: useRef(null),
+        pass2I: useRef(null)
+    }
+    const { pass1, pass1I, pass2, pass2I } = refs;
     const [email, setEmail] = useState(user ? user.email : '');
     const [passwords, setPasswords] = useState(initPasswords);
     const [oldPass, setOldPass] = useState('')
@@ -28,7 +36,6 @@ const Password = ({setNavigate, setShowModal, showModal, user, changePasswordReq
         if (params.token === 'init' || !params.token) return setAlert('Improper Link Parameters Try Again Later', 'error', setShowModal, showModal);
         if (passwords.pass1 !== passwords.pass2) return setAlert('Passwords Don\'t Match', 'error', setShowModal, showModal);
         changePasswordToken(params.token, passwords.pass1, oldPass, setShowModal, showModal);
-        setTimeout(setNavigate, 3500, '/dashboard');
     };
 
     return (
@@ -54,12 +61,18 @@ const Password = ({setNavigate, setShowModal, showModal, user, changePasswordReq
                         <div className='password-first'>
                             <small>New Password</small>
                             <br></br>
-                            <input type='text' name='pass1' value={passwords.pass1} onChange={e => onchange(e)} placeholder='password-one'></input>
+                            <input type='password' name='pass1' ref={pass1} value={passwords.pass1} onChange={e => onchange(e)} placeholder='password-one'></input>
+                            <button type='button' onClick={() => toggleShow(refs, 'pass1')}>
+                                <i ref={pass1I} className='fa-solid fa-eye'></i>
+                            </button>
                         </div>
                         <div className='password-second'>
                             <small>Must Match</small>
                             <br></br>
-                            <input type='text' name='pass2' value={passwords.pass2} onChange={e => onchange(e)} placeholder='password-two'></input>
+                            <input type='password' name='pass2' ref={pass2} value={passwords.pass2} onChange={e => onchange(e)} placeholder='password-two'></input>
+                            <button type='button' onClick={() => toggleShow(refs, 'pass2')}>
+                                <i ref={pass2I} className='fa-solid fa-eye'></i>
+                            </button>
                         </div>
                         <div className='password-submit'>
                             <input type='submit' value='Submit'></input>
