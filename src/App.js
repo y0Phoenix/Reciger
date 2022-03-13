@@ -54,7 +54,10 @@ function App() {
   });
   const [navigate, setNavigate] = useState(null);
   const location =  window.location.pathname;
-  useEffect(() => store.dispatch(loadUser()), [location]);
+  useEffect(() => {
+    if (location === '/' || location === '/login' || location === '/register') return;
+    store.dispatch(loadUser())
+  }, [location]);
   return (
     <Provider store={store}>
       <Router>
