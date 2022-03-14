@@ -5,6 +5,11 @@ import PropTypes from 'prop-types';
 import { Navigate } from 'react-router-dom';
 import {setAlert} from '../../actions/alert';
 import toggleShow from '../../functions/toggleShow';
+import { motion } from 'framer-motion';
+
+const hover = {
+  scale: 1.05
+};
 
 const Register = ({isAuthenticated, register, setAlert, setShowModal, showModal}) => {
   const refs = {
@@ -47,35 +52,40 @@ const Register = ({isAuthenticated, register, setAlert, setShowModal, showModal}
     <Fragment>
       {isAuthenticated ? <Navigate to='/dashboard'/> : 
         <div className='register'>
-          <form className='register-form' onSubmit={e => onsubmit(e)}>
-            <div className='register-form1'>
+          <h2>Register</h2>
+          <form onSubmit={e => onsubmit(e)} autoComplete="off">
+            <div className='register-form-text'>
               <input type='text' onChange={e => onchange(e)} value={name} placeholder='name' name='name'></input>
-              <br></br>
             </div>
-            <div className='register-form2'>
-              <input type='text' onChange={e => onchange(e)} value={email} placeholder='email' name='email'></input>
-              <br></br>
+            <br></br>
+            <div className='register-form-text'>
+              <input type='email' onChange={e => onchange(e)} value={email} placeholder='email' name='email'></input>
             </div>
-            <div className='register-form3'>
+            <br></br>
+            <div className='register-form-pass'>
               <input ref={pass1} type='password' onChange={e => onchange(e)} value={password} placeholder="password" name='password'></input>
-              <button type='button' onClick={() => toggleShow(refs, 'pass1')}>
-                <i className='fa-solid fa-eye' ref={pass1I}></i>
-              </button>
-              <br></br>
-              <small>Must Contain 6 Characters</small>
-              <br></br>
+              <div className='eye'> 
+                <motion.button whileHover={hover} type='button' className='eye-btn' onClick={() => toggleShow(refs, 'pass1')}>
+                  <i className='fa-solid fa-eye' ref={pass1I}></i>
+                </motion.button>
+              </div>
             </div>
-            <div className='register-form4'>
+            <br></br>
+            <small>Must Contain 6 Characters</small>
+            <br></br>
+            <div className='register-form-pass'>
               <input type='password' onChange={e => onchange(e)} placeholder="password 2" ref={pass2}></input>
-              <button type='button' onClick={() => toggleShow(refs, 'pass2')}>
-                <i className='fa-solid fa-eye' ref={pass2I}></i>
-              </button>
-              <br></br>
-              <small>Must Match</small>
-              <br></br>
+              <div className='eye'>
+                <motion.button whileHover={hover} type='button' className='eye-btn' onClick={() => toggleShow(refs, 'pass2')}>
+                  <i className='fa-solid fa-eye' ref={pass2I}></i>
+                </motion.button>
+              </div>
             </div>
-            <div className='register-form5'>
-              <small>Prefered Measurements (defaults to standard oz, floz)</small>
+            <br></br>
+            <small>Must Match</small>
+            <br></br>
+            <div className='register-form-prefs'>
+              <small>Prefered Measurements (defaults to oz, floz)</small>
               <input type='checkbox' value={showPrefs} onChange={e => setShowPrefs(e.target.checked)}></input>
               {showPrefs &&
                 <>
@@ -85,8 +95,9 @@ const Register = ({isAuthenticated, register, setAlert, setShowModal, showModal}
                   <input type='text' name='preferedW' onChange={e => onchange(e)} placeholder='prefered weight' value={preferedW}></input>
                 </>
               }
-              </div>
-            <input type='submit' value='Register'></input>
+            </div>
+            <br></br>
+            <motion.input whileHover={hover} type='submit' value='Register' className='btn'></motion.input>
           </form>
         </div>
       }

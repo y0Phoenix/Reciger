@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { animate, AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import cooking from '../images/cooking-at-home.gif'
 import PropTypes from 'prop-types';
 import { Link, Navigate } from 'react-router-dom';

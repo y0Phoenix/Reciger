@@ -3,6 +3,7 @@ import './css/Navbar.css';
 import './css/Footer.css';
 import './css/Landing.css';
 import './css/Login.css';
+import './css/Register.css';
 import React, {Fragment, useEffect, useState} from 'react';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import { Provider } from 'react-redux';
