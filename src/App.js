@@ -4,6 +4,9 @@ import './css/Footer.css';
 import './css/Landing.css';
 import './css/Login.css';
 import './css/Register.css';
+import './css/Dashboard/Dashboard.css';
+import './css/Dashboard/RecentIngs.css';
+import './css/Dashboard/RecentRecs.css';
 import React, {Fragment, useEffect, useState} from 'react';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import { Provider } from 'react-redux';
@@ -56,7 +59,7 @@ function App() {
   const [navigate, setNavigate] = useState(null);
   const location =  window.location.pathname;
   useEffect(() => {
-    if (location === '/' || location === '/login' || location === '/register') return;
+    if ((location === '/' || location === '/login' || location === '/register') && !localStorage.token) return;
     store.dispatch(loadUser())
   }, [location]);
   return (
@@ -75,7 +78,7 @@ function App() {
               <Route  exact path='/' element={<Landing {...{showModal, setShowModal}}/>}/>
               <Route  exact path='/register' element={<Register {...{showModal, setShowModal}}/>}/>
               <Route  exact path='/login' element={<Login {...{showModal, setShowModal}}/>}/>
-              <Route  exact path='/dashboard' element={<Dashboard {...{showModal, setShowModal}}/>}/>
+              <Route  exact path='/dashboard' element={<Dashboard {...{showModal, setShowModal, setNavigate}}/>}/>
               <Route  exact path='/ingredients/:page' element={<Ingredients {...{showModal, setShowModal, setNavigate}}/>}/>
               <Route  exact path='/recipe/:id' element={<Recipe {...{showModal, setShowModal, setNavigate}}/>}/>
               <Route  exact path='/recipes/:page' element={<Recipes {...{showModal, setShowModal, setNavigate}}/>}/>

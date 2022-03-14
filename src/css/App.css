@@ -33,8 +33,19 @@ a {
 	background-color: var(--theme-color);
 	height: 30px;
 	color: white;
-	width: 75px;
+	max-width: fit-content;
 	border: none;
+}
+.btn-red {
+	border-radius: 8px;
+	height: 30px;
+	color: white;
+	max-width: fit-content;
+	border: none;
+	background-color: red;
+}
+.btn-red:hover {
+	background-color: rgb(146, 0, 0);
 }
 .btn:hover {
 	background-color: var(--theme-color-hover);

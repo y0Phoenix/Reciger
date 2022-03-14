@@ -1,4 +1,6 @@
 :root {
     --theme-color: rgb(0, 124, 124);
     --theme-color-hover: rgb(0, 102, 102);
+    --recents-background: rgb(46, 46, 100);
+    --recents-opacity: 0.9;
 }

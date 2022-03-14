@@ -1,11 +1,16 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Link, Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import RecentRecs from './RecentRecs';
 import RecentIngs from './RecentIngs';
 
-const Dashboard = ({user, showModal, setShowModal}) => {
+const hover = {
+  scale: 1.07
+};
+
+const Dashboard = ({user, showModal, setShowModal, setNavigate}) => {
   const {isAuthenticated, user: _user} = user;
   
   return (
@@ -13,24 +18,27 @@ const Dashboard = ({user, showModal, setShowModal}) => {
       {!isAuthenticated ? <Navigate to='/login' /> : 
         <>
           <div className='dashboard-head'>
-            <h1>{_user.name}'s Recipes</h1>
+            <h1>{_user.name}'s Dashboard</h1>
           </div>
+          <br></br>
           <div className='dashboard-container'>
             <div className='recent-recipes'>
               <h3>Recent Recipes</h3>
+              <div className='recent-create'>
+                <motion.button whileHover={hover} onClick={() => setNavigate('/recipe/new')}>
+                  <i className="fa-solid fa-book"></i> Create Recipe
+                </motion.button>
+              </div>
               <RecentRecs user={_user} setShowModal={setShowModal} showModal={showModal}/>
-                <Link to='/recipe/new'>
-                  <button className='btn'>
-                   <i className="fa-solid fa-book"></i> Create Recipe
-                  </button>
-                </Link>
             </div>
             <div className='recent-ingredients'>
               <h3>Recent Ingredients</h3>
+              <div className='recent-create'>
+                <motion.button whileHover={hover} onClick={e => setShowModal({...showModal, IngredientM: {bool: true, id: ''}})}>
+                  <i className="fa-solid fa-carrot"></i> Create Ingredient
+                </motion.button>
+              </div>
               <RecentIngs user={_user} setShowModal={setShowModal} showModal={showModal}/>
-                <button className='btn' onClick={e => setShowModal({...showModal, IngredientM: {bool: true, id: ''}})}>
-                 <i className="fa-solid fa-carrot"></i> Create Ingredient
-                </button>
             </div>
           </div>
         </>

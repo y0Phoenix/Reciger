@@ -2,6 +2,11 @@ import React, { Fragment, useState } from 'react';
 import { connect } from 'react-redux';
 import { Navigate } from 'react-router';
 import { deleteRecipe } from '../../actions/recipe';
+import { motion } from 'framer-motion';
+
+const hover = {
+    scale: 1.03
+};
 
 const RecentRecs = ({user, setShowModal, showModal, deleteRecipe}) => {
     const [navigate, setNavigate] = useState({
@@ -25,18 +30,20 @@ const RecentRecs = ({user, setShowModal, showModal, deleteRecipe}) => {
                     });
                     return (
                         <div className={`recent-recs${i}`} key={i}>
-                            <div className={`recent-recs${i}1`} key={i + 10}>
-                                <p className='recent-recs-name'>{rec.name}</p>
-                                <p className='recent-recs-categories'>Categories: {cats}</p>
-                                <p className='recent-recs-calories'>Calories: {rec.calories}</p>
-                                <p className='recent-recs-yield'>Yield: {rec.yield}</p>
-                                <p className='recent-recs-price'>{rec.price}</p>
-                                <button type="button" onClick={() => setNavigate({...navigate, bool: true, id: rec.rec})}>
+                            <div className={`recent-recs-name${i}`}>{rec.name}</div>
+                            <div className={`recent-recs-categories${i}`}>Categories: {cats}</div>
+                            <div className={`recent-recs-calories${i}`}>Calories: {rec.calories}</div>
+                            <div className={`recent-recs-yield${i}`}>Yield: {rec.yield}</div>
+                            <div className={`recent-recs-price${i}`}>{rec.price}</div>
+                            <div className={`recent-recs-edit${i}`}>
+                                <motion.button whileHover={hover} type="button" className='btn' onClick={() => setNavigate({...navigate, bool: true, id: rec.rec})}>
                                     <i className='fa-solid fa-edit'></i>  
-                                </button>
-                                <button onClick={() => setShowModal({...showModal, YesorNo: {direct: deleteRecipe, bool: true, params: {id: rec.rec, setShowModal, showModal}}})}>
+                                </motion.button>
+                            </div>
+                            <div className={`recent-recs-delete${i}`}>
+                                <motion.button whileHover={hover} className='btn-red' onClick={() => setShowModal({...showModal, YesorNo: {direct: deleteRecipe, bool: true, params: {id: rec.rec, setShowModal, showModal}}})}>
                                     <i className='fa-solid fa-x'></i>    
-                                </button>
+                                </motion.button>
                             </div>
                         </div>
                     )
