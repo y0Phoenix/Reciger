@@ -1,3 +1,0 @@
-src: https://www.flaticon.com/search?word=chicken&color=color&shape=fill&order_by=4&type=icon
-
-chicken : <a href="https://www.flaticon.com/free-icons/chicken" title="chicken icons">Chicken icons created by Freepik - Flaticon</a>

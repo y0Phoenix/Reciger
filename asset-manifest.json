@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/Reciger/static/css/main.459dec63.css",
+    "main.js": "/Reciger/static/js/main.893e37c9.js",
+    "static/media/cooking-at-home.gif": "/Reciger/static/media/cooking-at-home.f5f2ac463da415c8d704.gif",
+    "static/media/spinner.gif": "/Reciger/static/media/spinner.a1a996746e5e48352c81.gif",
+    "index.html": "/Reciger/index.html",
+    "main.459dec63.css.map": "/Reciger/static/css/main.459dec63.css.map",
+    "main.893e37c9.js.map": "/Reciger/static/js/main.893e37c9.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.459dec63.css",
+    "static/js/main.893e37c9.js"
+  ]
+}
