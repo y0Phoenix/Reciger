@@ -23,10 +23,10 @@ a {
 	border-radius: 6px;
 	border: none;
 	height: 35px;
-	background-color: var(--theme-color);
+	background-color: white;
 }
 .eye-btn:hover {
-	background-color: var(--theme-color-hover);
+	background-color: rgb(231, 231, 231);
 }
 .btn {
 	border-radius: 8px;

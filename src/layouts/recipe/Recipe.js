@@ -180,58 +180,70 @@ const Recipe = ({ingredients, navigate, setNavigate, postRecipe, getRecipes, sho
     {isAuthenticated ?
     
       <div className='new-recipe-container'>
-        <div className='new-recipe-form'>
-          <form onSubmit={e => onsubmit(e)} autoComplete="off">
+        <form onSubmit={e => onsubmit(e)} autoComplete="off">
+          <div className='new-recipe-form'>
             <div className='new-recipe-name'>
+              <small>Name</small>
+              <br></br>
               <input type='text' value={name} name='name' onChange={e => onchange(e)} placeholder='name'></input>
             </div>
             <div className='new-recipe-yield'>
-              <input type='text' value={Yield.number} name='number' onChange={e => onchange(e)} placeholder='amount'></input>
+              <small>Yield</small>
+              <br></br>
+              <input type='text' value={Yield.number} id='number' name='number' onChange={e => onchange(e)} placeholder='amount'></input>
               <input type='text' value={Yield.string} name='string' onChange={e => onchange(e)} placeholder='unit'></input>
               <Scale {...{params, setScale}}/>
+            </div>
+            <div className='new-recipe-nutrients'>
+              <small>Nutrients</small>
+              <br></br>
+              <Nutrients {...{recipe, scale, setScale}}/>
             </div>
             {/* code doesn't work with having Ingredients as a child component. Keeps saying 
             (Cannot update a component (`Recipe`) while rendering a different component (`Ingredients`). To locate the bad setState() call inside `Ingredients`, 
             follow the stack trace as described in https://reactjs.org/link/setstate-in-render)*/}
             {/* <Ingredients {...{ingData, onchange, suggs, _loading, onblur, showModal, ingredients, setStateChange, addIng, removeIng}}/> */}
             <div className='new-recipe-ingredients'>
+              <small>Ingredients</small>
+              <br></br>
                 {ingData.length > 0 && !_loading.bool && ingData.map((ing, i, arr) => {
                     if (!suggs[i]) setSuggs([...suggs, []]);
                     return (
                         <div key={i} className='new-recipe-ingredient-item'>
-                            <input type='text' name='ing-name' value={ingData[i].name} onChange={e => onchange(e, i)} onBlur={e => onblur(i, ing.name)} placeholder='name'></input>
+                            <input type='text' id='ing-name' name='ing-name' value={ingData[i].name} onChange={e => onchange(e, i)} onBlur={e => onblur(i, ing.name)} placeholder='name'></input>
                             <Suggestions {...{suggs, ingData, i, showModal, setStateChange}}/>
-                            <input type='text' name='ing-amount' value={ingData[i].quantity.amount} onChange={e => onchange(e, i)} placeholder='amount'></input>
-                            <input type='text' name='ing-unit' value={ingData[i].quantity.unit} onChange={e => onchange(e, i)} placeholder='unit'></input>
-                            <button type='button' className='edit-btn' onClick={e => {
+                            <input type='text' id='ing-amount' name='ing-amount' value={ingData[i].quantity.amount} onChange={e => onchange(e, i)} placeholder='amount'></input>
+                            <input type='text' id='ing-unit' name='ing-unit' value={ingData[i].quantity.unit} onChange={e => onchange(e, i)} placeholder='unit'></input>
+                            <button type='button' className='btn' onClick={e => {
                                 const index = ingredients.map(ing => ing.name).indexOf(ingData[i].name);
                                 if (index === -1) return;
                                setShowModal({...showModal, IngredientM: {bool: true, id: ingredients[index]._id}});
                             }}>Edit</button>
-                            <button className='remove-btn' type='button' onClick={e => removeIng(e, i)}>
+                            <button className='btn-red' type='button' onClick={e => removeIng(e, i)}>
                                 <i className='fa-solid fa-x'></i>
                             </button>
                         </div>
                     )
                 })}
+                <button className='btn' type='button'onClick={e => addIng(e)}>Add Ingredient</button>
             </div>
-            <button className='btn' type='button'onClick={e => addIng(e)}>Add Ingredient</button>
             <div className='new-recipe-categories'>
+              <small>Categories</small>
+              <br></br>
               <input type='text' value={categories} name='categories' onChange={e => setFormData({...formData, categories: e.target.value})} placeholder='categories'></input>
               <input type='checkbox' value={Correlative} name='Correlative' onChange={e => setFormData({...formData, Correlative: e.target.checked})}></input>
               <span>Check If This Recipe Will Be Used In Other Recipes</span>
             </div>
             <div className='new-recipe-instructions'>
+              <small>Instructions</small>
+              <br></br>
               <textarea type='text' value={instructions} name='instructions' onChange={e => onchange(e)} rows="7" cols="60"></textarea>
             </div>
             <div className='new-recipe-submit'>
               <input type='submit' value='Submit Recipe'></input>
             </div>
-          </form>
-          <div className='recipe-nutrients'>
-            <Nutrients {...{recipe, scale, setScale}}/>
           </div>
-        </div>
+        </form>
       </div> : <Navigate to='/login' />
     }
     </>

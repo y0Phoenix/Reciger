@@ -7,6 +7,8 @@ const Scale = ({params, setScale}) => {
         <>
             {params.id !== 'new' && 
                 <div className='recipe-scale-container'>
+                    <small>Scale Recipe</small>
+                    <br></br>
                     <div className='recipe-scale-amount'>
                         <input type='number' name='amount' value={tempScale} onChange={e => setTempScale(e.target.value)} ref={scale}></input>    
                     </div>

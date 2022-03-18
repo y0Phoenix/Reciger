@@ -1,0 +1,52 @@
+@import '../Colors.css';
+
+.new-recipe-container {
+    margin: 0 auto;
+    padding: 75px;
+}
+.new-recipe-form {
+    display: grid;
+    grid-template-areas: 
+    'name yield nutrients'
+    'ingredients ingredients nutrients'
+    'instructions instructions instructions'
+    'categories categories categories'
+    '. submit .';
+    color: white;
+}
+.new-recipe-form input[type='text'],
+.new-recipe-form input[type='number'] {
+    border-radius: 6px;
+    height: 25px;
+    margin: 4px;
+    font-size: large;
+}
+.new-recipe-yield input[type='number'],
+.new-recipe-yield #number {
+    width: 75px;
+}
+.new-recipe-ingredient-item #ing-amount,
+.new-recipe-ingredient-item #ing-unit {
+    width: 75px;
+}
+.new-recipe-name {
+    grid-area: name;
+}
+.new-recipe-yield {
+    grid-area: yield;
+}
+.new-recipe-nutrients {
+    grid-area: nutrients;
+}
+.new-recipe-ingredients {
+    grid-area: ingredients;
+}
+.new-recipe-instructions {
+    grid-area: instructions;
+}
+.new-recipe-submit {
+    grid-area: submit;
+}
+.new-recipe-categories {
+    grid-area: categories;
+}
