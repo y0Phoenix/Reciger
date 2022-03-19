@@ -65,15 +65,17 @@ const Nutrients = ({recipe, scale}) => {
         <>
             {recipe.nutrients &&
                 <>
-                    <div className='recipe-calories'>Calories {calories}</div>
-                    <div className='recipe-iron'>Iron {nutrients.iron.amount} {nutrients.iron.unit}</div>
-                    <div className='recipe-sodium'>Sodium {nutrients.sodium.amount} {nutrients.sodium.unit}</div>
-                    <div className='recipe-calcium'>Calcium {nutrients.calcium.amount} {nutrients.calcium.unit}</div>
-                    <div className='recipe-fiber'>Fiber {nutrients.fiber.amount} {nutrients.fiber.unit}</div>
-                    <div className='recipe-sugar'>Sugars {nutrients.sugars.amount} {nutrients.sugars.unit}</div>
-                    <div className='recipe-carbs'>Carbs {nutrients.carbs.amount} {nutrients.carbs.unit}</div>
-                    <div className='recipe-fat'>Fats {nutrients.fat.amount} {nutrients.fat.unit}</div>
-                    <div className='recipe-protein'>Protein {nutrients.protein.amount} {nutrients.protein.unit}</div>
+                    <div className='nutrients-container'>
+                        <p className='recipe-calories'>Calories {calories}</p>
+                        <p className='recipe-iron'>Iron {nutrients.iron.amount} {nutrients.iron.unit}</p>
+                        <p className='recipe-sodium'>Sodium {nutrients.sodium.amount} {nutrients.sodium.unit}</p>
+                        <p className='recipe-calcium'>Calcium {nutrients.calcium.amount} {nutrients.calcium.unit}</p>
+                        <p className='recipe-fiber'>Fiber {nutrients.fiber.amount} {nutrients.fiber.unit}</p>
+                        <p className='recipe-sugar'>Sugars {nutrients.sugars.amount} {nutrients.sugars.unit}</p>
+                        <p className='recipe-carbs'>Carbs {nutrients.carbs.amount} {nutrients.carbs.unit}</p>
+                        <p className='recipe-fat'>Fats {nutrients.fat.amount} {nutrients.fat.unit}</p>
+                        <p className='recipe-protein'>Protein {nutrients.protein.amount} {nutrients.protein.unit}</p>
+                    </div>
                 </>
             }
         </>

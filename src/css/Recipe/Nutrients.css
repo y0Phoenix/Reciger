@@ -1,0 +1,10 @@
+@import '../Colors.css';
+
+.nutrients-container {
+    display: flex;
+    flex-direction: column;
+}
+.nutrients-container p {
+    margin: 0;
+    font-size: 20px;
+}

@@ -9,6 +9,11 @@ import { getIngredients } from '../../actions/ingredient';
 import Scale from './Scale';
 import Nutrients from './Nutrients';
 import Suggestions from './Suggestions';
+import { motion } from 'framer-motion';
+
+const hover = {
+  scale: 1.06
+};
 
 const Recipe = ({ingredients, navigate, setNavigate, postRecipe, getRecipes, showModal, setShowModal, getIngredients, isAuthenticated, _loading, recipe}) => {
   const params = useParams();
@@ -37,6 +42,13 @@ const Recipe = ({ingredients, navigate, setNavigate, postRecipe, getRecipes, sho
     Ingredients: []
   });
   const [suggs, setSuggs] = useState([[]]);
+  const [suggsIndex, setSuggsIndex] = useState({
+    index: 0,
+    where: 0,
+    start: true,
+    show: false
+  });
+  const [userClicked, setUserClicked] = useState(false);
   const [scale, setScale] = useState(1);
   const [stateChange, setStateChange] = useState({
     type: '',
@@ -120,6 +132,7 @@ const Recipe = ({ingredients, navigate, setNavigate, postRecipe, getRecipes, sho
       else tempdata[i][e.target.name.replace('ing-', '')] = e.target.value;
       if (e.target.name.includes('name')) {
         tempdata[i].show = true;
+        setSuggsIndex({...suggsIndex, show: true, index: i, where: 0, start: true});
         let currentsuggs = [...suggs];
         currentsuggs[i] = await getSuggs(e.target.value);
         setSuggs(currentsuggs);
@@ -149,6 +162,7 @@ const Recipe = ({ingredients, navigate, setNavigate, postRecipe, getRecipes, sho
       tempdatasuggs[i] = [];
       setIngData(tempdataing);
       setSuggs(tempdatasuggs);
+      setSuggsIndex({index: 0, show: false});
     }, 300)
   }
 
@@ -180,70 +194,70 @@ const Recipe = ({ingredients, navigate, setNavigate, postRecipe, getRecipes, sho
     {isAuthenticated ?
     
       <div className='new-recipe-container'>
-        <form onSubmit={e => onsubmit(e)} autoComplete="off">
+        <div className='new-recipe-form-container'>
           <div className='new-recipe-form'>
-            <div className='new-recipe-name'>
-              <small>Name</small>
-              <br></br>
-              <input type='text' value={name} name='name' onChange={e => onchange(e)} placeholder='name'></input>
+              <div className='new-recipe-name'>
+                <small>Name</small>
+                <br></br>
+                <input type='text' value={name} name='name' onChange={e => onchange(e)} placeholder='name'></input>
+              </div>
+              <div className='new-recipe-yield'>
+                <small>Yield</small>
+                <br></br>
+                <input type='text' value={Yield.number} id='number' name='number' onChange={e => onchange(e)} placeholder='amount'></input>
+                <input type='text' value={Yield.string} name='string' onChange={e => onchange(e)} placeholder='unit'></input>
+                <Scale {...{params, setScale}}/>
+              </div>
+              <div className='new-recipe-nutrients'>
+                <small>Nutrients</small>
+                <br></br>
+                <Nutrients {...{recipe, scale, setScale}}/>
+              </div>
+              {/* code doesn't work with having Ingredients as a child component. Keeps saying 
+              (Cannot update a component (`Recipe`) while rendering a different component (`Ingredients`). To locate the bad setState() call inside `Ingredients`, 
+              follow the stack trace as described in https://reactjs.org/link/setstate-in-render)*/}
+              {/* <Ingredients {...{ingData, onchange, suggs, _loading, onblur, showModal, ingredients, setStateChange, addIng, removeIng}}/> */}
+              <div className='new-recipe-ingredients'>
+                <small>Ingredients</small>
+                <br></br>
+                  {ingData.length > 0 && !_loading.bool && ingData.map((ing, i, arr) => {
+                      if (!suggs[i]) setSuggs([...suggs, []]);
+                      return (
+                          <div key={i} className='new-recipe-ingredient-item'>
+                              <input autoComplete='off' type='text' id='ing-name' name='ing-name' value={ingData[i].name} onChange={e => onchange(e, i)} onBlur={e => onblur(i, ing.name)} placeholder='name'></input>
+                              <Suggestions {...{suggs, ingData, i, showModal, setState, suggsIndex, setSuggsIndex, userClicked, setUserClicked}}/>
+                              <input autoComplete='off' type='text' id='ing-amount' name='ing-amount' value={ingData[i].quantity.amount} onChange={e => onchange(e, i)} placeholder='amount'></input>
+                              <input autoComplete='off' type='text' id='ing-unit' name='ing-unit' value={ingData[i].quantity.unit} onChange={e => onchange(e, i)} placeholder='unit'></input>
+                              <motion.button whileHover={hover} type='button' className='btn no-radius' onClick={e => {
+                                  const index = ingredients.map(ing => ing.name).indexOf(ingData[i].name);
+                                  if (index === -1) return;
+                                setShowModal({...showModal, IngredientM: {bool: true, id: ingredients[index]._id}});
+                              }}>Edit</motion.button>
+                              <motion.button whileHover={hover} className='btn-red no-radius' type='button' onClick={e => removeIng(e, i)}>
+                                  <i className='fa-solid fa-x'></i>
+                              </motion.button>
+                          </div>
+                      )
+                  })}
+                  <motion.button whileHover={hover} className='btn' type='button'onClick={e => addIng(e)}>Add Ingredient</motion.button>
+              </div>
+              <div className='new-recipe-categories'>
+                <small>Categories</small>
+                <br></br>
+                <input type='text' value={categories} name='categories' onChange={e => setFormData({...formData, categories: e.target.value})} placeholder='categories'></input>
+                <input type='checkbox' value={Correlative} name='Correlative' onChange={e => setFormData({...formData, Correlative: e.target.checked})}></input>
+                <span>Check If This Recipe Will Be Used In Other Recipes</span>
+              </div>
+              <div className='new-recipe-instructions'>
+                <small>Instructions</small>
+                <br></br>
+                <textarea type='text' value={instructions} name='instructions' onChange={e => onchange(e)} rows="7" cols="60"></textarea>
+              </div>
             </div>
-            <div className='new-recipe-yield'>
-              <small>Yield</small>
-              <br></br>
-              <input type='text' value={Yield.number} id='number' name='number' onChange={e => onchange(e)} placeholder='amount'></input>
-              <input type='text' value={Yield.string} name='string' onChange={e => onchange(e)} placeholder='unit'></input>
-              <Scale {...{params, setScale}}/>
-            </div>
-            <div className='new-recipe-nutrients'>
-              <small>Nutrients</small>
-              <br></br>
-              <Nutrients {...{recipe, scale, setScale}}/>
-            </div>
-            {/* code doesn't work with having Ingredients as a child component. Keeps saying 
-            (Cannot update a component (`Recipe`) while rendering a different component (`Ingredients`). To locate the bad setState() call inside `Ingredients`, 
-            follow the stack trace as described in https://reactjs.org/link/setstate-in-render)*/}
-            {/* <Ingredients {...{ingData, onchange, suggs, _loading, onblur, showModal, ingredients, setStateChange, addIng, removeIng}}/> */}
-            <div className='new-recipe-ingredients'>
-              <small>Ingredients</small>
-              <br></br>
-                {ingData.length > 0 && !_loading.bool && ingData.map((ing, i, arr) => {
-                    if (!suggs[i]) setSuggs([...suggs, []]);
-                    return (
-                        <div key={i} className='new-recipe-ingredient-item'>
-                            <input type='text' id='ing-name' name='ing-name' value={ingData[i].name} onChange={e => onchange(e, i)} onBlur={e => onblur(i, ing.name)} placeholder='name'></input>
-                            <Suggestions {...{suggs, ingData, i, showModal, setStateChange}}/>
-                            <input type='text' id='ing-amount' name='ing-amount' value={ingData[i].quantity.amount} onChange={e => onchange(e, i)} placeholder='amount'></input>
-                            <input type='text' id='ing-unit' name='ing-unit' value={ingData[i].quantity.unit} onChange={e => onchange(e, i)} placeholder='unit'></input>
-                            <button type='button' className='btn' onClick={e => {
-                                const index = ingredients.map(ing => ing.name).indexOf(ingData[i].name);
-                                if (index === -1) return;
-                               setShowModal({...showModal, IngredientM: {bool: true, id: ingredients[index]._id}});
-                            }}>Edit</button>
-                            <button className='btn-red' type='button' onClick={e => removeIng(e, i)}>
-                                <i className='fa-solid fa-x'></i>
-                            </button>
-                        </div>
-                    )
-                })}
-                <button className='btn' type='button'onClick={e => addIng(e)}>Add Ingredient</button>
-            </div>
-            <div className='new-recipe-categories'>
-              <small>Categories</small>
-              <br></br>
-              <input type='text' value={categories} name='categories' onChange={e => setFormData({...formData, categories: e.target.value})} placeholder='categories'></input>
-              <input type='checkbox' value={Correlative} name='Correlative' onChange={e => setFormData({...formData, Correlative: e.target.checked})}></input>
-              <span>Check If This Recipe Will Be Used In Other Recipes</span>
-            </div>
-            <div className='new-recipe-instructions'>
-              <small>Instructions</small>
-              <br></br>
-              <textarea type='text' value={instructions} name='instructions' onChange={e => onchange(e)} rows="7" cols="60"></textarea>
-            </div>
-            <div className='new-recipe-submit'>
-              <input type='submit' value='Submit Recipe'></input>
-            </div>
+          <div className='new-recipe-submit'>
+            <motion.input whileHover={hover} type='submit'  className='btn' value='Submit Recipe' onClick={e => onsubmit(e)}></motion.input>
           </div>
-        </form>
+        </div>
       </div> : <Navigate to='/login' />
     }
     </>

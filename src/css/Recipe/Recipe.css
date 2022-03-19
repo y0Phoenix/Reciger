@@ -2,17 +2,26 @@
 
 .new-recipe-container {
     margin: 0 auto;
-    padding: 75px;
+    padding: 75px 175px;
+}
+.new-recipe-form-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 .new-recipe-form {
     display: grid;
+    grid-template-columns: 1200px 1fr;
     grid-template-areas: 
-    'name yield nutrients'
-    'ingredients ingredients nutrients'
-    'instructions instructions instructions'
-    'categories categories categories'
-    '. submit .';
+    'name yield'
+    'ingredients nutrients'
+    'instructions nutrients'
+    'categories categories'
+    ;
     color: white;
+}
+.new-recipe-submit {
+    text-align: center;
 }
 .new-recipe-form input[type='text'],
 .new-recipe-form input[type='number'] {
@@ -25,9 +34,13 @@
 .new-recipe-yield #number {
     width: 75px;
 }
+.new-recipe-ingredient-item #ing-name {
+    width: 900px;
+}
 .new-recipe-ingredient-item #ing-amount,
 .new-recipe-ingredient-item #ing-unit {
     width: 75px;
+    margin: 6px;
 }
 .new-recipe-name {
     grid-area: name;
@@ -36,16 +49,16 @@
     grid-area: yield;
 }
 .new-recipe-nutrients {
+    margin-top: 20px;
     grid-area: nutrients;
 }
 .new-recipe-ingredients {
     grid-area: ingredients;
+    display: flex;
+    flex-direction: column;
 }
 .new-recipe-instructions {
     grid-area: instructions;
-}
-.new-recipe-submit {
-    grid-area: submit;
 }
 .new-recipe-categories {
     grid-area: categories;

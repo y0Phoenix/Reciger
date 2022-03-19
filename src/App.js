@@ -5,6 +5,7 @@ import './css/Landing.css';
 import './css/Login.css';
 import './css/Register.css';
 import './css/Recipe/Recipe.css';
+import './css/Recipe/Nutrients.css';
 import './css/Dashboard/Dashboard.css';
 import './css/Dashboard/RecentIngs.css';
 import './css/Dashboard/RecentRecs.css';

@@ -33,7 +33,7 @@ a {
 	background-color: var(--theme-color);
 	height: 30px;
 	color: white;
-	max-width: fit-content;
+	width: fit-content;
 	border: none;
 }
 .btn-red {
@@ -49,6 +49,9 @@ a {
 }
 .btn:hover {
 	background-color: var(--theme-color-hover);
+}
+.no-radius {
+	border-radius: 0px;
 }
 .background {
 	position: fixed;
@@ -176,20 +179,33 @@ a {
 }
 .suggs {
 	position: absolute;
-	top: 20px;
+	top: 35px;
+	border-radius: 6px;
 	left: 0;
-	background-color: rgb(230, 230, 230);
+	background-color: white;
 	color: black;
-	z-index: 1;
+	z-index: 5;
 	max-height: 200px;
+	overflow-y: auto;
 	cursor: pointer;
+	pointer-events: auto;
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
 }
 .suggs ul {
 	list-style: none;
 }
-.suggs ul li {
-	margin-right: 15px;
-	margin-left: -25px;
+.suggs-item {
+	display: flex;
+	gap: 8px;
+	padding: 6px;
+}
+.suggs-item:hover {
+	background-color: rgb(209, 209, 209);
+}
+.suggs-selected {
+	background-color: rgb(209, 209, 209);
 }
 .category-modal {
 	margin: auto;
