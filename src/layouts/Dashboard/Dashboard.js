@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Navigate } from 'react-router-dom';
@@ -12,6 +12,7 @@ const hover = {
 
 const Dashboard = ({user, showModal, setShowModal, setNavigate}) => {
   const {isAuthenticated, user: _user} = user;
+  const [number, setNumber] = useState(1);
   
   return (
     <Fragment>

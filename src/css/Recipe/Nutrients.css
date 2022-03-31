@@ -1,8 +1,8 @@
 @import '../Colors.css';
 
 .nutrients-container {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 135px 1fr;
 }
 .nutrients-container p {
     margin: 0;

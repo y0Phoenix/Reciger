@@ -1,15 +1,14 @@
-import React, {Fragment} from 'react';
+import React from 'react';
 import cycleSuggs from '../../functions/cycleSuggs';
 
 const Suggestions = ({suggs, ingData, i, showModal, setState, suggsIndex, setSuggsIndex, userClicked, setUserClicked}) => {
-  window.onkeyup = (e) => cycleSuggs(e, suggsIndex, suggs, setUserClicked, setSuggsIndex);
-  window.onmousemove = () => !userClicked && setUserClicked(true); 
+  window.onkeyup = (e) => cycleSuggs(e, suggsIndex, suggs, setUserClicked, setSuggsIndex, true);
   return (
       <>
           {suggs[i]?.length > 0 ?
                     <>
                       <br></br>
-                      <div className='suggs' style={{width: '915px'}}>
+                      <div className='suggs'>
                           {suggs[i].map((sugg, index) =>
                               <div className='suggs-item' id={`suggs${index}`} key={sugg.name} onClick={e => {
                                 if (userClicked) {
@@ -26,7 +25,7 @@ const Suggestions = ({suggs, ingData, i, showModal, setState, suggsIndex, setSug
                                   const tempdataing = [...ingData];
                                   tempdataing[i].name = sugg.name;
                                   setState(tempdataing, 'setIngData');
-                                  
+                                  setUserClicked(true);
                                 }
                               }}>
                                 <i className='fa-solid fa-magnifying-glass' key={index}></i>

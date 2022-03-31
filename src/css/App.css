@@ -40,7 +40,7 @@ a {
 	border-radius: 8px;
 	height: 30px;
 	color: white;
-	max-width: fit-content;
+	width: fit-content;
 	border: none;
 	background-color: red;
 }
@@ -186,6 +186,7 @@ a {
 	color: black;
 	z-index: 5;
 	max-height: 200px;
+	width: 915px;
 	overflow-y: auto;
 	cursor: pointer;
 	pointer-events: auto;
@@ -256,10 +257,4 @@ a {
 }
 .category-x:hover {
 	background-color: rgb(228, 213, 194);
-}
-.recipe-search-box {
-	position: relative;
-}
-.recipe-search-result {
-	cursor: pointer;
 }

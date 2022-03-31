@@ -41,21 +41,22 @@ const Nutrients = ({recipe, scale}) => {
     const [initCalories, setInitCalories] = useState(0);
     useEffect(() => {
         if (!recipe?.nutrients) return;
-        setNutrients(recipe.nutrients.total);
+        const temp = {...recipe.nutrients.total};
+        setNutrients(temp);
         setInitAmounts(recipe.nutrients.total);
         setCalories(recipe.calories.total);
         setInitCalories(recipe.calories.total);
     }, [recipe]);
     useEffect(() => {
         setNutrients({...nutrients, 
-            iron: {amount: initAmounts.iron.amount * scale},
-            sodium: {amount: initAmounts.sodium.amount * scale},
-            calcium: {amount: initAmounts.calcium.amount * scale},
-            fiber: {amount: initAmounts.fiber.amount * scale},
-            sugars: {amount: initAmounts.sugars.amount * scale},
-            carbs: {amount: initAmounts.carbs.amount * scale},
-            fat: {amount: initAmounts.fat.amount * scale},
-            protein: {amount: initAmounts.protein.amount * scale},
+            iron: {amount: initAmounts.iron.amount * scale, unit: initAmounts.iron.unit},
+            sodium: {amount: initAmounts.sodium.amount * scale, unit: initAmounts.sodium.unit},
+            calcium: {amount: initAmounts.calcium.amount * scale, unit: initAmounts.calcium.unit},
+            fiber: {amount: initAmounts.fiber.amount * scale , unit: initAmounts.fiber.unit},
+            sugars: {amount: initAmounts.sugars.amount * scale , unit: initAmounts.sugars.unit},
+            carbs: {amount: initAmounts.carbs.amount * scale , unit: initAmounts.carbs.unit},
+            fat: {amount: initAmounts.fat.amount * scale , unit: initAmounts.fat.unit},
+            protein: {amount: initAmounts.protein.amount * scale , unit: initAmounts.protein.unit},
         });
         setCalories(initCalories * scale);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -66,15 +67,24 @@ const Nutrients = ({recipe, scale}) => {
             {recipe.nutrients &&
                 <>
                     <div className='nutrients-container'>
-                        <p className='recipe-calories'>Calories {calories}</p>
-                        <p className='recipe-iron'>Iron {nutrients.iron.amount} {nutrients.iron.unit}</p>
-                        <p className='recipe-sodium'>Sodium {nutrients.sodium.amount} {nutrients.sodium.unit}</p>
-                        <p className='recipe-calcium'>Calcium {nutrients.calcium.amount} {nutrients.calcium.unit}</p>
-                        <p className='recipe-fiber'>Fiber {nutrients.fiber.amount} {nutrients.fiber.unit}</p>
-                        <p className='recipe-sugar'>Sugars {nutrients.sugars.amount} {nutrients.sugars.unit}</p>
-                        <p className='recipe-carbs'>Carbs {nutrients.carbs.amount} {nutrients.carbs.unit}</p>
-                        <p className='recipe-fat'>Fats {nutrients.fat.amount} {nutrients.fat.unit}</p>
-                        <p className='recipe-protein'>Protein {nutrients.protein.amount} {nutrients.protein.unit}</p>
+                        <p>Calories {calories}</p>
+                        <p>kCal</p>
+                        <p>Iron {nutrients.iron.amount}</p>
+                        <p>{nutrients.iron.unit}</p>
+                        <p>Sodium {nutrients.sodium.amount}</p>
+                        <p>{nutrients.sodium.unit}</p>
+                        <p>Calcium {nutrients.calcium.amount}</p>
+                        <p>{nutrients.calcium.unit}</p>
+                        <p>Fiber {nutrients.fiber.amount}</p>
+                        <p>{nutrients.fiber.unit}</p>
+                        <p>Sugars {nutrients.sugars.amount}</p>
+                        <p>{nutrients.sugars.unit}</p>
+                        <p>Carbs {nutrients.carbs.amount}</p>
+                        <p>{nutrients.carbs.unit}</p>
+                        <p>Fats {nutrients.fat.amount}</p>
+                        <p>{nutrients.fat.unit}</p>
+                        <p>Protein {nutrients.protein.amount}</p>
+                        <p>{nutrients.protein.unit}</p>
                     </div>
                 </>
             }

@@ -9,6 +9,7 @@ import './css/Recipe/Nutrients.css';
 import './css/Dashboard/Dashboard.css';
 import './css/Dashboard/RecentIngs.css';
 import './css/Dashboard/RecentRecs.css';
+import './css/Recipes.css';
 import React, {Fragment, useEffect, useState} from 'react';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import { Provider } from 'react-redux';

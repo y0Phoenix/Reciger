@@ -1,6 +1,14 @@
-export default function cycleSuggs(e, index, suggs, setUserClicked, setSuggsIndex) {
+/**
+ * @param  {} e the event from the browser
+ * @param  {} index the index state
+ * @param  {} suggs the array of suggestions
+ * @param  {} setUserClicked the callback to set the bool for userClicked
+ * @param  {} setSuggsIndex the callback to set the index state
+ * @param  {} bool if this is recipe page suggs true else false
+ */
+export default function cycleSuggs(e, index, suggs, setUserClicked, setSuggsIndex, bool) {
     var {index: i, show, start, where} = {...index};
-    const length = suggs[i]?.length;
+    const length = bool ? suggs[i]?.length : suggs.length;
     if (!length) return;
     var li;
     if ((e.code === 'ArrowDown' || e.code === 'ArrowUp' || e.code === 'Enter') && show) {

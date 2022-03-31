@@ -1,9 +1,8 @@
-import React, { useRef, useState } from 'react'
+import React, { useState } from 'react'
 import { motion } from 'framer-motion';
 
 const Scale = ({params, setScale}) => {
     const [tempScale, setTempScale] = useState(1);
-    const scale = useRef();
     return (
         <>
             {params.id !== 'new' && 
@@ -12,11 +11,11 @@ const Scale = ({params, setScale}) => {
                     <br></br>
                     <form onSubmit={(e) => {
                         e.preventDefault();
-                        setScale(scale.current.value);
+                        setScale(tempScale);
                     }}>
                         <div className='recipe-scale-amount'>
-                            <input type='number' name='amount' value={tempScale} onChange={e => setTempScale(e.target.value)} ref={scale}></input>    
-                            <motion.input className='btn' whileHover={{scale: 1.06}} type='button' value='Scale'></motion.input>
+                            <input type='number' name='amount' value={tempScale} onChange={e => setTempScale(e.target.value)} min='1' step='0.5' autoFocus="autoFocus"></input>    
+                            <motion.input className='btn' whileHover={{scale: 1.06}} type='submit' value='Scale'></motion.input>
                         </div>
                     </form>
                 </div>

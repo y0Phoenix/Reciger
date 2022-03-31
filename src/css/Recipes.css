@@ -1,0 +1,61 @@
+@import './Colors.css';
+:root {
+    --search-height: 25px;
+}
+.recipes-main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: white;
+    margin: 0 auto;
+}
+.recipes-head,
+.recipes-create {
+    text-align: center;
+}
+.recipes-rest {
+    display: flex;
+    padding: 50px 150px;
+}
+.recipes-search {
+    border: 1px solid white;
+    margin-right: 50px;
+    border-radius: 8px;
+    padding: 4px;
+}
+.recipes-search-box {
+    position: relative;
+}
+.recipes-search-box{
+    display: flex;
+}
+.recipes-search-box #search {
+    width: 915px;
+    height: var(--search-height);
+    font-size: 20px;
+}
+.recipe-search-result {
+	cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 20px auto;
+    border: 1px solid white;
+    gap: 20px;
+}
+.recipe-result {
+    padding: 4px;
+}
+.recipe-search-result:first-child {
+    margin-top: 20px;
+}
+.recipe-result-edit,
+.recipe-result-delete {
+    align-self: flex-end;
+}
+.recipe-result-rest {
+    display: flex;
+    gap: 20px;
+}
+.recipe-result-buttons {
+    display: flex;
+}

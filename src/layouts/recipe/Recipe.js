@@ -34,12 +34,14 @@ const Recipe = ({ingredients, navigate, setNavigate, postRecipe, getRecipes, sho
       string: ''
     },
     categories: '',
-    Correlative: false
+    Correlative: false,
+    Price: ''
   });
   const [ingData, setIngData] = useState([]);
   const [initAmounts, setInitAmounts] = useState({
     Recipe: 0,
-    Ingredients: []
+    Ingredients: [],
+    Price: ''
   });
   const [suggs, setSuggs] = useState([[]]);
   const [suggsIndex, setSuggsIndex] = useState({
@@ -50,10 +52,6 @@ const Recipe = ({ingredients, navigate, setNavigate, postRecipe, getRecipes, sho
   });
   const [userClicked, setUserClicked] = useState(false);
   const [scale, setScale] = useState(1);
-  const [stateChange, setStateChange] = useState({
-    type: '',
-    newState: null
-  });
   useEffect(() => {
     if (!ingData[0]) return;
     const arr = ingData.map(ing =>  {
@@ -62,8 +60,9 @@ const Recipe = ({ingredients, navigate, setNavigate, postRecipe, getRecipes, sho
       return ing;
     });
     setIngData(arr);
-    const setValue = {...Yield, number: initAmounts.Recipe * scale}
-    setFormData({...formData, Yield: setValue})
+    const setValue = {...Yield, number: initAmounts.Recipe * scale};
+    let price = `$${(parseFloat(initAmounts.Price.split('$').join('')) * scale).toFixed(2)}`;
+    setFormData({...formData, Yield: setValue, Price: price})
   }, [scale])
   useEffect(() => {
       if (params.id !== 'new') {
@@ -75,27 +74,25 @@ const Recipe = ({ingredients, navigate, setNavigate, postRecipe, getRecipes, sho
     if (params.id !== 'new') {
       if (!recipe) return;
       if (recipe.constructor === Array) return;
-      setFormData({...formData, name: recipe.name, instructions: recipe.instructions, Yield: recipe.yield, categories: recipe.categories, Correlative: recipe.type === 'ingredient'});
+      setFormData({...formData, name: recipe.name, instructions: recipe.instructions, 
+        Yield: recipe.yield, categories: recipe.categories, 
+        Correlative: recipe.type === 'ingredient', Price: recipe.price});
       const temp = {...initAmounts};
       temp.Recipe = recipe.yield.number;
+      temp.Price = recipe.price;
       temp.Ingredients = recipe.ingredients.map(ing => ({amount: ing.quantity.amount, name: ing.name}))
       const ings = recipe.ingredients.map(ing => ({name: ing.name, quantity: ing.quantity, show: false}));
       setInitAmounts(temp);
       setIngData(ings);
     }
   }, [recipe]);
-  // incase updating state inside a child component breaks the app wrapping any rendered state change inside a useEffect is SUPPOSED to work 😭
-  useEffect(() => {
-    if (stateChange.newState) {
-      setState(stateChange.newState, stateChange.type);
-    }
-  }, [stateChange])
   const {
     name,
     Yield,
     instructions,
     categories,
-    Correlative
+    Correlative,
+    Price
   } = formData;
   const getSuggs = value => {
     value = value.split('');
@@ -200,11 +197,17 @@ const Recipe = ({ingredients, navigate, setNavigate, postRecipe, getRecipes, sho
                 <small>Name</small>
                 <br></br>
                 <input type='text' value={name} name='name' onChange={e => onchange(e)} placeholder='name'></input>
+                {params.id !== 'new' &&
+                  <>
+                    <small>Price</small>
+                    <div>{Price}</div>
+                  </>
+                }
               </div>
               <div className='new-recipe-yield'>
                 <small>Yield</small>
                 <br></br>
-                <input type='text' value={Yield.number} id='number' name='number' onChange={e => onchange(e)} placeholder='amount'></input>
+                <input type='number' value={Yield.number} id='number' name='number' onChange={e => onchange(e)} placeholder='amount'></input>
                 <input type='text' value={Yield.string} name='string' onChange={e => onchange(e)} placeholder='unit'></input>
                 <Scale {...{params, setScale}}/>
               </div>
