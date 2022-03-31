@@ -47,8 +47,7 @@ const Recipes = ({showModal, setShowModal, getRecipes, deleteRecipe, _loading, u
   const filterByPage = (rec, i) => {
     const lessthan = (25 * parseInt(params.page));
     const greterthan = (lessthan - 25);
-    if (greterthan === i) return null;
-    return i <= lessthan && i >= greterthan ? rec : null;
+    return i < lessthan && i >= greterthan ? rec : null;
   }
 
   // eslint-disable-next-line no-unused-vars
@@ -223,7 +222,7 @@ const Recipes = ({showModal, setShowModal, getRecipes, deleteRecipe, _loading, u
                             </button>
                           </div>  
                         } 
-                        {(parseInt(params.page) * 24) <= recipes.length &&
+                        {(parseInt(params.page) * 25) < recipes.length &&
                           <div className='recipes-next'>
                             <button type='button' onClick={() => setNavigate(`/recipes/${(parseInt(params.page) + 1)}`)}>
                                 <i className='fa-solid fa-arrow-right'></i>

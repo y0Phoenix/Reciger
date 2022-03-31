@@ -54,10 +54,10 @@ const Ingredients = ({showModal, setShowModal, getIngredients, deleteIngredient,
   }, [Ingredients, params]);
 
   const filterByPage = (rec, i) => {
-    const lessthan = (24 * parseInt(params.page));
-    const greterthan = (lessthan - 24);
-    if (greterthan === i) return null;
-    return i <= lessthan && i >= greterthan ? rec : null;
+    const lessthan = (25 * parseInt(params.page));
+    const greterthan = (lessthan - 25);
+    // if (greterthan === i) return null;
+    return i < lessthan && i >= greterthan ? rec : null;
   }
 
   // eslint-disable-next-line no-unused-vars
@@ -236,7 +236,7 @@ const Ingredients = ({showModal, setShowModal, getIngredients, deleteIngredient,
                           </motion.button>
                         </div>  
                       }
-                      {(parseInt(params.page) * 24) <= Ingredients.length &&
+                      {(parseInt(params.page) * 25) < Ingredients.length &&
                         <div className='ingredient-next'>
                           <motion.button whileHover={hover} className='btn no-radius' type='button' onClick={() => setNavigate(`/ingredients/${(parseInt(params.page) + 1)}`)}>
                               Next page <i className='fa-solid fa-arrow-right'></i>
