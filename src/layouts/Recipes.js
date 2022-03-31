@@ -46,7 +46,8 @@ const Recipes = ({showModal, setShowModal, getRecipes, deleteRecipe, _loading, u
 
   const filterByPage = (rec, i) => {
     const lessthan = (25 * parseInt(params.page));
-    const greterthan = (lessthan - 25)
+    const greterthan = (lessthan - 25);
+    if (greterthan === i) return null;
     return i <= lessthan && i >= greterthan ? rec : null;
   }
 

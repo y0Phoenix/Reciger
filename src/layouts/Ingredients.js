@@ -45,7 +45,8 @@ const Ingredients = ({showModal, setShowModal, getIngredients, deleteIngredient,
         if (Ingredients[0]) {
           if (!params.page) return;
           setResults(Ingredients);
-          setPageResults(Ingredients && Ingredients.filter(filterByPage));
+          const arr = Ingredients && Ingredients.filter(filterByPage);
+          setPageResults(Ingredients && arr);
         }
       }
     }
@@ -54,7 +55,8 @@ const Ingredients = ({showModal, setShowModal, getIngredients, deleteIngredient,
 
   const filterByPage = (rec, i) => {
     const lessthan = (24 * parseInt(params.page));
-    const greterthan = (lessthan - 24)
+    const greterthan = (lessthan - 24);
+    if (greterthan === i) return null;
     return i <= lessthan && i >= greterthan ? rec : null;
   }
 

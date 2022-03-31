@@ -12,6 +12,7 @@ export default function cycleSuggs(e, index, suggs, setUserClicked, setSuggsInde
     if (!length) return;
     var li;
     if ((e.code === 'ArrowDown' || e.code === 'ArrowUp' || e.code === 'Enter') && show) {
+        if (e.code === 'Enter' && !start) return;
         li = document.getElementById(`suggs${where}`);
         let Index = -1;
         let newLi = where === 0 && li;
