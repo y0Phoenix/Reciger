@@ -194,7 +194,7 @@ const Recipes = ({showModal, setShowModal, getRecipes, deleteRecipe, _loading, u
                       <div className='results'>
                         {pageResults.length > 0 && pageResults.map((res, i) => 
                           <div key={i} className='search-result'>
-                            <div className='result'>{res.name}</div>
+                            <div className='result' onClick={() => setNavigate(`/recipe/${res._id}`)}>{res.name}</div>
                             <div className='result result-rest'>
                               <div className='result-calories'>kCal: {res.calories.total}</div>
                               <div className='result-price'>{res.price}</div>
@@ -214,20 +214,22 @@ const Recipes = ({showModal, setShowModal, getRecipes, deleteRecipe, _loading, u
                           </div>
                         )}
                       </div> 
-                      {(parseInt(params.page) * 24) <= recipes.length &&
-                        <div className='recipes-next'>
-                          <button type='button' onClick={() => setNavigate(`/recipes/${(parseInt(params.page) + 1)}`)}>
-                              <i className='fa-solid fa-arrow-right'></i>
-                          </button>
-                        </div>  
-                      }   
-                      {parseInt(params.page) > 1 &&
-                        <div className='recipes-previous'>
-                          <button type='button' onClick={() => setNavigate(`/recipes/${(parseInt(params.page) - 1)}`)}>
-                              <i className='fa-solid fa-arrow-left'></i>
-                          </button>
-                        </div>  
-                      } 
+                      <div className='search-pagination'>
+                        {parseInt(params.page) > 1 &&
+                          <div className='recipes-previous'>
+                            <button type='button' onClick={() => setNavigate(`/recipes/${(parseInt(params.page) - 1)}`)}>
+                                <i className='fa-solid fa-arrow-left'></i>
+                            </button>
+                          </div>  
+                        } 
+                        {(parseInt(params.page) * 24) <= recipes.length &&
+                          <div className='recipes-next'>
+                            <button type='button' onClick={() => setNavigate(`/recipes/${(parseInt(params.page) + 1)}`)}>
+                                <i className='fa-solid fa-arrow-right'></i>
+                            </button>
+                          </div>  
+                        }   
+                      </div>
                     </div>  
                     <div className='search-recents'>
                       <RecentRecs user={user} setShowModal={setShowModal} showModal={showModal}/>

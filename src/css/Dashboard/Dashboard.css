@@ -15,9 +15,8 @@
     color: white;
     display: flex;
     font-family: Arial, Helvetica, sans-serif;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    align-items: stretch;
+    justify-content: center;
+    gap: 200px;
 }
 .dashboard-head {
     margin: 25px auto;

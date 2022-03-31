@@ -37,7 +37,6 @@
     font-size: 20px;
 }
 .search-result {
-	cursor: pointer;
     display: flex;
     justify-content: space-between;
     margin: 0 20px auto;
@@ -45,6 +44,7 @@
     gap: 20px;
 }
 .result {
+    cursor: pointer;
     padding: 4px;
 }
 .search-result:first-child {

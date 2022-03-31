@@ -205,7 +205,7 @@ const Ingredients = ({showModal, setShowModal, getIngredients, deleteIngredient,
                         if (!res.calories) return <></>;
                         return (
                           <div key={i} className='search-result'>
-                            <div className='result'>{res.name}</div>
+                            <div className='result' onClick={() => setShowModal({...showModal, IngredientM: {id: res._id, bool: true}})}>{res.name}</div>
                             <div className='result-rest'>
                               <div className='result-calories'>kCal: {res.calories.pref}</div>
                               <div className='result-price'>{res.price}</div>
@@ -227,13 +227,6 @@ const Ingredients = ({showModal, setShowModal, getIngredients, deleteIngredient,
                       })}
                     </div>
                     <div className='search-pagination'>
-                      {(parseInt(params.page) * 24) <= Ingredients.length &&
-                        <div className='ingredient-next'>
-                          <motion.button whileHover={hover} className='btn no-radius' type='button' onClick={() => setNavigate(`/ingredients/${(parseInt(params.page) + 1)}`)}>
-                              Next page <i className='fa-solid fa-arrow-right'></i>
-                          </motion.button>
-                        </div>  
-                      }   
                       {parseInt(params.page) > 1 &&
                         <div className='ingredient-previous'>
                           <motion.button whileHover={hover} className='btn no-radius' type='button' onClick={() => setNavigate(`/ingredients/${(parseInt(params.page) - 1)}`)}>
@@ -241,6 +234,13 @@ const Ingredients = ({showModal, setShowModal, getIngredients, deleteIngredient,
                           </motion.button>
                         </div>  
                       }
+                      {(parseInt(params.page) * 24) <= Ingredients.length &&
+                        <div className='ingredient-next'>
+                          <motion.button whileHover={hover} className='btn no-radius' type='button' onClick={() => setNavigate(`/ingredients/${(parseInt(params.page) + 1)}`)}>
+                              Next page <i className='fa-solid fa-arrow-right'></i>
+                          </motion.button>
+                        </div>  
+                      }   
                     </div>
                   </div>  
                   <div className='search-recents'>
