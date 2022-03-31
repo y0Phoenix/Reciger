@@ -1,6 +1,6 @@
 @import './Colors.css';
 :root {
-    --search-height: 25px;
+    --search-height: 30px;
 }
 .search-main {
     display: flex;
@@ -28,13 +28,19 @@
 .search-box {
     position: relative;
 }
-.search-box{
+.search-box form {
     display: flex;
+    height: 100%;
+    font-size: 20px;
+    line-height: 20px;
+}
+.search-box button {
 }
 .search-box #search {
     width: 915px;
     height: var(--search-height);
-    font-size: 20px;
+    font-size: 1em;
+    line-height: 1em;
 }
 .search-result {
     display: flex;

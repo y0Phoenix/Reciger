@@ -195,7 +195,7 @@ const Recipes = ({showModal, setShowModal, getRecipes, deleteRecipe, _loading, u
                         {pageResults.length > 0 && pageResults.map((res, i) => 
                           <div key={i} className='search-result'>
                             <div className='result' onClick={() => setNavigate(`/recipe/${res._id}`)}>{res.name}</div>
-                            <div className='result result-rest'>
+                            <div className='result-rest'>
                               <div className='result-calories'>kCal: {res.calories.total}</div>
                               <div className='result-price'>{res.price}</div>
                               <div className='result-buttons'>

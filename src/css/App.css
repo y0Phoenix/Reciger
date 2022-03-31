@@ -31,14 +31,14 @@ a {
 .btn {
 	border-radius: 8px;
 	background-color: var(--theme-color);
-	height: 30px;
+	height: 35px;
 	color: white;
 	width: fit-content;
 	border: none;
 }
 .btn-red {
 	border-radius: 8px;
-	height: 30px;
+	height: 35px;
 	color: white;
 	width: fit-content;
 	border: none;
