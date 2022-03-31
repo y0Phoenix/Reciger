@@ -140,18 +140,18 @@ const Recipes = ({showModal, setShowModal, getRecipes, deleteRecipe, _loading, u
           {(!_loading.bool && pageResults) && 
             <>
               {pageResults !== [] &&
-                <div className='recipes-main'>
-                  <div className='recipes-head'>
+                <div className='search-main'>
+                  <div className='search-head'>
                     <h1>{`${user.name}s Recipes`}</h1>
                   </div>
-                  <div className='recipes-create'>
+                  <div className='search-create'>
                     <motion.button whileHover={hover} className='btn' type='button' onClick={() => setNavigate('/recipe/new')}>
                      <i className='fa-solid fa-book'></i> Create Recipe 
                     </motion.button>
                   </div>
-                  <div className='recipes-rest'>
-                    <div className='recipes-search'>
-                      <div className='recipes-search-box'>
+                  <div className='search-rest'>
+                    <div className='search-search'>
+                      <div className='search-box'>
                         <form onSubmit={(e) => onsubmit(e)}>
                           <input type='text' value={search} id='search' name='search' onChange={e => onchange(e)} onBlur={() => setTimeout(() => {
                             setSuggs({suggs: [], show: false});
@@ -174,7 +174,7 @@ const Recipes = ({showModal, setShowModal, getRecipes, deleteRecipe, _loading, u
                                     <i className='fa-solid fa-magnifying-glass'></i>
                                     {sug.name}
                                   </div>
-                                )}    
+                                )}
                             </div>
                           }
                           <motion.button whileHover={hover} type='button' className='btn no-radius' onClick={(e) => onsubmit(e)}>
@@ -193,18 +193,18 @@ const Recipes = ({showModal, setShowModal, getRecipes, deleteRecipe, _loading, u
                       </div>
                       <div className='results'>
                         {pageResults.length > 0 && pageResults.map((res, i) => 
-                          <div key={i} className='recipe-search-result'>
-                            <div className='recipe-result'>{res.name}</div>
-                            <div className='recipe-result recipe-result-rest'>
-                              <div className='recipe-result-calories'>kCal: {res.calories.total}</div>
-                              <div className='recipe-result-price'>{res.price}</div>
-                              <div className='recipe-result-buttons'>
-                                <div className='recipe-result-edit'>
+                          <div key={i} className='search-result'>
+                            <div className='result'>{res.name}</div>
+                            <div className='result result-rest'>
+                              <div className='result-calories'>kCal: {res.calories.total}</div>
+                              <div className='result-price'>{res.price}</div>
+                              <div className='result-buttons'>
+                                <div className='result-edit'>
                                   <motion.button whileHover={hover} className='btn no-radius' type="button" onClick={() => setNavigate(`/recipe/${res._id}`)}>
                                       <i className='fa-solid fa-edit'></i>
                                   </motion.button>  
                                 </div>
-                                <div className='recipe-result-delete'>
+                                <div className='result-delete'>
                                   <motion.button whileHover={hover} className='btn-red no-radius' type='button' onClick={() => deleteRec(res._id)}>
                                     <i className='fa-solid fa-x'></i>  
                                   </motion.button>  
@@ -229,7 +229,7 @@ const Recipes = ({showModal, setShowModal, getRecipes, deleteRecipe, _loading, u
                         </div>  
                       } 
                     </div>  
-                    <div className='recipes-recents'>
+                    <div className='search-recents'>
                       <RecentRecs user={user} setShowModal={setShowModal} showModal={showModal}/>
                     </div>  
                   </div>

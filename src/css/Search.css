@@ -2,39 +2,41 @@
 :root {
     --search-height: 25px;
 }
-.recipes-main {
+.search-main {
     display: flex;
     flex-direction: column;
     justify-content: center;
     color: white;
     margin: 0 auto;
 }
-.recipes-head,
-.recipes-create {
+.search-head,
+.search-create {
     text-align: center;
 }
-.recipes-rest {
+.search-rest {
     display: flex;
     padding: 50px 150px;
 }
-.recipes-search {
+.search-search {
+    display: flex;
+    flex-direction: column;
     border: 1px solid white;
     margin-right: 50px;
     border-radius: 8px;
     padding: 4px;
 }
-.recipes-search-box {
+.search-box {
     position: relative;
 }
-.recipes-search-box{
+.search-box{
     display: flex;
 }
-.recipes-search-box #search {
+.search-box #search {
     width: 915px;
     height: var(--search-height);
     font-size: 20px;
 }
-.recipe-search-result {
+.search-result {
 	cursor: pointer;
     display: flex;
     justify-content: space-between;
@@ -42,20 +44,26 @@
     border: 1px solid white;
     gap: 20px;
 }
-.recipe-result {
+.result {
     padding: 4px;
 }
-.recipe-search-result:first-child {
+.search-result:first-child {
     margin-top: 20px;
 }
-.recipe-result-edit,
-.recipe-result-delete {
+.result-edit,
+.result-delete {
     align-self: flex-end;
 }
-.recipe-result-rest {
+.result-rest {
     display: flex;
     gap: 20px;
 }
-.recipe-result-buttons {
+.result-buttons {
     display: flex;
+}
+.search-pagination {
+    margin: 20px 0 10px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
 }

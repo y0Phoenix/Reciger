@@ -5,6 +5,12 @@ import { setAlert } from '../actions/alert';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import RecentIngs from './Dashboard/RecentIngs';
+import { motion } from 'framer-motion';
+import cycleSuggs from '../functions/cycleSuggs';
+
+const hover = {
+  scale: 1.07
+}
 
 const Ingredients = ({showModal, setShowModal, getIngredients, deleteIngredient, _loading, user, Ingredients, setNavigate, setAlert, isAuthenticated}) => {
   const params = useParams();
@@ -15,6 +21,14 @@ const Ingredients = ({showModal, setShowModal, getIngredients, deleteIngredient,
   });
   const [results, setResults] = useState([]);
   const [pageResults, setPageResults] = useState([]);
+  const [suggsIndex, setSuggsIndex] = useState({
+    index: 0,
+    where: 0,
+    start: true,
+    show: false
+  });
+  const [userClicked, setUserClicked] = useState(false);
+  window.onkeyup = (e) => cycleSuggs(e, suggsIndex, suggs.suggs, setUserClicked, setSuggsIndex, false);
   useEffect(() => {
       getIngredients(false, null, true, setShowModal, showModal);
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -115,11 +129,19 @@ const Ingredients = ({showModal, setShowModal, getIngredients, deleteIngredient,
     setSearch(e.target.value);
     const suggs = await getSuggs(e.target.value);
     setSuggs({suggs: suggs, show: true});
+    setSuggsIndex({...suggsIndex, show: true});
   };
 
   const deleteIng = (ing) => {
     setShowModal({...showModal, YesorNo: {direct: deleteIngredient, bool: true, params: {id: ing, setShowModal, showModal}}})
   }
+
+  const onsubmit = (e) => {
+    e.preventDefault();
+    if (suggs.show) return;
+    initSearch(e);
+  }
+
   return (
     <>
       {isAuthenticated ? 
@@ -127,82 +149,104 @@ const Ingredients = ({showModal, setShowModal, getIngredients, deleteIngredient,
         {(!_loading.bool && pageResults) && 
           <>
             {pageResults !== [] &&
-              <div className='ingredient-main'>
-                <div className='ingredient-create'>
-                  <button type='button' onClick={() => setShowModal({...showModal, IngredientM: {bool: true, id: null}})}>
-                   <i className='fa-solid fa-carrot'></i> Create Ingredient 
-                  </button>
+              <div className='search-main'>
+                <div className='search-head'>
+                  <h1>{`${user.name}s Ingredients`}</h1>
                 </div>
-                <div className='ingredient-search'>
-                  <div className='ingredient-search-box'>
-                    <form>
-                      <input type='text' value={search} name='search' onChange={e => onchange(e)} onBlur={() => setTimeout(setSuggs, 250, {suggs: [], show: false})} autoComplete="off"></input>
-                      {suggs.suggs.length > 0 && suggs.show &&
-                        <div className='suggs'>
-                          <ul>
-                            {suggs.suggs.map((sug, i) =>
-                              <li key={i} onClick={() => {
-                                setSearch(sug.name);
-                                setSuggs({suggs: [], show: false})
-                              }}>{sug.name}</li>
-                            )}  
-                          </ul>  
-                        </div>
+                <div className='search-create'>
+                  <motion.button whileHover={hover} className='btn' type='button' onClick={() => setShowModal({...showModal, IngredientM: {bool: true, id: null}})}>
+                   <i className='fa-solid fa-carrot'></i> Create Ingredient 
+                  </motion.button>
+                </div>
+                <div className='search-rest'>
+                  <div className='search-search'>
+                    <div className='search-box'>
+                      <form onSubmit={(e) => onsubmit(e)}>
+                        <input type='text' value={search} id='search' name='search' onChange={e => onchange(e)} onBlur={() => setTimeout(() => {
+                            setSuggs({suggs: [], show: false});
+                            setSuggsIndex({show: false, start: true, where: 0, index: 0});
+                          }, 250)} autoComplete="off" placeholder='search'></input>
+                        {suggs.suggs.length > 0 && suggs.show &&
+                          <div className='suggs'>
+                              {suggs.suggs.map((sug, i) =>
+                                <div id={`suggs${i}`} key={i} onClick={() => {
+                                  if (userClicked) {
+                                    setSearch(sug.name);
+                                    setSuggs({suggs: [], show: false});
+                                    setSuggsIndex({show: false, start: true, index: 0, where: 0});
+                                  }
+                                  else {
+                                    setSearch(sug.name);
+                                    setUserClicked(true);
+                                  }
+                                }}>
+                                  <i className='fa-solid fa-magnifying-glass'></i>
+                                  {sug.name}
+                                  </div>
+                              )}  
+                          </div>
+                        }
+                        <motion.button whileHover={hover} type='submit' className='btn no-radius' onClick={(e) => onsubmit(e)}>
+                          <i className='fa-solid fa-magnifying-glass'></i>  
+                        </motion.button>
+                        <motion.button whileHover={hover} type='button' className='btn-red no-radius' onClick={() => setSearch('')}>
+                          <i className='fa-solid fa-x'></i>  
+                        </motion.button>
+                        <motion.button whileHover={hover} type='button' className='btn no-radius' onClick={() => {
+                          setAlert('Filter Functionality Is Not Avalible Yet', 'error', setShowModal, showModal);
+                          // setShowModal({...showModal, Filter: {typeOf: 'ingredient', bool: true, filter: null, type: null}})
+                        }}>
+                          <i className='fa-solid fa-filter'></i>
+                        </motion.button>
+                      </form>
+                    </div>
+                    <div className='results'>
+                      {pageResults.length > 0 && pageResults.map((res, i) => {
+                        if (!res.calories) return <></>;
+                        return (
+                          <div key={i} className='search-result'>
+                            <div className='result'>{res.name}</div>
+                            <div className='result-rest'>
+                              <div className='result-calories'>kCal: {res.calories.pref}</div>
+                              <div className='result-price'>{res.price}</div>
+                              <div className='result-buttons'>
+                                <div className='result-edit'>
+                                  <motion.button whileHover={hover} className='btn no-radius' type="button" onClick={() => setShowModal({...showModal, IngredientM: {bool: true, id: res._id}})}>
+                                      <i className='fa-solid fa-edit'></i>
+                                  </motion.button>  
+                                </div>
+                                <div className='result-delete'>
+                                  <motion.button whileHover={hover} className='btn-red no-radius' type='button' onClick={() => deleteIng(res._id)}>
+                                    <i className='fa-solid fa-x'></i>  
+                                  </motion.button>  
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        )
+                      })}
+                    </div>
+                    <div className='search-pagination'>
+                      {(parseInt(params.page) * 24) <= Ingredients.length &&
+                        <div className='ingredient-next'>
+                          <motion.button whileHover={hover} className='btn no-radius' type='button' onClick={() => setNavigate(`/ingredients/${(parseInt(params.page) + 1)}`)}>
+                              Next page <i className='fa-solid fa-arrow-right'></i>
+                          </motion.button>
+                        </div>  
+                      }   
+                      {parseInt(params.page) > 1 &&
+                        <div className='ingredient-previous'>
+                          <motion.button whileHover={hover} className='btn no-radius' type='button' onClick={() => setNavigate(`/ingredients/${(parseInt(params.page) - 1)}`)}>
+                              Previous Page <i className='fa-solid fa-arrow-left'></i>
+                          </motion.button>
+                        </div>  
                       }
-                      <button type='submit' className='ingredient-search-i' onClick={(e) => initSearch(e)}>
-                        <i className='fa-solid fa-magnifying-glass'></i>  
-                      </button>
-                      <button type='button' className='ingredient-search-x' onClick={() => setSearch('')}>
-                        <i className='fa-solid fa-x'></i>  
-                      </button>
-                      <button type='button' className='ingredient-search-filter' onClick={() => {
-                        setAlert('Filter Functionality Is Not Avalible Yet', 'error', setShowModal, showModal);
-                        // setShowModal({...showModal, Filter: {typeOf: 'ingredient', bool: true, filter: null, type: null}})
-                      }}>
-                        <i className='fa-solid fa-filter'></i>
-                      </button>
-                    </form>
-                  </div>
-                  <div className='results'>
-                    {pageResults.length > 0 && pageResults.map((res, i) => {
-                      if (!res.calories) return <></>;
-                      return (
-                        <div key={i} className='ingredient-search-result'>
-                          <div className='ingredient-result-name'>{res.name}</div>
-                          <div className='ingredient-result-calories'>{res.calories.pref}</div>
-                          <div className='ingredient-result-price'>{res.price}</div>
-                          <div className='ingredient-result-edit'>
-                            <button type="button" onClick={() => setShowModal({...showModal, IngredientM: {bool: true, id: res._id}})}>
-                                <i className='fa-solid fa-edit'></i>
-                            </button>  
-                          </div>
-                          <div className='ingredient-result-delete'>
-                            <button type='button' onClick={() => deleteIng(res._id)}>
-                              <i className='fa-solid fa-x'></i>  
-                            </button>  
-                          </div>
-                        </div>
-                      )
-                    })}
-                  </div>
-                  {(parseInt(params.page) * 24) <= Ingredients.length &&
-                    <div className='ingredient-next'>
-                      <button type='button' onClick={() => setNavigate(`/ingredients/${(parseInt(params.page) + 1)}`)}>
-                          <i className='fa-solid fa-arrow-right'></i>
-                      </button>
-                    </div>  
-                  }   
-                  {parseInt(params.page) > 1 &&
-                    <div className='ingredient-previous'>
-                      <button type='button' onClick={() => setNavigate(`/ingredients/${(parseInt(params.page) - 1)}`)}>
-                          <i className='fa-solid fa-arrow-left'></i>
-                      </button>
-                    </div>  
-                  }
-                </div>  
-                <div className='ingredient-recents'>
-                  <RecentIngs user={user} setShowModal={setShowModal} showModal={showModal}/>
-                </div>  
+                    </div>
+                  </div>  
+                  <div className='search-recents'>
+                    <RecentIngs user={user} setShowModal={setShowModal} showModal={showModal}/>
+                  </div>  
+                </div>
               </div> 
             }
           </>
