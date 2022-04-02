@@ -1,0 +1,10 @@
+@import '../Colors.css';
+
+.verify-email-main {
+    max-width: fit-content;
+    max-height: fit-content;
+    margin: 0 auto;
+    text-align: center;
+    padding: 100px;
+    color: white;
+}

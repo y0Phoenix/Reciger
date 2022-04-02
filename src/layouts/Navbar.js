@@ -28,7 +28,7 @@ const Navbar = ({isAuthenticated, logout, setNavigate}) => {
           </motion.button>
         </div>
         <div className='nav-item nav-4'>
-          <motion.button whileHover={animate} className='nav-btn' onClick={() => setNavigate('/account')}>
+          <motion.button whileHover={animate} className='nav-btn' onClick={() => setNavigate('/account/personal')}>
            <i className='fa-solid fa-user'></i> Account 
           </motion.button>
         </div>

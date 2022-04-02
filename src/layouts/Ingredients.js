@@ -45,8 +45,7 @@ const Ingredients = ({showModal, setShowModal, getIngredients, deleteIngredient,
         if (Ingredients[0]) {
           if (!params.page) return;
           setResults(Ingredients);
-          const arr = Ingredients && Ingredients.filter(filterByPage);
-          setPageResults(Ingredients && arr);
+          setPageResults(Ingredients && Ingredients.filter(filterByPage));
         }
       }
     }

@@ -1,0 +1,47 @@
+@import '../Colors.css';
+
+.account-main {
+    display: flex;
+    color: white;
+    gap: 50px;
+    margin: 0 auto;
+    padding: 50px 350px;
+}
+.account-main input {
+    width: 300px;
+    height: 25px;
+    border-radius: 4px;
+    font-size: 20px;
+}
+.account-navbar {
+    border: 1px solid white;
+    padding: 12px;
+    width: 200px;
+    height: 600px;
+}
+.account-navbar button {
+    width: 100%;
+}
+.account-content {
+    border: 1px solid white;
+    padding: 12px;
+    width: 800px;
+    position: relative;
+}
+.account-buttons {
+    position: absolute;
+    display: flex;
+    gap: 10px;
+    right: 10px;
+    bottom: 10px;
+}
+.account-content-form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.account-email {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}

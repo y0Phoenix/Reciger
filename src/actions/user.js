@@ -52,6 +52,7 @@ export const register = (formData, setShowModal, showModal) => async dispatch =>
         delete formData.preferedW;
         dispatch(loading());
         const res = await axios.post('/api/user', formData);
+        dispatch(verifyEmail(formData.email, null, null, setShowModal, showModal));
         dispatch(stopLoading());
 
         dispatch({
@@ -127,7 +128,7 @@ export const loadUser = () => async dispatch => {
             res = await axios.get('/api/auth');
         }
         else {
-            res = await axios.get(`/api/auth/${token}`);
+            res = await axios.get(`/api/auth/get/${token}`);
         }
         dispatch(stopLoading());
         dispatch({
@@ -143,12 +144,29 @@ export const loadUser = () => async dispatch => {
     }
 };
 
+export const deleteUser = ({setShowModal, showModal, setNavigate}) => async dispatch => {
+    try {
+        dispatch(loading());
+        const res = await axios.delete('/api/user');
+        dispatch(stopLoading());
+        const msgs = res.data.msgs;
+        msgs.forEach(msg => dispatch(setAlert(msg.msg, 'success', setShowModal, showModal)));
+        setNavigate('/');
+    } catch (err) {
+        dispatch(stopLoading());
+        if (!err?.response) return dispatch(setAlert('Error Try Again Later', 'error', setShowModal, showModal));
+        const msgs = err.response.data.msgs;
+        if (msgs.constructor !== Array) return dispatch(setAlert('Error Try Again Later', 'error', setShowModal, showModal));
+        msgs.forEach(msg => dispatch(setAlert(msg.msg, 'error', setShowModal, showModal)));
+    }
+}
+
 export const changePasswordReq = (email, setShowModal, showModal) => async dispatch => {
     try {
         const token = localStorage.token;
         if (!token) return dispatch(setAlert('Error Try Again Later', 'error', setShowModal, showModal));
         dispatch(loading());
-        await axios.get(`/api/auth/passwordreq/${token}?email=${email}`);
+        await axios.get(`/api/auth/passwordreq?email=${email}`);
         dispatch(stopLoading());
         dispatch(setAlert('Please Check Your Email For A Link To Change Password', 'success', setShowModal, showModal));
         return true;
@@ -162,14 +180,13 @@ export const changePasswordReq = (email, setShowModal, showModal) => async dispa
     }
 };
 
-export const changePasswordToken = (token, newPass, oldPass, setShowModal, showModal) => async dispatch => {
+export const changePasswordToken = (token, newPass, setShowModal, showModal) => async dispatch => {
     try {
         if (!token) return;
         dispatch(loading());
         const res = await axios.post(`/api/auth/changepassword/${token}`, 
             {
-                newPass: newPass,
-                oldPass: oldPass 
+                newPass: newPass
             }
         );
         dispatch(stopLoading());
@@ -182,5 +199,38 @@ export const changePasswordToken = (token, newPass, oldPass, setShowModal, showM
         if (msgs.constructor !== Array) return dispatch(setAlert('Error Try Again Later', 'error', setShowModal, showModal));
         msgs.forEach(msg => dispatch(setAlert(msg.msg, 'success', setShowModal, showModal)));
         return null;
+    }
+};
+
+export const verifyEmail = (email, original, update, setShowModal, showModal) => async dispatch => {
+    try {
+        if (update) await axios.post('/api/user/update', update);
+        dispatch(loading());
+        const res = await axios.post('/api/auth/email', {email, original});
+        dispatch(stopLoading());
+        const msgs = res.data.msgs;
+        if (msgs) msgs.forEach(msg => dispatch(setAlert(msg.msg, 'success', setShowModal, showModal)));
+    } catch (err) {
+        dispatch(stopLoading());
+        if (!err.response) return dispatch(setAlert('Error Try Again Later', 'error', setShowModal, showModal));
+        const msgs = err.response.data.msgs;
+        if (msgs.constructor !== Array) return dispatch(setAlert('Error Try Again Later', 'error', setShowModal, showModal));
+        msgs.forEach(msg => dispatch(setAlert(msg.msg, 'error', setShowModal, showModal)));
+    }
+};
+
+export const verifyEmailFinish = (token, setShowModal, showModal) => async dispatch => {
+    try {
+        dispatch(loading());
+        const res = await axios.get(`/api/auth/email/${token}`);
+        dispatch(stopLoading());
+        const msgs = res.data.msgs;
+        if (msgs) msgs.forEach(msg => dispatch(setAlert(msg.msg, 'success', setShowModal, showModal)));
+    } catch (err) {
+        dispatch(stopLoading());
+        if (!err.response) return dispatch(setAlert('Error Try Again Later', 'error', setShowModal, showModal));
+        const msgs = err.response.data.msgs;
+        if (msgs.constructor !== Array) return dispatch(setAlert('Error Try Again Later', 'error', setShowModal, showModal));
+        msgs.forEach(msg => dispatch(setAlert(msg.msg, 'error', setShowModal, showModal)));
     }
 }

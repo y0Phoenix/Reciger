@@ -10,6 +10,9 @@ import './css/Dashboard/Dashboard.css';
 import './css/Dashboard/RecentIngs.css';
 import './css/Dashboard/RecentRecs.css';
 import './css/Search.css';
+import './css/Account/Account.css';
+import './css/Account/Password.css';
+import './css/Account/VerifyEmail.css';
 import React, {Fragment, useEffect, useState} from 'react';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import { Provider } from 'react-redux';
@@ -30,8 +33,9 @@ import Category from './layouts/models/Category';
 import IngredientM from './layouts/models/IngredientM';
 import YesorNo from './layouts/models/YesorNo';
 import Redirect from './layouts/utils/Redirect';
-import Password from './layouts/Password';
-import Account from './layouts/Account';
+import Password from './layouts/Account/Password';
+import Account from './layouts/Account/Account';
+import VerifyEmail from './layouts/Account/VerifyEmail';
 
 
 function App() {
@@ -85,8 +89,9 @@ function App() {
               <Route  exact path='/ingredients/:page' element={<Ingredients {...{showModal, setShowModal, setNavigate}}/>}/>
               <Route  exact path='/recipe/:id' element={<Recipe {...{showModal, setShowModal, setNavigate}}/>}/>
               <Route  exact path='/recipes/:page' element={<Recipes {...{showModal, setShowModal, setNavigate}}/>}/>
-              <Route exact path='/account' element={<Account {...{showModal, setShowModal, setNavigate}}/>}/>
+              <Route exact path='/account/:page' element={<Account {...{showModal, setShowModal, setNavigate}}/>}/>
               <Route exact path='/password/:token' element={<Password {...{showModal, setShowModal, setNavigate}}/>}/>
+              <Route exact path='/verifyemail/:token' element={<VerifyEmail {...{showModal, setShowModal}}/>}/>
             </Routes>
           </section>
           <Footer />

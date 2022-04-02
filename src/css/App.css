@@ -1,5 +1,12 @@
 @import './Colors.css';
 
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="number"] {
+	border: none;
+}
+
 html body {
 	height: 100%;
 	margin:0;
@@ -13,6 +20,9 @@ a {
 .container {
 	position: relative;
 	margin-bottom: 130px;
+}
+.eye-container {
+	position: relative;
 }
 .eye {
 	position: absolute;
@@ -125,12 +135,12 @@ a {
 .new-ingredient-btn {
 	border-radius: 8px;
 	color: white;
-	background-color: rgb(0, 0, 225);
+	background-color: black;
 	margin: 10px;
 	padding: 10px;
 }
 .new-ingredient-btn:hover {
-	background-color: rgb(0, 0, 255);
+	background-color: rgb(41, 41, 41);
 }
 .new-ingredient-form-nonut {
 	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;

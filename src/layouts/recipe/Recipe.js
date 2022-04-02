@@ -254,7 +254,7 @@ const Recipe = ({ingredients, navigate, setNavigate, postRecipe, getRecipes, sho
               <div className='new-recipe-instructions'>
                 <small>Instructions</small>
                 <br></br>
-                <textarea type='text' value={instructions} name='instructions' onChange={e => onchange(e)} rows="7" cols="60"></textarea>
+                <textarea className='new-recipe-instructions' type='text' value={instructions} name='instructions' onChange={e => onchange(e)} rows="7" cols="60"></textarea>
               </div>
             </div>
           <div className='new-recipe-submit'>

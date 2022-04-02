@@ -68,3 +68,6 @@
 .new-recipe-categories {
     grid-area: categories;
 }
+.new-recipe-instructions {
+    width: 98%;
+}
