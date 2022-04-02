@@ -10,6 +10,7 @@ import Scale from './Scale';
 import Nutrients from './Nutrients';
 import Suggestions from './Suggestions';
 import { motion } from 'framer-motion';
+import jsPDF from 'jspdf';
 
 const hover = {
   scale: 1.06
@@ -24,6 +25,7 @@ const Recipe = ({ingredients, navigate, setNavigate, postRecipe, getRecipes, sho
       amount: '', 
       unit: '',
     },
+    instructions: '',
     show: false
   }
   const [formData, setFormData] = useState({
@@ -81,7 +83,8 @@ const Recipe = ({ingredients, navigate, setNavigate, postRecipe, getRecipes, sho
       const temp = {...initAmounts};
       temp.Recipe = recipe.yield.number;
       temp.Price = recipe.price;
-      temp.Ingredients = recipe.ingredients.map(ing => ({amount: ing.quantity.amount, name: ing.name}))
+      temp.Ingredients = recipe.ingredients.map(ing => ({amount: ing.quantity.amount, name: ing.name, 
+        instructions: ing.instructions ? ing.instructions : ''}));
       const ings = recipe.ingredients.map(ing => ({name: ing.name, quantity: ing.quantity, show: false}));
       if (recipe.type === 'ingredient') correlative.current.checked = true;
       setInitAmounts(temp);
@@ -127,6 +130,9 @@ const Recipe = ({ingredients, navigate, setNavigate, postRecipe, getRecipes, sho
     }
     else if (e.target.name.includes('ing')) {
       let tempdata = [...ingData];
+      if (e.target.name === 'ing-instructions') {
+        tempdata[i].instructions = e.target.value;
+      }
       if (e.target.name.includes('amount') || e.target.name.includes('unit')) tempdata[i].quantity[e.target.name.replace('ing-', '')] = e.target.value;
       else tempdata[i][e.target.name.replace('ing-', '')] = e.target.value;
       if (e.target.name.includes('name')) {
@@ -188,6 +194,44 @@ const Recipe = ({ingredients, navigate, setNavigate, postRecipe, getRecipes, sho
       }
   }
 
+  const printPage = () => {
+    const pdf = new jsPDF();
+    let ingredients = ``;
+    let quantity = ``;
+    let special = ``;
+    ingData.forEach((ing, i) => {
+      ingredients += `${ing.name}\n`;
+      quantity += `${ing.quantity.amount} ${ing.quantity.unit}\n`;
+      if (ing?.instructions) special += `${ing.instructions}\n`;
+      else special += `\n`;
+      if (i === ingData.length - 1) {
+        ingredients += `\nInstructions\n\n\t${formData.instructions}`;
+      }
+    });
+    pdf.text(`${formData.name}`, 105, 15, {
+      align: 'center'
+    });
+    pdf.line(5, 25, 210, 25);
+    pdf.line(5, 40, 210, 40);
+    pdf.line(5, 25, 5, 265);
+    pdf.line(210, 25, 210, 265);
+    pdf.line(5, 265, 210, 265);
+    const textOptions = {
+      align: 'center'
+    }
+    pdf.text(`Yield: ${formData.Yield.number} ${formData.Yield.string}`, 25, 35, textOptions);
+    pdf.text(`Price: ${formData.Price}`, 190, 35, textOptions);
+    pdf.text(`Ingredient`, 30, 50, textOptions);
+    pdf.text(`Amount`, 75, 50, textOptions);
+    pdf.text(`Special Instructions`, 125, 50, textOptions);
+    pdf.text(ingredients, 30, 60, textOptions);
+    pdf.text(quantity, 75, 60, textOptions);
+    pdf.text(special, 105, 60, textOptions);
+    pdf.setFontSize(16);
+    pdf.autoPrint();
+    pdf.output('dataurlnewwindow');
+  }
+
   return (
     <>
     {isAuthenticated ?
@@ -230,6 +274,7 @@ const Recipe = ({ingredients, navigate, setNavigate, postRecipe, getRecipes, sho
                       return (
                           <div key={i} className='new-recipe-ingredient-item'>
                               <input autoComplete='off' type='text' id='ing-name' name='ing-name' value={ingData[i].name} onChange={e => onchange(e, i)} onBlur={e => onblur(i, ing.name)} placeholder='name'></input>
+                              <input autoComplete='off' type='text' id='ing-instructions' name='ing-instructions' value={ingData[i].instructions} onChange={e => onchange(e, i)} placeholder='instructions'></input>
                               <Suggestions {...{suggs, ingData, i, showModal, setState, suggsIndex, setSuggsIndex, userClicked, setUserClicked}}/>
                               <input autoComplete='off' type='text' id='ing-amount' name='ing-amount' value={ingData[i].quantity.amount} onChange={e => onchange(e, i)} placeholder='amount'></input>
                               <input autoComplete='off' type='text' id='ing-unit' name='ing-unit' value={ingData[i].quantity.unit} onChange={e => onchange(e, i)} placeholder='unit'></input>
@@ -261,6 +306,9 @@ const Recipe = ({ingredients, navigate, setNavigate, postRecipe, getRecipes, sho
             </div>
           <div className='new-recipe-submit'>
             <motion.input whileHover={hover} type='submit'  className='btn' value='Submit Recipe' onClick={e => onsubmit(e)}></motion.input>
+          </div>
+          <div>
+            <motion.button className='btn' onClick={() => printPage()}>Print</motion.button>
           </div>
         </div>
       </div> : <Navigate to='/login' />

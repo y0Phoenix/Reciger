@@ -66,6 +66,7 @@ export const postRecipe = (FormData, update = false, setShowModal, showModal) =>
                 return ingredient.name.toLowerCase()}).indexOf(ing.name.toLowerCase());
             let ingredient = {...ingredients[index]};
             ingredient.quantity = ing.quantity;
+            ingredient.instrucions = ing.instructions;
             return ingredient;
         });
         formData.yield = {...formData.Yield};
@@ -81,7 +82,6 @@ export const postRecipe = (FormData, update = false, setShowModal, showModal) =>
         const msgs = res.data.msgs;
         if (msgs) {
             msgs.forEach((msg) => {
-                console.log(msg);
                 dispatch(setAlert(msg.msg, 'success', setShowModal, showModal))
             });
         }
