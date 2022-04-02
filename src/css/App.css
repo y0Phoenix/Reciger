@@ -81,28 +81,6 @@ a {
 	display: flex;
 	justify-content: center;
 }
-.modal{
-	max-width: 400px;
-	max-height: 1000px;
-	padding: 40px 20px;
-	margin: auto;
-	background: black;
-	border-radius: 10px;
-	text-align: center;
-	z-index: 10;
-}
-
-.modal-btn {
-	color: pink;
-	border-color: red;
-	font-weight: bold;
-	margin-top: 20px;
-}
-
-.modal-p{
-	color: white;
-	font-weight: bold;
-}
 .new-ingredient {
 	display: grid;
 	grid-template-areas: 

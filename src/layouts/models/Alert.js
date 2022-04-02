@@ -5,6 +5,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { removeAlert } from '../../actions/alert';
 import { background, modal } from './types';
 
+const hover = {
+  scale: 1.09
+};
+
 const Alert = ({alert, showModal, setShowModal, removeAlert}) => {
   const exit = () => {
     setShowModal({...showModal, Alert: false});
@@ -20,19 +24,22 @@ const Alert = ({alert, showModal, setShowModal, removeAlert}) => {
                     animate="enter"
                     exit="exit"
                     key='background'>
-                  <motion.div className='modal' key="alert" onBlur={() => exit()}
+                  <motion.div className='alert-main' key="alert" onBlur={() => exit()}
                   variants={modal}
                   initial="initial"
                   animate="enter">
-                    <p className='modal-p'>Errors</p>
+                    <p className='modal-p'>Notice</p>
                     {alert.map(alert => (
-                      <div key={alert.id} className={`alert-${alert.type}`}>
-                        <p className='modal-p' key={alert.id}>
-                          {alert.msg}
-                        </p>
+                      <div key={alert.id} className={`alert ${alert.type}`}>
+                        <p>{alert.msg}</p>
                       </div>
                     ))}
-                    <button onClick={() => exit()} className="modal-btn" style={{cursor: "pointer"}}>Okay</button>
+                    <motion.button whileHover={hover} className='btn' style={{backgroundColor: 'black'}} onClick={() => exit()}>Okay</motion.button>
+                    <div className='close-modal'>
+                      <motion.button whileHover={hover} className='btn'>
+                        <i className='fa-solid fa-x'></i>
+                      </motion.button>
+                    </div>
                   </motion.div>
                 </motion.div> 
             </AnimatePresence>
