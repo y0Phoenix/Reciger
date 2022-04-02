@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState} from 'react';
+import React, { useEffect, useRef, useState} from 'react';
 import { connect } from 'react-redux';
 import { Navigate, useLocation, useParams } from 'react-router';
 import { loading, stopLoading } from '../../actions/loading';
@@ -52,6 +52,7 @@ const Recipe = ({ingredients, navigate, setNavigate, postRecipe, getRecipes, sho
   });
   const [userClicked, setUserClicked] = useState(false);
   const [scale, setScale] = useState(1);
+  const correlative = useRef(null);
   useEffect(() => {
     if (!ingData[0]) return;
     const arr = ingData.map(ing =>  {
@@ -82,6 +83,7 @@ const Recipe = ({ingredients, navigate, setNavigate, postRecipe, getRecipes, sho
       temp.Price = recipe.price;
       temp.Ingredients = recipe.ingredients.map(ing => ({amount: ing.quantity.amount, name: ing.name}))
       const ings = recipe.ingredients.map(ing => ({name: ing.name, quantity: ing.quantity, show: false}));
+      if (recipe.type === 'ingredient') correlative.current.checked = true;
       setInitAmounts(temp);
       setIngData(ings);
     }
@@ -248,7 +250,7 @@ const Recipe = ({ingredients, navigate, setNavigate, postRecipe, getRecipes, sho
                 <small>Categories</small>
                 <br></br>
                 <input type='text' value={categories} name='categories' onChange={e => setFormData({...formData, categories: e.target.value})} placeholder='categories'></input>
-                <input type='checkbox' value={Correlative} name='Correlative' onChange={e => setFormData({...formData, Correlative: e.target.checked})}></input>
+                <input type='checkbox' ref={correlative} value={Correlative} name='Correlative' onChange={e => setFormData({...formData, Correlative: e.target.checked})}></input>
                 <span>Check If This Recipe Will Be Used In Other Recipes</span>
               </div>
               <div className='new-recipe-instructions'>

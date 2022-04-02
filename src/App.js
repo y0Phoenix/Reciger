@@ -86,7 +86,7 @@ function App() {
             <Routes>
               <Route  exact path='/' element={<Landing {...{showModal, setShowModal}}/>}/>
               <Route  exact path='/register' element={<Register {...{showModal, setShowModal}}/>}/>
-              <Route  exact path='/login' element={<Login {...{showModal, setShowModal}}/>}/>
+              <Route  exact path='/login' element={<Login {...{showModal, setShowModal, setNavigate}}/>}/>
               <Route  exact path='/dashboard' element={<Dashboard {...{showModal, setShowModal, setNavigate}}/>}/>
               <Route  exact path='/ingredients/:page' element={<Ingredients {...{showModal, setShowModal, setNavigate}}/>}/>
               <Route  exact path='/recipe/:id' element={<Recipe {...{showModal, setShowModal, setNavigate}}/>}/>

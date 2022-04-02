@@ -163,8 +163,6 @@ export const deleteUser = ({setShowModal, showModal, setNavigate}) => async disp
 
 export const changePasswordReq = (email, setShowModal, showModal) => async dispatch => {
     try {
-        const token = localStorage.token;
-        if (!token) return dispatch(setAlert('Error Try Again Later', 'error', setShowModal, showModal));
         dispatch(loading());
         await axios.get(`/api/auth/passwordreq?email=${email}`);
         dispatch(stopLoading());

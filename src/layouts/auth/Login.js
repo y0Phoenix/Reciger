@@ -10,7 +10,7 @@ const animate = {
 	scale: 1.05
 };
 
-const Login = ({isAuthenticated, login, setShowModal, showModal, setAlert}) => {
+const Login = ({isAuthenticated, login, setNavigate, setShowModal, showModal, setAlert}) => {
 	const refs = {
 		pass: useRef(null),
 		passI: useRef(null)
@@ -63,6 +63,12 @@ const Login = ({isAuthenticated, login, setShowModal, showModal, setAlert}) => {
 				<div className='login-remeber'>
 					Remeber Me <input type='checkbox' name='remeber' value={remeber} onChange={e => setFormData({...formData, remeber: e.target.checked})}></input>
 				</div>
+				<div className='login-forgot'>
+					<motion.button type='button' whileHover={animate} className='btn' onClick={() => setNavigate('/password/init')}>
+						Forgot Password
+					</motion.button>
+				</div>
+				<br></br>
 				<div className='login-submit'>
 					<motion.input whileHover={animate} type='submit' value='Login' className='btn'></motion.input>
 				</div>
