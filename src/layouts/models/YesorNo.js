@@ -2,10 +2,11 @@ import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { background, modal } from './types';
 
+const hover = {
+    scale: 1.09
+};
+
 const YesorNo = ({showModal, setShowModal}) => {
-    if (showModal.YesorNo.bool) {
-        console.log('yes/no bool true');
-    }
     return (
         <>
             {showModal.YesorNo.bool && 
@@ -23,21 +24,25 @@ const YesorNo = ({showModal, setShowModal}) => {
                             exit='initial'
                        >
                             <div className='yesorno-title'>
-                                Are You Sure?
+                                <h1>
+                                    Are You Sure?
+                                </h1>
                             </div> 
-                            <div className='yesorno-yes'>
-                                <button type='button' onClick={() => {
-                                    showModal.YesorNo.direct(showModal.YesorNo.params);
-                                    setShowModal({...showModal, YesorNo: {id: null, bool: false, params: null}})
-                                }}>Yes</button>    
-                            </div>
-                            <div className='yesorno-no'>
-                                <button type='button' onClick={() => setShowModal({...showModal, YesorNo: {bool: false, direct: null, params: null}})}>No</button>    
+                            <div className='yesorno-buttons'>
+                                <div className='yesorno-yes'>
+                                    <motion.button whileHover={hover} id='yes' className='btn no-radius' type='button' onClick={() => {
+                                        showModal.YesorNo.direct(showModal.YesorNo.params);
+                                        setShowModal({...showModal, YesorNo: {id: null, bool: false, params: null}})
+                                    }}>Yes</motion.button>    
+                                </div>
+                                <div className='yesorno-no'>
+                                    <motion.button id='no' whileHover={hover} className='btn no-radius' type='button' onClick={() => setShowModal({...showModal, YesorNo: {bool: false, direct: null, params: null}})}>No</motion.button>    
+                                </div>
                             </div>
                             <div className='close-modal'>
-                                <button type='button' onClick={() => setShowModal({...showModal, YesorNo: {bool: false, direct: null, params: null}})}>
+                                <motion.button whileHover={hover} className='btn' type='button' onClick={() => setShowModal({...showModal, YesorNo: {bool: false, direct: null, params: null}})}>
                                     <i className='fa-solid fa-x'></i>    
-                                </button>    
+                                </motion.button>    
                             </div>
                         </motion.div> 
                     </motion.div>

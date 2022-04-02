@@ -13,6 +13,7 @@ import './css/Search.css';
 import './css/Account/Account.css';
 import './css/Account/Password.css';
 import './css/Account/VerifyEmail.css';
+import './css/Modals/YesorNo.css';
 import React, {Fragment, useEffect, useState} from 'react';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import { Provider } from 'react-redux';

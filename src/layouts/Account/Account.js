@@ -29,7 +29,9 @@ const Account = ({ isAuthenticated, user, updateUser, verifyEmail, setAlert, set
         if (user.email !== formData.email) {
             return verifyEmail(formData.email, user.email, {name: formData.name}, setShowModal, showModal);
         }
-        updateUser(formData, setShowModal, showModal);
+        let data = {...formData};
+        if (user.email === formData.email) delete data.email;
+        updateUser(data, setShowModal, showModal);
     }
     
     return (

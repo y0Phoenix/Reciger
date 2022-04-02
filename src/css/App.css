@@ -63,6 +63,11 @@ a {
 .no-radius {
 	border-radius: 0px;
 }
+.close-modal {
+	position: absolute;
+	top: 0;
+	right: 0;
+}
 .background {
 	position: fixed;
 	top: 0;
