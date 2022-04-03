@@ -15,6 +15,7 @@ import './css/Account/Password.css';
 import './css/Account/VerifyEmail.css';
 import './css/Modals/YesorNo.css';
 import './css/Modals/Alert.css';
+import './css/Modals/Ingredient.css';
 import React, {Fragment, useEffect, useState} from 'react';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import { Provider } from 'react-redux';

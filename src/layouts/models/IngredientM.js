@@ -137,8 +137,8 @@ const IngredientM = ({showModal, setShowModal, postIngredient, getIngredients, l
 						</button>
 						<div className='new-ingredient-h'><h1>New Ingredient <i className='fa-solid fa-carrot'></i></h1></div>
 						<div className='new-ingredient-form'>
-							<h2 style={{"paddingLeft": "40px"}}>Form</h2>
 							<form onSubmit={e => onSubmit(e)} autoComplete='off'>
+								<h2>Form</h2>
 								<div className='new-ingredient-form-name'>
 									<input className='new-ingredient-form-input' type='text' value={name} name='name' onChange={e => onChange(e)} placeholder='name'></input>
 								</div>
@@ -151,7 +151,8 @@ const IngredientM = ({showModal, setShowModal, postIngredient, getIngredients, l
 								<div>
 									<input className='new-ingredient-form-input' type='text' value={prefered} name='prefered' onChange={e => onChange(e)} placeholder='prefered measurement'></input>
 								</div>
-								<input type='checkbox' value={showPrefs} onChange={e => setShowPrefs(e.target.checked)} className='new-ingredient-checkbox'></input>
+								{/* not intuitive */}
+								{/* <input type='checkbox' value={showPrefs} onChange={e => setShowPrefs(e.target.checked)} className='new-ingredient-checkbox'></input>
 								<span className='new-ingredient-p'>Set Prefered Weight and Volume Specifically<br></br>
 								(defaults to standard oz, floz)</span>
 								{showPrefs &&
@@ -165,7 +166,7 @@ const IngredientM = ({showModal, setShowModal, postIngredient, getIngredients, l
 									</>
 								}
 								<br></br>
-								<br></br>
+								<br></br> */}
 								<div className='new-ingredient-form-nonut'>
 									<input className='new-ingredient-checkbox' type='checkbox' value={noNut} name='noNut' onChange={e => onChange(e)}></input>
 									<span className='new-ingredient-p'>No Nutritional Data</span>
@@ -174,25 +175,27 @@ const IngredientM = ({showModal, setShowModal, postIngredient, getIngredients, l
 									Submit <i className="fa-solid fa-arrow-up"></i>
 								</button>
 							</form>
+							<div className='new-ingredient-nutdata'>
+								<h2 style={{"paddingLeft": "40px"}}>Nutritional Data</h2>
+								<div ref={calories}>No Nutritional Data</div>
+								<div ref={iron}>Create An Ingredient</div>
+								<div ref={sodium}>In Order To Retrieve</div>
+								<div ref={calcium}>Nutritional Data</div>
+								<div ref={fiber}></div>
+								<div ref={sugars}></div>
+								<div ref={carbs}></div>
+								<div ref={fat}></div>
+								<div ref={protein}></div>
+							</div>
 						</div>
-						<div className='new-ingredient-nutdata'>
-							<h2 style={{"paddingLeft": "40px"}}>Nutritional Data</h2>
-							<div ref={calories}>No Nutritional Data</div>
-							<div ref={iron}>Create An Ingredient</div>
-							<div ref={sodium}>In Order To Retrieve</div>
-							<div ref={calcium}>Nutritional Data</div>
-							<div ref={fiber}></div>
-							<div ref={sugars}></div>
-							<div ref={carbs}></div>
-							<div ref={fat}></div>
-							<div ref={protein}></div>
-						</div>
-						<button className='new-ingredient-btn reset-ingredient-btn' onClick={e => {
-							exit();
-							setShowModal({...showModal, IngredientM: {bool: true, id: showModal.IngredientM.id}});
-						}}>
-							Reset Form <i className="fa-solid fa-arrow-rotate-left"></i>
-						</button>
+						{!showModal.IngredientM.id &&
+							<button className='new-ingredient-btn reset-ingredient-btn' onClick={e => {
+								exit();
+								setShowModal({...showModal, IngredientM: {bool: true, id: showModal.IngredientM.id}});
+							}}>
+								Reset Form <i className="fa-solid fa-arrow-rotate-left"></i>
+							</button>
+						}
 					</motion.div>
                 </motion.div>
 			</AnimatePresence>
