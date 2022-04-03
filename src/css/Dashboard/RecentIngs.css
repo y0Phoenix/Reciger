@@ -1,5 +1,17 @@
 @import '../Colors.css';
 
+@media (max-width: 425px) {
+    .recent-ings1 {
+        max-width: 250px;
+    }
+    .recent-ings2 {
+        max-width: 250px;
+    }
+    .recent-ings3 {
+        max-width: 250px;
+    }
+}
+
 .recent-ingredients {
     display: flex;
     flex-direction: column;
@@ -9,6 +21,7 @@
     position: relative;
     background-color: var(--recents-background);
     opacity: var(--recents-opacity);
+    max-width: fit-content;
 }
 .recent-ingredients h3 {
     margin: 0 auto 20px;

@@ -1,12 +1,23 @@
 @import './Colors.css';
 
+@media (max-width: 425px) {
+	.navbar-container {
+		flex-direction: column;
+		text-align: center;
+		justify-content: center;
+	}
+	.nav-2 {
+		flex-direction: column;
+		justify-content: center;
+		text-align: center;
+	}
+}
+
 .navbar-container {
-	display: grid;
-	margin: 0 auto;
-	grid-template-areas: 
-	'nav-1 nav-2 nav-3 . . . . . . . . . . . . . . . . .nav-4 nav-5';
+	display: flex;
+	justify-content: space-between;
 	background-color: var(--theme-color);
-	height: 50px;
+	max-height: fit-content;
 	border: 1px solid white;
 }
 .nav-btn {
@@ -21,19 +32,7 @@
 .nav-btn:hover {
 	background-color: var(--theme-color-hover);
 }
-.nav-1 {
-	margin-left: 20px;
-	grid-area: nav-1;
-}
 .nav-2 {
-	grid-area: nav-2;
-}
-.nav-3 {
-	grid-area: nav-3;
-}
-.nav-4 {
-	grid-area: nav-4;
-}
-.nav-5 {
-	grid-area: nav-5;
+	display: flex;
+	justify-content: space-between;
 }
