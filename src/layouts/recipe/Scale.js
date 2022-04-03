@@ -15,7 +15,9 @@ const Scale = ({params, setScale}) => {
                     }}>
                         <div className='recipe-scale-amount'>
                             <input type='number' name='amount' value={tempScale} onChange={e => setTempScale(e.target.value)} min='1' step='0.5' autoFocus="autoFocus"></input>    
-                            <motion.input className='btn' whileHover={{scale: 1.06}} type='submit' value='Scale'></motion.input>
+                            <motion.button className='btn' whileHover={{scale: 1.06}} type='submit'>
+                                Scale: <i className="fa-solid fa-scale-balanced"></i>
+                            </motion.button>
                         </div>
                     </form>
                 </div>

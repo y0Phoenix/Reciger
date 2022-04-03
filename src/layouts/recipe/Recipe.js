@@ -13,7 +13,7 @@ import { motion } from 'framer-motion';
 import jsPDF from 'jspdf';
 
 const hover = {
-  scale: 1.06
+  scale: 1.07
 };
 
 const Recipe = ({ingredients, navigate, setNavigate, postRecipe, getRecipes, showModal, setShowModal, getIngredients, isAuthenticated, _loading, recipe}) => {
@@ -208,19 +208,17 @@ const Recipe = ({ingredients, navigate, setNavigate, postRecipe, getRecipes, sho
         ingredients += `\nInstructions\n\n\t${formData.instructions}`;
       }
     });
-    pdf.text(`${formData.name}`, 105, 15, {
+    const textOptions = {
       align: 'center'
-    });
+    }
+    pdf.text(`${formData.name}`, 105, 15, textOptions, 10);
     pdf.line(5, 25, 210, 25);
     pdf.line(5, 40, 210, 40);
     pdf.line(5, 25, 5, 265);
     pdf.line(210, 25, 210, 265);
     pdf.line(5, 265, 210, 265);
-    const textOptions = {
-      align: 'center'
-    }
     pdf.text(`Yield: ${formData.Yield.number} ${formData.Yield.string}`, 25, 35, textOptions);
-    pdf.text(`Price: ${formData.Price}`, 190, 35, textOptions);
+    pdf.text(`Yield: ${formData.Price} Serving: ${servingPrice()}`, 170, 35, textOptions);
     pdf.text(`Ingredient`, 30, 50, textOptions);
     pdf.text(`Amount`, 75, 50, textOptions);
     pdf.text(`Special Instructions`, 125, 50, textOptions);
@@ -229,7 +227,16 @@ const Recipe = ({ingredients, navigate, setNavigate, postRecipe, getRecipes, sho
     pdf.text(special, 105, 60, textOptions);
     pdf.setFontSize(16);
     pdf.autoPrint();
-    pdf.output('dataurlnewwindow');
+    pdf.output('dataurlnewwindow', {
+      filename: `${formData.name}`
+    });
+  }
+
+  const servingPrice = () => {
+    if (formData.Yield.number !== 1) {
+      return `$${(parseFloat(Price.split('$').join('')) / formData.Yield.number).toFixed(2)}`;
+    }
+    return Price;
   }
 
   return (
@@ -246,7 +253,8 @@ const Recipe = ({ingredients, navigate, setNavigate, postRecipe, getRecipes, sho
                 {params.id !== 'new' &&
                   <>
                     <small>Price</small>
-                    <div>{Price}</div>
+                    <div>Yield: {Price}</div>
+                    <div>Serving: {servingPrice()}</div>
                   </>
                 }
               </div>
@@ -254,6 +262,9 @@ const Recipe = ({ingredients, navigate, setNavigate, postRecipe, getRecipes, sho
                 <small>Yield</small>
                 <br></br>
                 <input type='number' value={Yield.number} id='number' name='number' onChange={e => onchange(e)} placeholder='amount'></input>
+                <motion.button whileHover={hover} className='btn' onClick={() => printPage()}>
+                  Print <i className='fa-solid fa-print'></i>
+                </motion.button>
                 <input type='text' value={Yield.string} name='string' onChange={e => onchange(e)} placeholder='unit'></input>
                 <Scale {...{params, setScale}}/>
               </div>
@@ -289,7 +300,9 @@ const Recipe = ({ingredients, navigate, setNavigate, postRecipe, getRecipes, sho
                           </div>
                       )
                   })}
-                  <motion.button whileHover={hover} className='btn' type='button'onClick={e => addIng(e)}>Add Ingredient</motion.button>
+                  <motion.button whileHover={hover} className='btn' type='button'onClick={e => addIng(e)}>
+                    Add Ingredient <i className='fa-solid fa-arrow-down'></i>
+                  </motion.button>
               </div>
               <div className='new-recipe-categories'>
                 <small>Categories</small>
@@ -305,10 +318,12 @@ const Recipe = ({ingredients, navigate, setNavigate, postRecipe, getRecipes, sho
               </div>
             </div>
           <div className='new-recipe-submit'>
-            <motion.input whileHover={hover} type='submit'  className='btn' value='Submit Recipe' onClick={e => onsubmit(e)}></motion.input>
+            <motion.button whileHover={hover} type='submit'  className='btn' onClick={e => onsubmit(e)}>
+              Submit Recipe <i className='fa-solid fa-arrow-up'></i>
+            </motion.button>
           </div>
           <div>
-            <motion.button className='btn' onClick={() => printPage()}>Print</motion.button>
+            
           </div>
         </div>
       </div> : <Navigate to='/login' />
