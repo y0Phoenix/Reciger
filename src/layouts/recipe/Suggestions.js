@@ -36,8 +36,8 @@ const Suggestions = ({suggs, ingData, i, showModal, setState, suggsIndex, setSug
                     </> :
                     <>
                       {ingData[i].show === true &&
-                        <div className='suggs' style={{width: '915px'}}>
-                          <button id={`suggs${0}`} type='button' className='btn no-radius' style={{width: '915px'}} onClick={e => {
+                        <div className='suggs'>
+                          <button id={`suggs${0}`} type='button' className='btn no-radius' style={{width: '100%'}} onClick={e => {
                             setState({...showModal, IngredientM: {bool: true, id: showModal.IngredientM.id}}, 'setShowModal');
                             const tempdata = [...ingData];
                             tempdata[i].show = false;

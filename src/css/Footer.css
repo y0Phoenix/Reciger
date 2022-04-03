@@ -1,13 +1,11 @@
 @import './Colors.css';
 
 .footer-container {
-    position: fixed;
+    position: sticky;
     bottom: 0;
     width: 100%;
 }
 .footer-content {
-    display: grid;
-    margin: 0 auto;
     text-align: center;
     background-color: var(--theme-color);
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;

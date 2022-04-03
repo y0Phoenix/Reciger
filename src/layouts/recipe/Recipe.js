@@ -262,10 +262,10 @@ const Recipe = ({ingredients, navigate, setNavigate, postRecipe, getRecipes, sho
                 <small>Yield</small>
                 <br></br>
                 <input type='number' value={Yield.number} id='number' name='number' onChange={e => onchange(e)} placeholder='amount'></input>
+                <input id='yield-string' type='text' value={Yield.string} name='string' onChange={e => onchange(e)} placeholder='unit'></input>
                 <motion.button whileHover={hover} className='btn' onClick={() => printPage()}>
                   Print <i className='fa-solid fa-print'></i>
                 </motion.button>
-                <input type='text' value={Yield.string} name='string' onChange={e => onchange(e)} placeholder='unit'></input>
                 <Scale {...{params, setScale}}/>
               </div>
               <div className='new-recipe-nutrients'>
@@ -284,11 +284,23 @@ const Recipe = ({ingredients, navigate, setNavigate, postRecipe, getRecipes, sho
                       if (!suggs[i]) setSuggs([...suggs, []]);
                       return (
                           <div key={i} className='new-recipe-ingredient-item'>
+                            <div>
                               <input autoComplete='off' type='text' id='ing-name' name='ing-name' value={ingData[i].name} onChange={e => onchange(e, i)} onBlur={e => onblur(i, ing.name)} placeholder='name'></input>
+
+                            </div>
+                            <div>
                               <input autoComplete='off' type='text' id='ing-instructions' name='ing-instructions' value={ingData[i].instructions} onChange={e => onchange(e, i)} placeholder='instructions'></input>
-                              <Suggestions {...{suggs, ingData, i, showModal, setState, suggsIndex, setSuggsIndex, userClicked, setUserClicked}}/>
+
+                            </div>
+                            <div>
                               <input autoComplete='off' type='text' id='ing-amount' name='ing-amount' value={ingData[i].quantity.amount} onChange={e => onchange(e, i)} placeholder='amount'></input>
+
+                            </div>
+                            <div>
                               <input autoComplete='off' type='text' id='ing-unit' name='ing-unit' value={ingData[i].quantity.unit} onChange={e => onchange(e, i)} placeholder='unit'></input>
+
+                            </div>
+                            <div className='new-recipe-ingredient-buttons'>
                               <motion.button whileHover={hover} type='button' className='btn no-radius' onClick={e => {
                                   const index = ingredients.map(ing => ing.name).indexOf(ingData[i].name);
                                   if (index === -1) return;
@@ -297,19 +309,26 @@ const Recipe = ({ingredients, navigate, setNavigate, postRecipe, getRecipes, sho
                               <motion.button whileHover={hover} className='btn-red no-radius' type='button' onClick={e => removeIng(e, i)}>
                                   <i className='fa-solid fa-x'></i>
                               </motion.button>
+
+                            </div>
+                              <Suggestions {...{suggs, ingData, i, showModal, setState, suggsIndex, setSuggsIndex, userClicked, setUserClicked}}/>
                           </div>
                       )
                   })}
-                  <motion.button whileHover={hover} className='btn' type='button'onClick={e => addIng(e)}>
-                    Add Ingredient <i className='fa-solid fa-arrow-down'></i>
-                  </motion.button>
+                  <div>
+                    <motion.button style={{marginTop: '15px'}} whileHover={hover} className='btn' type='button'onClick={e => addIng(e)}>
+                      Add Ingredient <i className='fa-solid fa-arrow-down'></i>
+                    </motion.button>
+                  </div>
               </div>
               <div className='new-recipe-categories'>
                 <small>Categories</small>
                 <br></br>
-                <input type='text' value={categories} name='categories' onChange={e => setFormData({...formData, categories: e.target.value})} placeholder='categories'></input>
-                <input type='checkbox' ref={correlative} value={Correlative} name='Correlative' onChange={e => setFormData({...formData, Correlative: e.target.checked})}></input>
-                <span>Check If This Recipe Will Be Used In Other Recipes</span>
+                <div className='new-recipe-categories-inputs'>
+                  <input type='text' value={categories} name='categories' onChange={e => setFormData({...formData, categories: e.target.value})} placeholder='categories'></input>
+                  <input type='checkbox' ref={correlative} value={Correlative} name='Correlative' onChange={e => setFormData({...formData, Correlative: e.target.checked})}></input>
+                  Check If This Will Be Used In Other Recipes
+                </div>
               </div>
               <div className='new-recipe-instructions'>
                 <small>Instructions</small>

@@ -9,8 +9,8 @@ input[type="number"] {
 
 html body {
 	height: 100%;
-	margin:0;
-	padding:0;
+	margin: 0;
+	padding: 0;
 	line-height: 1.6;
 	background-color: rgba(0,0,0,0.9);
 }
@@ -97,9 +97,6 @@ a {
 .reset-ingredient-btn {
 	grid-area: reset-ingredient-btn;
 }
-.new-recipe-ingredient-item {
-	position: relative;
-}
 .suggs {
 	position: absolute;
 	top: 35px;
@@ -116,9 +113,6 @@ a {
 	display: flex;
 	flex-direction: column;
 	gap: 6px;
-}
-.suggs ul {
-	list-style: none;
 }
 .suggs-item {
 	display: flex;
