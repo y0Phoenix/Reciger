@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { AnimatePresence, motion } from 'framer-motion';
-import cooking from '../images/cooking-at-home.gif'
+import cooking from '../images/cooking-at-home.gif';
+import cookingSmall from '../images/cooking-at-home-small.gif';
+import cookingXSmall from '../images/cooking-at-home-xsmall.gif';
 import PropTypes from 'prop-types';
 import { Link, Navigate } from 'react-router-dom';
+const gifArr = [cooking, cookingSmall, cookingXSmall];
 const initial = {
   opacity: 0
 };
@@ -15,6 +18,13 @@ const hover = {
 };
 
 const Landing = ({isAuthenticated}) => {
+  const [i, setI] = useState(0);
+  window.addEventListener('resize', (e) => {
+    const width = e.target.innerWidth;
+    if (width >= 768) return setI(0);
+    if (width >= 425) return setI(1);
+    return setI(2);
+  });
   return (
     <>
       {isAuthenticated ? <Navigate to='/dashboard' /> : 
@@ -40,7 +50,7 @@ const Landing = ({isAuthenticated}) => {
             </motion.div>
           </div>
           <div className='landing-img-container'>
-            <motion.img src={cooking} initial={initial} animate={{opacity: 0.7}} transition={{duration: 1}} className='landing-img'>
+            <motion.img src={gifArr[i]} initial={initial} animate={{opacity: 0.7}} transition={{duration: 1}} className='landing-img'>
             </motion.img>
           </div>
           <div className='landing-credit'>
