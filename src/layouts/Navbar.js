@@ -48,20 +48,22 @@ const Navbar = ({isAuthenticated, logout, setNavigate}) => {
         </div>
       </div> : 
       <div className='navbar-container'>
-        <div className='nav-item nav-1'>
-          <motion.button whileHover={animate} className='nav-btn' onClick={() => setNavigate('/login')}>
-           <i className='fa fa-user'></i> Login 
-          </motion.button>
-        </div>
-        <div className='nav-item nav-2'>
-          <motion.button whileHover={animate} className='nav-btn' onClick={() => setNavigate('/register')}>
-           <i className='fa fa-user-check'></i> Register 
-          </motion.button>
-        </div>
-        <div className='nan-item nav-3'>
-          <motion.button whileHover={animate} className='nav-btn' onClick={() => setNavigate('/')}>
-           <i className='fa fa-folder-open'></i> Reciger 
-          </motion.button>
+        <div style={{gap: gap}} className='nav-2'>
+          <div className='nav-item nav-1'>
+            <motion.button whileHover={animate} className='nav-btn' onClick={() => setNavigate('/login')}>
+            <i className='fa fa-user'></i> Login 
+            </motion.button>
+          </div>
+          <div className='nav-item nav-2'>
+            <motion.button whileHover={animate} className='nav-btn' onClick={() => setNavigate('/register')}>
+            <i className='fa fa-user-check'></i> Register 
+            </motion.button>
+          </div>
+          <div className='nan-item nav-3'>
+            <motion.button whileHover={animate} className='nav-btn' onClick={() => setNavigate('/')}>
+            <i className='fa fa-folder-open'></i> Reciger 
+            </motion.button>
+          </div>
         </div>
       </div>}
     </Fragment>

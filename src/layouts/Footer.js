@@ -1,10 +1,8 @@
-import React, { useState } from 'react'
-import { Link, useLocation } from 'react-router-dom';
+import React from 'react'
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 const Footer = () => {
-    const location = useLocation();
-    const bool = location.pathname.includes('recipe');
     // const [width, setWidth] = useState('100%');
     // if (bool) {
     //     if (window.innerWidth <= 425 && window.innerWidth > 375) {
