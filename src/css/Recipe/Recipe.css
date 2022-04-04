@@ -83,10 +83,16 @@
 .new-recipe-categories-inputs {
     display: flex;
 }
+.new-recipe-ingredient-unit-amount {
+    display: flex;
+}
+.new-recipe-ingredient-name-instruction {
+    display: flex;
+}
 
 @media screen and (max-width: 1440px) {
     #ing-name {
-        width: 400px;
+        width: 300px;
     }
     .suggs {
         width: 410px;
@@ -103,7 +109,7 @@
 }
 @media screen and (max-width: 1024px) {
     #ing-name {
-        width: 200px;
+        width: 100px;
     }
     .suggs {
         width: 210px;
@@ -131,10 +137,13 @@
     }
     #ing-name,
     #ing-instructions {
-        width: 180px;
+        width: 95px;
     }
     .suggs {
         width: 190px;
+    }
+    .footer-container {
+        position: sticky;
     }
 }
 @media screen and (max-width: 425px) {
@@ -143,7 +152,7 @@
     }
     #ing-name,
     #ing-instructions {
-        width: 355px;
+        width: 173px;
     }
     .suggs {
         width: 365px;
@@ -154,7 +163,7 @@
     }
     #ing-amount,
     #ing-unit {
-        width: 355px;
+        width: 170px;
         margin: 6px;
     }
     .new-recipe-instructions {
@@ -176,12 +185,12 @@
 @media screen and (max-width: 375px) {
     #ing-amount,
     #ing-unit {
-        width: 295px;
+        width: 140px;
         margin: 6px;
     }
     #ing-name,
     #ing-instructions {
-        width: 295px;
+        width: 143px;
     }
     .new-recipe-instructions {
         width: 295px;
@@ -205,12 +214,12 @@
 @media screen and (max-width: 320px) {
     #ing-amount,
     #ing-unit {
-        width: 265px;
+        width: 125px;
         margin: 6px;
     }
     #ing-name,
     #ing-instructions {
-        width: 265px;
+        width: 127px;
     }
     .new-recipe-instructions {
         width: 265px;

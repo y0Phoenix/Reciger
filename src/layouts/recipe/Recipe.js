@@ -284,21 +284,13 @@ const Recipe = ({ingredients, navigate, setNavigate, postRecipe, getRecipes, sho
                       if (!suggs[i]) setSuggs([...suggs, []]);
                       return (
                           <div key={i} className='new-recipe-ingredient-item'>
-                            <div>
+                            <div className='new-recipe-ingredient-name-instruction'>
                               <input autoComplete='off' type='text' id='ing-name' name='ing-name' value={ingData[i].name} onChange={e => onchange(e, i)} onBlur={e => onblur(i, ing.name)} placeholder='name'></input>
-
-                            </div>
-                            <div>
                               <input autoComplete='off' type='text' id='ing-instructions' name='ing-instructions' value={ingData[i].instructions} onChange={e => onchange(e, i)} placeholder='instructions'></input>
-
                             </div>
-                            <div>
+                            <div className='new-recipe-ingredient-unit-amount'>
                               <input autoComplete='off' type='text' id='ing-amount' name='ing-amount' value={ingData[i].quantity.amount} onChange={e => onchange(e, i)} placeholder='amount'></input>
-
-                            </div>
-                            <div>
                               <input autoComplete='off' type='text' id='ing-unit' name='ing-unit' value={ingData[i].quantity.unit} onChange={e => onchange(e, i)} placeholder='unit'></input>
-
                             </div>
                             <div className='new-recipe-ingredient-buttons'>
                               <motion.button whileHover={hover} type='button' className='btn no-radius' onClick={e => {
