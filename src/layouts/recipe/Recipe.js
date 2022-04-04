@@ -84,8 +84,10 @@ const Recipe = ({ingredients, navigate, setNavigate, postRecipe, getRecipes, sho
       temp.Recipe = recipe.yield.number;
       temp.Price = recipe.price;
       temp.Ingredients = recipe.ingredients.map(ing => ({amount: ing.quantity.amount, name: ing.name, 
-        instructions: ing.instructions ? ing.instructions : ''}));
-      const ings = recipe.ingredients.map(ing => ({name: ing.name, quantity: ing.quantity, show: false}));
+        instructions: ing.instructions}));
+      const ings = recipe.ingredients.map(ing => ({name: ing.name, quantity: ing.quantity, show: false,
+        instructions: ing.instructions  
+      }));
       if (recipe.type === 'ingredient') correlative.current.checked = true;
       setInitAmounts(temp);
       setIngData(ings);
@@ -220,11 +222,11 @@ const Recipe = ({ingredients, navigate, setNavigate, postRecipe, getRecipes, sho
     pdf.text(`Yield: ${formData.Yield.number} ${formData.Yield.string}`, 25, 35, textOptions);
     pdf.text(`Yield: ${formData.Price} Serving: ${servingPrice()}`, 170, 35, textOptions);
     pdf.text(`Ingredient`, 30, 50, textOptions);
-    pdf.text(`Amount`, 75, 50, textOptions);
-    pdf.text(`Special Instructions`, 125, 50, textOptions);
+    pdf.text(`Amount`, 85, 50, textOptions);
+    pdf.text(`Special Instructions`, 135, 50, textOptions);
     pdf.text(ingredients, 30, 60, textOptions);
-    pdf.text(quantity, 75, 60, textOptions);
-    pdf.text(special, 105, 60, textOptions);
+    pdf.text(quantity, 85, 60, textOptions);
+    pdf.text(special, 120, 60, textOptions);
     pdf.setFontSize(16);
     pdf.autoPrint();
     pdf.output('dataurlnewwindow', {

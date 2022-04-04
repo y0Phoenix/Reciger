@@ -66,7 +66,7 @@ export const postRecipe = (FormData, update = false, setShowModal, showModal) =>
                 return ingredient.name.toLowerCase()}).indexOf(ing.name.toLowerCase());
             let ingredient = {...ingredients[index]};
             ingredient.quantity = ing.quantity;
-            ingredient.instrucions = ing.instructions;
+            ingredient.instructions = ing.instructions;
             return ingredient;
         });
         formData.yield = {...formData.Yield};
