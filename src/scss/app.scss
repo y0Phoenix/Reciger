@@ -1,4 +1,21 @@
-@import './Colors.css';
+@import './_Colors.scss';
+@import './_Footer.scss';
+@import './_Landing.scss';
+@import './_Login.scss';
+@import './_Navbar.scss';
+@import './_Register.scss';
+@import './_Search.scss';
+@import './Account/_Account.scss';
+@import './Account/_Password.scss';
+@import './Account/_VerifyEmail.scss';
+@import './Dashboard/_Dashboard.scss';
+@import './Dashboard/_RecentIngs.scss';
+@import './Dashboard/_RecentRecs.scss';
+@import './Modals/_Alert.scss';
+@import './Modals/_Ingredient.scss';
+@import './Modals/_YesorNo.scss';
+@import './Recipe/_Recipe.scss';
+@import './Recipe/_Nutrients.scss';
 
 input[type="text"],
 input[type="password"],

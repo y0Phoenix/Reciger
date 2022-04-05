@@ -1,4 +1,4 @@
-@import './Colors.css';
+@import './_Colors.scss';
 :root {
     --search-height: 30px;
 }
@@ -13,6 +13,7 @@
 .search-create {
     text-align: center;
 }
+
 .search-rest {
     display: flex;
     padding: 50px 150px;

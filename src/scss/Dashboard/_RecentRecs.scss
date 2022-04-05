@@ -1,18 +1,18 @@
-@import '../Colors.css';
+@import '../_Colors.scss';
 
 @media (max-width: 425px) {
-    .recent-ings1 {
+    .recent-recs1 {
         max-width: 250px;
     }
-    .recent-ings2 {
+    .recent-recs2 {
         max-width: 250px;
     }
-    .recent-ings3 {
+    .recent-resc3 {
         max-width: 250px;
     }
 }
 
-.recent-ingredients {
+.recent-recipes {
     display: flex;
     flex-direction: column;
     border: 1px solid white;
@@ -23,13 +23,13 @@
     opacity: var(--recents-opacity);
     max-width: fit-content;
 }
-.recent-ingredients h3 {
+.recent-recipes h3 {
     margin: 0 auto 20px;
 }
-.recent-ings1 {
+.recent-recs1 {
     display: grid;
     grid-template-areas: 
-        'recent-rec-name1 . .'
+        'recent-rec-name1 . recent-rec-yield1'
         'recent-rec-categories1 . .'
         'recent-rec-calories1 . recent-rec-price1'
     ;
@@ -42,34 +42,37 @@
     position: var(--recent-position);
     margin-bottom: var(--recent-margin-bottom);
 }
-.recent-ings-name1 {
+.recent-recs-name1 {
     grid-area: recent-rec-name1;
 }
-.recent-ings-categories1 {
+.recent-recs-yield1 {
+    grid-area: recent-rec-yield1;
+}
+.recent-recs-categories1 {
     grid-area: recent-rec-categories1;
 }
-.recent-ings-price1{
+.recent-recs-price1{
     grid-area: recent-rec-price1;
 }
-.recent-ings-calories1 {
+.recent-recs-calories1 {
     grid-area: recent-rec-calories1;
 }
-.recent-ings-edit1{
+.recent-recs-edit1{
     position: absolute;
     bottom: 0;
     left: 0;
     grid-area: recent-rec-edit1;
 }
-.recent-ings-delete1 {
+.recent-recs-delete1 {
     position: absolute;
     bottom: 0;
     right: 0;
     grid-area: recent-rec-delete1;
 }
-.recent-ings2 {
+.recent-recs2 {
     display: grid;
     grid-template-areas: 
-        'recent-rec-name2 . .'
+        'recent-rec-name2 . recent-rec-yield2'
         'recent-rec-categories2 . .'
         'recent-rec-calories2 . recent-rec-price2'
     ;
@@ -82,34 +85,37 @@
     position: var(--recent-position);
     margin-bottom: var(--recent-margin-bottom);
 }
-.recent-ings-name2 {
+.recent-recs-name2 {
     grid-area: recent-rec-name2;
 }
-.recent-ings-categories2 {
+.recent-recs-yield2 {
+    grid-area: recent-rec-yield2;
+}
+.recent-recs-categories2 {
     grid-area: recent-rec-categories2;
 }
-.recent-ings-price2{
+.recent-recs-price2{
     grid-area: recent-rec-price2;
 }
-.recent-ings-calories2 {
+.recent-recs-calories2 {
     grid-area: recent-rec-calories2;
 }
-.recent-ings-edit2{
+.recent-recs-edit2{
     position: absolute;
     bottom: 0;
     left: 0;
     grid-area: recent-rec-edit2;
 }
-.recent-ings-delete2 {
+.recent-recs-delete2 {
     position: absolute;
     bottom: 0;
     right: 0;
     grid-area: recent-rec-delete2;
 }
-.recent-ings3 {
+.recent-recs3 {
     display: grid;
     grid-template-areas: 
-        'recent-rec-name3 . .'
+        'recent-rec-name3 . recent-rec-yield3'
         'recent-rec-categories3 . .'
         'recent-rec-calories3 . recent-rec-price3'
     ;
@@ -122,25 +128,28 @@
     position: var(--recent-position);
     margin-bottom: var(--recent-margin-bottom);
 }
-.recent-ings-name3 {
+.recent-recs-name3 {
     grid-area: recent-rec-name3;
 }
-.recent-ings-categories3 {
+.recent-recs-yield3 {
+    grid-area: recent-rec-yield3;
+}
+.recent-recs-categories3 {
     grid-area: recent-rec-categories3;
 }
-.recent-ings-price3{
+.recent-recs-price3{
     grid-area: recent-rec-price3;
 }
-.recent-ings-calories3 {
+.recent-recs-calories3 {
     grid-area: recent-rec-calories3;
 }
-.recent-ings-edit3{
+.recent-recs-edit3{
     position: absolute;
     bottom: 0;
     left: 0;
     grid-area: recent-rec-edit3;
 }
-.recent-ings-delete3 {
+.recent-recs-delete3 {
     position: absolute;
     bottom: 0;
     right: 0;
