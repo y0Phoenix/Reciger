@@ -80,10 +80,10 @@ const IngredientM = ({showModal, setShowModal, postIngredient, getIngredients, l
 
 		let ingredients;
 		if (showModal.IngredientM.id) {
-			ingredients = await updateIngredient({name, categories: cats, price, units: {volume, weight, prefered}, }, showModal.IngredientM.id, true, noNut, setShowModal, showModal)
+			ingredients = await updateIngredient({name, categories: cats, price, units: {volume, weight, prefered}, }, showModal.IngredientM.id, true, !noNut, setShowModal, showModal)
 		}
 		else {
-			ingredients = await postIngredient({name, categories: cats, price, units: {volume, weight, prefered}}, noNut, setShowModal, showModal, true, true);
+			ingredients = await postIngredient({name, categories: cats, price, units: {volume, weight, prefered}}, !noNut, setShowModal, showModal, true, true);
 		}
 		if (!ingredients) {
 			return stopLoading();
@@ -169,7 +169,7 @@ const IngredientM = ({showModal, setShowModal, postIngredient, getIngredients, l
 								<br></br> */}
 								<div className='new-ingredient-form-nonut'>
 									<input className='new-ingredient-checkbox' type='checkbox' value={noNut} name='noNut' onChange={e => onChange(e)}></input>
-									<span className='new-ingredient-p'>No Nutritional Data</span>
+									<span className='new-ingredient-p'>Opt In To Nutritional Data</span>
 								</div>
 								<button type='submit' className='new-ingredient-btn'>
 									Submit <i className="fa-solid fa-arrow-up"></i>
