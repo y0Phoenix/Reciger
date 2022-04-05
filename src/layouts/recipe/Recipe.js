@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useRef, useState} from 'react';
+import React, { StrictMode, useEffect, useRef, useState} from 'react';
 import { connect } from 'react-redux';
 import { Navigate, useLocation, useParams } from 'react-router';
 import { loading, stopLoading } from '../../actions/loading';
@@ -198,35 +198,50 @@ const Recipe = ({ingredients, navigate, setNavigate, postRecipe, getRecipes, sho
 
   const printPage = () => {
     const pdf = new jsPDF();
-    let ingredients = ``;
-    let quantity = ``;
-    let special = ``;
+    let start = 60;
     ingData.forEach((ing, i) => {
-      ingredients += `${ing.name}\n`;
-      quantity += `${ing.quantity.amount} ${ing.quantity.unit}\n`;
-      if (ing?.instructions) special += `${ing.instructions}\n`;
-      else special += `\n`;
+      pdf.setFontSize(12);
+      pdf.text(ing.name, 20, start);
+      pdf.text(`${ing.quantity.amount} ${ing.quantity.unit}`, 75, start);
+      if (ing?.instructions) pdf.text(ing.instructions, 125, start);
+      start = start + 7;
       if (i === ingData.length - 1) {
-        ingredients += `\nInstructions\n\n\t${formData.instructions}`;
+        start = start + 7;
+        pdf.setFontSize(14)
+        pdf.text('Instructions', 20, start);
+        pdf.setFontSize(10)
+        pdf.text(formData.instructions, 30, start + 10);
+        // const instructions = formData.instructions.split(/\r?\n/);
+        // let instruction = ``;
+        // if (instructions.length > 1) {
+        //   instructions.forEach((inst, i, arr) => {
+        //     if (inst === '') return;
+        //     instruction += `\t${inst}\n`;
+        //     if (arr[i + 1] === '') {
+        //       instruction += `\n`;
+        //     }
+        //   })
+        // }
+        // ingredients += `\nInstructions\n\npoopgfdssdgfdgsfsdgfgsfdgsdfgfsgfdgfd`;
       }
     });
     const textOptions = {
       align: 'center'
     }
+    pdf.setFontSize(26);
     pdf.text(`${formData.name}`, 105, 15, textOptions, 10);
     pdf.line(5, 25, 210, 25);
     pdf.line(5, 40, 210, 40);
     pdf.line(5, 25, 5, 265);
     pdf.line(210, 25, 210, 265);
     pdf.line(5, 265, 210, 265);
+    pdf.setFontSize(14);
     pdf.text(`Yield: ${formData.Yield.number} ${formData.Yield.string}`, 25, 35, textOptions);
     pdf.text(`Yield: ${formData.Price} Serving: ${servingPrice()}`, 170, 35, textOptions);
+    pdf.setFontSize(20);
     pdf.text(`Ingredient`, 30, 50, textOptions);
     pdf.text(`Amount`, 85, 50, textOptions);
     pdf.text(`Special Instructions`, 135, 50, textOptions);
-    pdf.text(ingredients, 30, 60, textOptions);
-    pdf.text(quantity, 85, 60, textOptions);
-    pdf.text(special, 120, 60, textOptions);
     pdf.setFontSize(16);
     pdf.autoPrint();
     pdf.output('dataurlnewwindow', {
