@@ -1,13 +1,7 @@
 @import '../_Colors.scss';
 
 @media (max-width: 425px) {
-    .recent-recs1 {
-        max-width: 250px;
-    }
-    .recent-recs2 {
-        max-width: 250px;
-    }
-    .recent-resc3 {
+    .recent-recs {
         max-width: 250px;
     }
 }
@@ -26,7 +20,7 @@
 .recent-recipes h3 {
     margin: 0 auto 20px;
 }
-.recent-recs1 {
+.recent-recs {
     display: grid;
     grid-template-areas: 
         'recent-rec-name1 . recent-rec-yield1'
@@ -42,116 +36,30 @@
     position: var(--recent-position);
     margin-bottom: var(--recent-margin-bottom);
 }
-.recent-recs-name1 {
+.recent-recs-name {
     grid-area: recent-rec-name1;
 }
-.recent-recs-yield1 {
+.recent-recs-yield {
     grid-area: recent-rec-yield1;
 }
-.recent-recs-categories1 {
+.recent-recs-categories {
     grid-area: recent-rec-categories1;
 }
-.recent-recs-price1{
+.recent-recs-price{
     grid-area: recent-rec-price1;
 }
-.recent-recs-calories1 {
+.recent-recs-calories {
     grid-area: recent-rec-calories1;
 }
-.recent-recs-edit1{
+.recent-recs-edit{
     position: absolute;
     bottom: 0;
     left: 0;
     grid-area: recent-rec-edit1;
 }
-.recent-recs-delete1 {
+.recent-recs-delete {
     position: absolute;
     bottom: 0;
     right: 0;
     grid-area: recent-rec-delete1;
-}
-.recent-recs2 {
-    display: grid;
-    grid-template-areas: 
-        'recent-rec-name2 . recent-rec-yield2'
-        'recent-rec-categories2 . .'
-        'recent-rec-calories2 . recent-rec-price2'
-    ;
-    width: var(--recent-width);
-    height: var(--recent-heigh);
-    border: var(--recent-border);
-    border-radius: var(--recent-border-radius);
-    padding: var(--recent-padding);
-    padding-bottom: var(--recent-padding-bottom);
-    position: var(--recent-position);
-    margin-bottom: var(--recent-margin-bottom);
-}
-.recent-recs-name2 {
-    grid-area: recent-rec-name2;
-}
-.recent-recs-yield2 {
-    grid-area: recent-rec-yield2;
-}
-.recent-recs-categories2 {
-    grid-area: recent-rec-categories2;
-}
-.recent-recs-price2{
-    grid-area: recent-rec-price2;
-}
-.recent-recs-calories2 {
-    grid-area: recent-rec-calories2;
-}
-.recent-recs-edit2{
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    grid-area: recent-rec-edit2;
-}
-.recent-recs-delete2 {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    grid-area: recent-rec-delete2;
-}
-.recent-recs3 {
-    display: grid;
-    grid-template-areas: 
-        'recent-rec-name3 . recent-rec-yield3'
-        'recent-rec-categories3 . .'
-        'recent-rec-calories3 . recent-rec-price3'
-    ;
-    width: var(--recent-width);
-    height: var(--recent-heigh);
-    border: var(--recent-border);
-    border-radius: var(--recent-border-radius);
-    padding: var(--recent-padding);
-    padding-bottom: var(--recent-padding-bottom);
-    position: var(--recent-position);
-    margin-bottom: var(--recent-margin-bottom);
-}
-.recent-recs-name3 {
-    grid-area: recent-rec-name3;
-}
-.recent-recs-yield3 {
-    grid-area: recent-rec-yield3;
-}
-.recent-recs-categories3 {
-    grid-area: recent-rec-categories3;
-}
-.recent-recs-price3{
-    grid-area: recent-rec-price3;
-}
-.recent-recs-calories3 {
-    grid-area: recent-rec-calories3;
-}
-.recent-recs-edit3{
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    grid-area: recent-rec-edit3;
-}
-.recent-recs-delete3 {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    grid-area: recent-rec-delete3;
 }

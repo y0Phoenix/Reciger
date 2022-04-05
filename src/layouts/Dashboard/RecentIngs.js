@@ -21,17 +21,17 @@ const RecentIngs = ({user, showModal, setShowModal, deleteIngredient}) =>
             }
         });
         return (
-            <div className={`recent-ings${i}`} key={i}>
-                <div className={`recent-ings-name${i}`}>{ing.name}</div>
-                <div className={`recent-ings-categories${i}`}>Categories: {cats}</div>
-                <div className={`recent-ings-calories${i}`}>Calories: {ing.calories}</div>
-                <div className={`recent-ings-price${i}`}>Price: {ing.price}</div>
-                <div className={`recent-ings-edit${i}`}>
+            <div className={`recent-ings`} key={i}>
+                <div className={`recent-ings-name`}>{ing.name}</div>
+                <div className={`recent-ings-categories`}>Categories: {cats}</div>
+                <div className={`recent-ings-calories`}>Calories: {ing.calories}</div>
+                <div className={`recent-ings-price`}>Price: {ing.price}</div>
+                <div className={`recent-ings-edit`}>
                     <motion.button whileHover={hover} className='btn' onClick={e => setShowModal({...showModal, IngredientM: {bool: true, id: ing.ing}})}>
                         <i className='fa-solid fa-edit'></i>    
                     </motion.button>
                 </div>
-                <div className={`recent-ings-delete${i}`}>
+                <div className={`recent-ings-delete`}>
                     <motion.button whileHover={hover} className='btn-red' onClick={() => setShowModal({...showModal, YesorNo: {direct: deleteIngredient, bool: true, params: {id: ing.ing, setShowModal, showModal}}})}>
                         <i className='fa-solid fa-x'></i>
                     </motion.button>

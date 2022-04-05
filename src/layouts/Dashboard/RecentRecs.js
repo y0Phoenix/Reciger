@@ -29,18 +29,18 @@ const RecentRecs = ({user, setShowModal, showModal, deleteRecipe}) => {
                         }
                     });
                     return (
-                        <div className={`recent-recs${i}`} key={i}>
-                            <div className={`recent-recs-name${i}`}>{rec.name}</div>
-                            <div className={`recent-recs-categories${i}`}>Categories: {cats}</div>
-                            <div className={`recent-recs-calories${i}`}>Calories: {rec.calories}</div>
-                            <div className={`recent-recs-yield${i}`}>Yield: {rec.yield}</div>
-                            <div className={`recent-recs-price${i}`}>{rec.price}</div>
-                            <div className={`recent-recs-edit${i}`}>
+                        <div className={`recent-recs`} key={i}>
+                            <div className={`recent-recs-name`}>{rec.name}</div>
+                            <div className={`recent-recs-categories`}>Categories: {cats}</div>
+                            <div className={`recent-recs-calories`}>Calories: {rec.calories}</div>
+                            <div className={`recent-recs-yield`}>Yield: {rec.yield}</div>
+                            <div className={`recent-recs-price`}>{rec.price}</div>
+                            <div className={`recent-recs-edit`}>
                                 <motion.button whileHover={hover} type="button" className='btn' onClick={() => setNavigate({...navigate, bool: true, id: rec.rec})}>
                                     <i className='fa-solid fa-edit'></i>  
                                 </motion.button>
                             </div>
-                            <div className={`recent-recs-delete${i}`}>
+                            <div className={`recent-recs-delete`}>
                                 <motion.button whileHover={hover} className='btn-red' onClick={() => setShowModal({...showModal, YesorNo: {direct: deleteRecipe, bool: true, params: {id: rec.rec, setShowModal, showModal}}})}>
                                     <i className='fa-solid fa-x'></i>    
                                 </motion.button>
