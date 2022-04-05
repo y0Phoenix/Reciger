@@ -206,11 +206,12 @@ const Recipe = ({ingredients, navigate, setNavigate, postRecipe, getRecipes, sho
       if (ing?.instructions) pdf.text(ing.instructions, 125, start);
       start = start + 7;
       if (i === ingData.length - 1) {
+        pdf.line(5, start - 2, 210, start - 2, 'FD');
         start = start + 7;
-        pdf.setFontSize(14)
+        pdf.setFontSize(20)
         pdf.text('Instructions', 20, start);
         pdf.setFontSize(10)
-        pdf.text(formData.instructions, 30, start + 10);
+        pdf.text(formData.instructions, 22, start + 10);
         // const instructions = formData.instructions.split(/\r?\n/);
         // let instruction = ``;
         // if (instructions.length > 1) {
