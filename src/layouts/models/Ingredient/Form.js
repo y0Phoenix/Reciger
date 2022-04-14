@@ -1,6 +1,7 @@
-import React from 'react'
+import React from 'react';
+import { motion } from 'framer-motion';
 
-const Form = ({onSubmit, onChange, name, categories, price, noNut}) => {
+const Form = ({onSubmit, onChange, name, categories, price, noNut, hover}) => {
     return (
         <form className='new-ingredient-form' onSubmit={e => onSubmit(e)} autoComplete='off'>
             <div className='new-ingredient-form-name'>
@@ -32,9 +33,9 @@ const Form = ({onSubmit, onChange, name, categories, price, noNut}) => {
                 <input className='new-ingredient-checkbox' type='checkbox' value={noNut} name='noNut' onChange={e => onChange(e)}></input>
                 <span className='new-ingredient-p'>Opt In To Nutritional Data</span>
             </div>
-            <button type='submit' className='new-ingredient-btn'>
+            <motion.button whileHover={hover} type='submit' className='new-ingredient-btn'>
                 Submit <i className="fa-solid fa-arrow-up"></i>
-            </button>
+            </motion.button>
         </form>
     )
 }

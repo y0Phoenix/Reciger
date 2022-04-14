@@ -29,7 +29,11 @@ const pageVariants = {
 			opacity: 0
 		}
 	}
-}
+};
+
+const hover = {
+	scale: 1.09
+};
 
 const swipeConfidenceThreshold = 10000;
 const swipePower = (offset, velocity) => {
@@ -209,18 +213,18 @@ const IngredientM = ({showModal, setShowModal, postIngredient, getIngredients, l
 									<div>{nutData.calories !== '' && nutData.protein}</div>
 								</div>
 								:
-								<Form {...{onSubmit, onChange, name, categories, price, noNut}} />
+								<Form {...{onSubmit, onChange, name, categories, price, noNut, hover}} />
 							}
 						<div>
 							<button className='close-icon' onClick={e => exit(e)}>
 									<i className='fa-solid fa-x'></i>
 							</button>
-							<button className='new-ingredient-next-page'onClick={() => paginate(1)} >
+							<motion.button whileHover={hover} className='new-ingredient-next-page'onClick={() => paginate(1)} >
 								<i className='fa-solid fa-arrow-right fa-2xl'></i>
-							</button>
-							<button className='new-ingredient-prev-page' onClick={() => paginate(-1)}>
+							</motion.button>
+							<motion.button whileHover={hover} className='new-ingredient-prev-page' onClick={() => paginate(-1)}>
 								<i className='fa-solid fa-arrow-left fa-2xl'></i>
-							</button>
+							</motion.button>
 						</div>
 						</motion.div>
 					</motion.div>
