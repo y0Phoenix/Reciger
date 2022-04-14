@@ -3,8 +3,8 @@
     flex-direction: column;
 	margin: auto;
 	text-align: center;
-	max-width: 1250px;
-	max-height: 700px;
+	max-width: fit-content;
+	max-height: fit-content;
 	background-color: var(--theme-color);
 	border-radius: 25px;
 	position: relative;
@@ -13,10 +13,31 @@
 	grid-area: new-ingredient-form;
 	border-radius: 6px;
 	border-color: black;
-    display: flex;
-    gap: 100px;
-    justify-content: space-between;
     padding: 0 100px 0 100px;
+}
+.new-ingredient-prev-page {
+	position: absolute;
+	left: 0;
+	top: 50%;
+	background-color: var(--theme-color);
+	border: none;
+	margin: 6px;
+	height: 30px;
+	border-radius: 6px;
+}
+.new-ingredient-next-page {
+	position: absolute;
+	right: 0;
+	top: 48%;
+	background-color: var(--theme-color);
+	border: none;
+	margin: 6px;
+	height: 30px;
+	border-radius: 6px;
+}
+.new-ingredient-prev-page:hover, 
+.new-ingredient-next-page:hover {
+	background-color: var(--theme-color-hover);
 }
 .new-ingredient-nutdata {
 	grid-area: new-ingredient-nutdata;
@@ -65,7 +86,7 @@
 }
 .new-ingredient-nutdata {
 	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-	text-align: left;
+	text-align: center;
     margin-bottom: 15px;
 }
 .new-ingredient-nutdata div{

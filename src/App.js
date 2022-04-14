@@ -16,7 +16,7 @@ import Footer from './layouts/Footer';
 import Alert from './layouts/models/Alert';
 import Loading from './layouts/models/Loading';
 import Category from './layouts/models/Category';
-import IngredientM from './layouts/models/IngredientM';
+import IngredientM from './layouts/models/Ingredient/IngredientM';
 import YesorNo from './layouts/models/YesorNo';
 import Redirect from './layouts/utils/Redirect';
 import Password from './layouts/Account/Password';
@@ -63,7 +63,9 @@ function App() {
           <section className='container'>
             <Alert {...{showModal, setShowModal}}/>
             <Category {...{showModal, setShowModal}}/>
-            <IngredientM {...{showModal, setShowModal, setNavigate}}/>
+            {showModal.IngredientM.bool &&
+              <IngredientM {...{showModal, setShowModal, setNavigate}}/>
+            }
             <Loading {...{showModal, setShowModal}}/>
             <YesorNo {...{showModal, setShowModal}} />
             <Redirect {...{navigate, setNavigate}}/>
