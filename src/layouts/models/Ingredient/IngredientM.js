@@ -172,7 +172,7 @@ const IngredientM = ({showModal, setShowModal, postIngredient, getIngredients, l
 						exit='initial'
 						ref={container}
 						>
-						<motion.div
+						<motion.div className='new-ingredient'
 							variants={pageVariants}
 							custom={direction}
 							initial='enter'
@@ -195,33 +195,33 @@ const IngredientM = ({showModal, setShowModal, postIngredient, getIngredients, l
 							}}
 							>
 							<div className='new-ingredient-h'><h1>New Ingredient <i className='fa-solid fa-carrot'></i></h1></div>
-							<div className='new-ingredient-form'>
-								{pageIndex > 0 ? 
-									<div className='new-ingredient-nutdata'>
-										<h2>Nutritional Data</h2>
-										<div>{nutData.calories !== '' ? nutData.calories : 'No Nutritional Data'}</div>
-										<div>{nutData.calories !== '' ? nutData.iron : 'Create An Ingredient'}</div>
-										<div>{nutData.calories !== '' ? nutData.sodium : 'In Order To Retrieve'}</div>
-										<div>{nutData.calories !== '' ? nutData.calcium : 'Nutritional Data'}</div>
-										<div>{nutData.calories !== '' && nutData.fiber}</div>
-										<div>{nutData.calories !== '' && nutData.sugars}</div>
-										<div>{nutData.calories !== '' && nutData.carbs}</div>
-										<div>{nutData.calories !== '' && nutData.fat}</div>
-										<div>{nutData.calories !== '' && nutData.protein}</div>
-									</div>
-									:
-									<Form {...{onSubmit, onChange, name, categories, price, noNut}} />
-								}
-							</div>
-						<button className='close-icon' onClick={e => exit(e)}>
-								<i className='fa-solid fa-x'></i>
-						</button>
-						<button className='new-ingredient-next-page'onClick={() => paginate(1)} >
-							<i className='fa-solid fa-arrow-right fa-2xl'></i>
-						</button>
-						<button className='new-ingredient-prev-page' onClick={() => paginate(-1)}>
-							<i className='fa-solid fa-arrow-left fa-2xl'></i>
-						</button>
+							{pageIndex > 0 ? 
+								<div className='new-ingredient-form nutdata'>
+									<h2>Nutritional Data</h2>
+									<div>{nutData.calories !== '' ? nutData.calories : 'No Nutritional Data'}</div>
+									<div>{nutData.calories !== '' ? nutData.iron : 'Create An Ingredient'}</div>
+									<div>{nutData.calories !== '' ? nutData.sodium : 'In Order To Retrieve'}</div>
+									<div>{nutData.calories !== '' ? nutData.calcium : 'Nutritional Data'}</div>
+									<div>{nutData.calories !== '' && nutData.fiber}</div>
+									<div>{nutData.calories !== '' && nutData.sugars}</div>
+									<div>{nutData.calories !== '' && nutData.carbs}</div>
+									<div>{nutData.calories !== '' && nutData.fat}</div>
+									<div>{nutData.calories !== '' && nutData.protein}</div>
+								</div>
+								:
+								<Form {...{onSubmit, onChange, name, categories, price, noNut}} />
+							}
+						<div>
+							<button className='close-icon' onClick={e => exit(e)}>
+									<i className='fa-solid fa-x'></i>
+							</button>
+							<button className='new-ingredient-next-page'onClick={() => paginate(1)} >
+								<i className='fa-solid fa-arrow-right fa-2xl'></i>
+							</button>
+							<button className='new-ingredient-prev-page' onClick={() => paginate(-1)}>
+								<i className='fa-solid fa-arrow-left fa-2xl'></i>
+							</button>
+						</div>
 						</motion.div>
 					</motion.div>
                 </motion.div>

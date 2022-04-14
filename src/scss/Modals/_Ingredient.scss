@@ -10,10 +10,8 @@
 	position: relative;
 }
 .new-ingredient-form {
-	grid-area: new-ingredient-form;
 	border-radius: 6px;
-	border-color: black;
-    padding: 0 100px 0 100px;
+    padding: 0 50px 0 50px;
 }
 .new-ingredient-prev-page {
 	position: absolute;
@@ -21,17 +19,15 @@
 	top: 50%;
 	background-color: var(--theme-color);
 	border: none;
-	margin: 6px;
 	height: 30px;
 	border-radius: 6px;
 }
 .new-ingredient-next-page {
 	position: absolute;
 	right: 0;
-	top: 48%;
+	top: 50%;
 	background-color: var(--theme-color);
 	border: none;
-	margin: 6px;
 	height: 30px;
 	border-radius: 6px;
 }
@@ -61,6 +57,7 @@
 	background-color: black;
 	margin: 10px;
 	padding: 10px;
+	border: none;
 }
 .new-ingredient-btn:hover {
 	background-color: rgb(41, 41, 41);
@@ -89,6 +86,34 @@
 	text-align: center;
     margin-bottom: 15px;
 }
-.new-ingredient-nutdata div{
+.nutdata {
+	width: 325px;
+}
+.nutdata div{
 	font-size: 30px;
+}
+
+@media screen and (max-width: 760px) {
+	.new-ingredient-form-input {
+		width: 275px;
+	}
+	.nutdata {
+		width: 255px;
+	}
+}
+@media screen and (max-width: 425px) {
+	.new-ingredient-form-input {
+		width: 225px;
+	}
+	.nutdata {
+		width: 170px;
+	}
+	.nutdata div {
+		font-size: 21px;
+	}
+}
+@media screen and (max-width: 375px) {
+	.new-ingredient-form-input {
+		width: 155px;
+	}
 }
