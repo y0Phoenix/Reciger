@@ -27,6 +27,10 @@ const Recipes = ({showModal, setShowModal, getRecipes, deleteRecipe, _loading, u
     start: true,
     show: false
   });
+  const [showXtra, setShowXtra] = useState({
+    result: window.innerWidth <= 700 ? false : true,
+    recents: window.innerWidth <= 535 ? false : true
+  });
   const [userClicked, setUserClicked] = useState(false);
   window.onkeyup = (e) => cycleSuggs(e, suggsIndex, suggs.suggs, setUserClicked, setSuggsIndex, false);
   useEffect(() => {
@@ -39,6 +43,11 @@ const Recipes = ({showModal, setShowModal, getRecipes, deleteRecipe, _loading, u
     load();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  window.addEventListener('resize', () => {
+    window.innerWidth <= 700 ? setShowXtra({...showXtra, result: false}) : !showXtra.result && setShowXtra({...showXtra, result: true});
+    window.innerWidth <= 535 ? setShowXtra({...showXtra, recents: false}) : !showXtra.recents && setShowXtra({...showXtra, recents: true});
+  });
   // useEffect(() => {
   //   if (showModal.Filter.filter) {
   //     filterResults();
@@ -196,8 +205,12 @@ const Recipes = ({showModal, setShowModal, getRecipes, deleteRecipe, _loading, u
                           <div key={i} className='search-result'>
                             <div className='result' onClick={() => setNavigate(`/recipe/${res._id}`)}>{res.name}</div>
                             <div className='result-rest'>
-                              <div className='result-calories'>kCal: {res.calories.total}</div>
-                              <div className='result-price'>{res.price}</div>
+                              {showXtra.result && 
+                                <>
+                                  <div className='result-calories'>kCal: {res.calories.total}</div>
+                                  <div className='result-price'>{res.price}</div>
+                                </>
+                              }
                               <div className='result-buttons'>
                                 <div className='result-edit'>
                                   <motion.button whileHover={hover} className='btn no-radius' type="button" onClick={() => setNavigate(`/recipe/${res._id}`)}>
@@ -230,10 +243,12 @@ const Recipes = ({showModal, setShowModal, getRecipes, deleteRecipe, _loading, u
                           </div>  
                         }   
                       </div>
-                    </div>  
-                    <div className='search-recents'>
-                      <RecentRecs user={user} setShowModal={setShowModal} showModal={showModal}/>
-                    </div>  
+                    </div>
+                    {showXtra.recents &&
+                      <div className='search-recents'>
+                        <RecentRecs search={true} user={user} setShowModal={setShowModal} showModal={showModal}/>
+                      </div>  
+                    }
                   </div>
                 </div> 
               }

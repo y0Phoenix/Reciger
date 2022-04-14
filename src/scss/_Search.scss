@@ -17,12 +17,13 @@
 .search-rest {
     display: flex;
     padding: 50px 150px;
+    margin: auto;
+    gap: 50px;
 }
 .search-search {
     display: flex;
     flex-direction: column;
     border: 1px solid white;
-    margin-right: 50px;
     border-radius: 8px;
     padding: 4px;
 }
@@ -73,4 +74,97 @@
     display: flex;
     justify-content: center;
     gap: 10px;
+}
+
+@media screen and (max-width: 1700px) {
+    .recent-search {
+        width: 250px;
+    }
+}
+@media screen and (max-width: 1500px) {
+    .search-box #search {
+        width: 850px;
+    }
+    .search-rest {
+        padding: 25px 50px;
+    }
+}
+@media screen and (max-width: 1350px) {
+    .search-box #search {
+        width: 700px;
+    }
+    .search-rest {
+        gap: 25px;
+    }
+}
+@media screen and (max-width: 1190px) {
+    .search-box #search {
+        width: 550px;
+    }
+}
+@media screen and (max-width: 1020px) {
+    .search-box #search {
+        width: 450px;
+    }
+    .search-result {
+        gap: 5px;
+    }
+    .search-rest {
+        padding: 25px 50px;
+    }
+}
+@media screen and (max-width: 920px) {
+    .search-box #search {
+        width: 375px;
+    }
+    .search-rest {
+        padding: 25px 0 0 0;
+    }
+}
+@media screen and (max-width: 800px) {
+    .recent-search {
+        width: 175px;
+    }
+}
+@media screen and (max-width: 700px) {
+    .search-box #search {
+        width: 200px;
+        font-size: 0.7em;
+    }
+    .search-result {
+        font-size: 12px;
+    }
+    .result {
+        padding: 8px;
+    }
+}
+@media screen and (max-width: 535px) {
+    .search-box #search {
+        width: 300px;
+        font-size: 0.9em;
+    }
+    .search-result {
+        font-size: 17px;
+    }
+}
+@media screen and (max-width: 425px) {
+    .search-box #search {
+        width: 225px;
+        font-size: 0.7em;
+    }
+    .search-result {
+        font-size: 15px;
+    }
+}
+@media screen and (max-width: 320px) {
+    .search-box #search {
+        width: 200px;
+        font-size: 0.7em;
+    }
+    .search-result {
+        font-size: 12px;
+    }
+    .result {
+        padding: 8px;
+    }
 }

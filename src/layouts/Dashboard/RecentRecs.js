@@ -8,11 +8,13 @@ const hover = {
     scale: 1.03
 };
 
-const RecentRecs = ({user, setShowModal, showModal, deleteRecipe}) => {
+const RecentRecs = ({user, setShowModal, showModal, deleteRecipe, search}) => {
     const [navigate, setNavigate] = useState({
         bool: false,
         id: ''
     });
+    const [width, setWidth] = useState(window.innerWidth <= 1700 ? 250 : 450);
+    window.addEventListener('resize', () => window.innerWidth <= 1700 ? setWidth(250) : width === 250 && setWidth(450));
     return (
         user && 
         <>
@@ -29,7 +31,7 @@ const RecentRecs = ({user, setShowModal, showModal, deleteRecipe}) => {
                         }
                     });
                     return (
-                        <div className={`recent-recs`} key={i}>
+                        <div className='recent-recs' style={{width: `${width}px`}} key={i}>
                             <div className={`recent-recs-name`}>{rec.name}</div>
                             <div className={`recent-recs-categories`}>Categories: {cats}</div>
                             <div className={`recent-recs-calories`}>Calories: {rec.calories}</div>

@@ -1,10 +1,5 @@
 @import '../_Colors.scss';
 
-@media (max-width: 425px) {
-    .recent-ings {
-        max-width: 250px;
-    }
-}
 
 .recent-ingredients {
     display: flex;
@@ -23,9 +18,9 @@
 .recent-ings {
     display: grid;
     grid-template-areas: 
-        'recent-rec-name1 . .'
-        'recent-rec-categories1 . .'
-        'recent-rec-calories1 . recent-rec-price1'
+    'recent-rec-name1 . .'
+    'recent-rec-categories1 . .'
+    'recent-rec-calories1 . recent-rec-price1'
     ;
     width: var(--recent-width);
     height: var(--recent-heigh);
@@ -59,4 +54,9 @@
     bottom: 0;
     right: 0;
     grid-area: recent-rec-delete1;
+}
+@media (max-width: 425px) {
+    .recent-ings {
+        max-width: 250px;
+    }
 }
