@@ -45,3 +45,32 @@
     flex-direction: column;
     gap: 4px;
 }
+
+@media screen and (max-width: 1430px) {
+    .account-main{
+        padding: 50px 100px;
+    }
+}
+@media screen and (max-width: 760px) {
+    .account-main {
+        padding: 25px 25px;
+        gap: 25px;
+    }
+    .account-main input {
+        width: 200px;
+        font-size: 15px;
+    }
+}
+@media screen and (max-width: 420px) {
+    .account-main {
+        padding: 25px 10px;
+        gap: 10px;
+    }
+    .account-main input {
+        width: 150px;
+        font-size: 12px;
+    }
+    .account-buttons {
+        gap: 5px;
+    }
+}
