@@ -28,7 +28,15 @@ const Ingredients = ({showModal, setShowModal, getIngredients, deleteIngredient,
     show: false
   });
   const [userClicked, setUserClicked] = useState(false);
+  const [showXtra, setShowXtra] = useState({
+    result: window.innerWidth <= 700 ? false : true,
+    recents: window.innerWidth <= 535 ? false : true
+  });
   window.onkeyup = (e) => cycleSuggs(e, suggsIndex, suggs.suggs, setUserClicked, setSuggsIndex, false);
+  window.addEventListener('resize', () => {
+    window.innerWidth <= 700 ? setShowXtra({...showXtra, result: false}) : !showXtra.result && setShowXtra({...showXtra, result: true});
+    window.innerWidth <= 535 ? setShowXtra({...showXtra, recents: false}) : !showXtra.recents && setShowXtra({...showXtra, recents: true});
+  });
   useEffect(() => {
       getIngredients(false, null, true, setShowModal, showModal);
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -208,8 +216,12 @@ const Ingredients = ({showModal, setShowModal, getIngredients, deleteIngredient,
                           <div key={i} className='search-result'>
                             <div className='result' onClick={() => setShowModal({...showModal, IngredientM: {id: res._id, bool: true}})}>{res.name}</div>
                             <div className='result-rest'>
-                              <div className='result-calories'>kCal: {res.calories.pref}</div>
-                              <div className='result-price'>{res.price}</div>
+                              {showXtra.result &&
+                                <>
+                                  <div className='result-calories'>kCal: {res.calories.pref}</div>
+                                  <div className='result-price'>{res.price}</div>
+                                </>
+                              }
                               <div className='result-buttons'>
                                 <div className='result-edit'>
                                   <motion.button whileHover={hover} className='btn no-radius' type="button" onClick={() => setShowModal({...showModal, IngredientM: {bool: true, id: res._id}})}>
@@ -243,10 +255,12 @@ const Ingredients = ({showModal, setShowModal, getIngredients, deleteIngredient,
                         </div>  
                       }   
                     </div>
-                  </div>  
-                  <div className='search-recents'>
-                    <RecentIngs user={user} setShowModal={setShowModal} showModal={showModal}/>
-                  </div>  
+                  </div>
+                  {showXtra.recents && 
+                    <div className='search-recents'>
+                      <RecentIngs user={user} setShowModal={setShowModal} showModal={showModal}/>
+                    </div>  
+                  }
                 </div>
               </div> 
             }
