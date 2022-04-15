@@ -22,7 +22,7 @@ const Dashboard = ({user, showModal, setShowModal, setNavigate}) => {
           </div>
           <br></br>
           <div className='dashboard-container'>
-            <div className='recent-recipes'>
+            <div className='recent-container'>
               <h3>Recent Recipes</h3>
               <div className='recent-create'>
                 <motion.button whileHover={hover} onClick={() => setNavigate('/recipe/new')}>
@@ -31,7 +31,7 @@ const Dashboard = ({user, showModal, setShowModal, setNavigate}) => {
               </div>
               <RecentRecs user={_user} setShowModal={setShowModal} showModal={showModal}/>
             </div>
-            <div className='recent-ingredients'>
+            <div className='recent-container'>
               <h3>Recent Ingredients</h3>
               <div className='recent-create'>
                 <motion.button whileHover={hover} onClick={e => setShowModal({...showModal, IngredientM: {bool: true, id: ''}})}>

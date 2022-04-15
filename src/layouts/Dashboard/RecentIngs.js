@@ -24,18 +24,18 @@ const RecentIngs = ({user, showModal, setShowModal, deleteIngredient}) => {
                 }
             });
             return (
-                <div className={`recent-ings`} style={{width: `${width}px`}} key={i}>
-                    <div className={`recent-ings-name`}>{ing.name}</div>
-                    <div className={`recent-ings-categories`}>Categories: {cats}</div>
-                    <div className={`recent-ings-calories`}>Calories: {ing.calories}</div>
-                    <div className={`recent-ings-price`}>Price: {ing.price}</div>
-                    <div className={`recent-ings-edit`}>
-                        <motion.button whileHover={hover} className='btn' onClick={e => setShowModal({...showModal, IngredientM: {bool: true, id: ing.ing}})}>
+                <div className={`recent-item-main recent-ings`} style={{width: `${width}px`}} key={i}>
+                    <div className={`recent-name recent-item`}>{ing.name}</div>
+                    <div className={`recent-categories recent-item`}>Categories: {cats}</div>
+                    <div className={`recent-calories recent-item`}>Calories: {ing.calories}</div>
+                    <div className={`recent-price recent-item`}>Price: {ing.price}</div>
+                    <div className={`recent-edit`}>
+                        <motion.button whileHover={hover} className='btn no-radius' onClick={e => setShowModal({...showModal, IngredientM: {bool: true, id: ing.ing}})}>
                             <i className='fa-solid fa-edit'></i>    
                         </motion.button>
                     </div>
-                    <div className={`recent-ings-delete`}>
-                        <motion.button whileHover={hover} className='btn-red' onClick={() => setShowModal({...showModal, YesorNo: {direct: deleteIngredient, bool: true, params: {id: ing.ing, setShowModal, showModal}}})}>
+                    <div className={`recent-delete`}>
+                        <motion.button whileHover={hover} className='btn-red no-radius' onClick={() => setShowModal({...showModal, YesorNo: {direct: deleteIngredient, bool: true, params: {id: ing.ing, setShowModal, showModal}}})}>
                             <i className='fa-solid fa-x'></i>
                         </motion.button>
                     </div>

@@ -258,7 +258,10 @@ const Ingredients = ({showModal, setShowModal, getIngredients, deleteIngredient,
                   </div>
                   {showXtra.recents && 
                     <div className='search-recents'>
-                      <RecentIngs user={user} setShowModal={setShowModal} showModal={showModal}/>
+                      <div className='recent-container'>
+                        <h3>Recents</h3>
+                        <RecentIngs user={user} setShowModal={setShowModal} showModal={showModal}/>
+                      </div>
                     </div>  
                   }
                 </div>

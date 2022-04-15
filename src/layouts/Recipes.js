@@ -246,7 +246,10 @@ const Recipes = ({showModal, setShowModal, getRecipes, deleteRecipe, _loading, u
                     </div>
                     {showXtra.recents &&
                       <div className='search-recents'>
-                        <RecentRecs search={true} user={user} setShowModal={setShowModal} showModal={showModal}/>
+                        <div className='recent-container'>
+                          <h3>Recents</h3>
+                          <RecentRecs search={true} user={user} setShowModal={setShowModal} showModal={showModal}/>
+                        </div>
                       </div>  
                     }
                   </div>
