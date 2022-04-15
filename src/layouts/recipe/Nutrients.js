@@ -49,16 +49,16 @@ const Nutrients = ({recipe, scale}) => {
     }, [recipe]);
     useEffect(() => {
         setNutrients({...nutrients, 
-            iron: {amount: initAmounts.iron.amount * scale, unit: initAmounts.iron.unit},
-            sodium: {amount: initAmounts.sodium.amount * scale, unit: initAmounts.sodium.unit},
-            calcium: {amount: initAmounts.calcium.amount * scale, unit: initAmounts.calcium.unit},
-            fiber: {amount: initAmounts.fiber.amount * scale , unit: initAmounts.fiber.unit},
-            sugars: {amount: initAmounts.sugars.amount * scale , unit: initAmounts.sugars.unit},
-            carbs: {amount: initAmounts.carbs.amount * scale , unit: initAmounts.carbs.unit},
-            fat: {amount: initAmounts.fat.amount * scale , unit: initAmounts.fat.unit},
-            protein: {amount: initAmounts.protein.amount * scale , unit: initAmounts.protein.unit},
+            iron: {amount: Number(initAmounts.iron.amount * scale).toFixed(0), unit: initAmounts.iron.unit},
+            sodium: {amount: Number(initAmounts.sodium.amount * scale).toFixed(0), unit: initAmounts.sodium.unit},
+            calcium: {amount: Number(initAmounts.calcium.amount * scale).toFixed(0), unit: initAmounts.calcium.unit},
+            fiber: {amount: Number(initAmounts.fiber.amount * scale).toFixed(0) , unit: initAmounts.fiber.unit},
+            sugars: {amount: Number(initAmounts.sugars.amount * scale).toFixed(0) , unit: initAmounts.sugars.unit},
+            carbs: {amount: Number(initAmounts.carbs.amount * scale).toFixed(0) , unit: initAmounts.carbs.unit},
+            fat: {amount: Number(initAmounts.fat.amount * scale).toFixed(0) , unit: initAmounts.fat.unit},
+            protein: {amount: Number(initAmounts.protein.amount * scale).toFixed(0) , unit: initAmounts.protein.unit},
         });
-        setCalories(initCalories * scale);
+        setCalories(Number(initCalories * scale).toFixed(0));
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [scale]);
 

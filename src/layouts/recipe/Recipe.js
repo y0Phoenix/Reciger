@@ -59,12 +59,12 @@ const Recipe = ({ingredients, navigate, setNavigate, postRecipe, getRecipes, sho
     if (!ingData[0]) return;
     const arr = ingData.map(ing =>  {
       const i = initAmounts.Ingredients.map(amount => amount.name).indexOf(ing.name);
-      ing.quantity.amount = initAmounts.Ingredients[i].amount * scale;
+      ing.quantity.amount = Number(initAmounts.Ingredients[i].amount * scale).toFixed(2);
       return ing;
     });
     setIngData(arr);
-    const setValue = {...Yield, number: initAmounts.Recipe * scale};
-    let price = `$${(parseFloat(initAmounts.Price.split('$').join('')) * scale).toFixed(2)}`;
+    const setValue = {...Yield, number: Number(initAmounts.Recipe * scale).toFixed(2)};
+    let price = `$${Number(parseFloat(initAmounts.Price.split('$').join('')) * scale).toFixed(2)}`;
     setFormData({...formData, Yield: setValue, Price: price})
   }, [scale])
   useEffect(() => {
