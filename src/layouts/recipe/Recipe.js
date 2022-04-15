@@ -237,7 +237,7 @@ const Recipe = ({ingredients, navigate, setNavigate, postRecipe, getRecipes, sho
     pdf.line(210, 25, 210, 265);
     pdf.line(5, 265, 210, 265);
     pdf.setFontSize(14);
-    pdf.text(`Yield: ${formData.Yield.number} ${formData.Yield.string}`, 25, 35, textOptions);
+    pdf.text(`Yield: ${formData.Yield.number} ${formData.Yield.string}`, 35, 35, textOptions);
     pdf.text(`Yield: ${formData.Price} Serving: ${servingPrice()}`, 170, 35, textOptions);
     pdf.setFontSize(20);
     pdf.text(`Ingredient`, 30, 50, textOptions);
