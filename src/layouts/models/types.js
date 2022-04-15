@@ -15,7 +15,7 @@ export const modal = {
         opacity: 0
     },
     enter: {
-        y: "200px",
+        y: "85px",
         opacity: 1,
         transition: {
             delay: 0.5
