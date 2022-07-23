@@ -8,12 +8,11 @@ axios.defaults.baseURL = 'https://reciger-back-end.herokuapp.com';
 // axios.defaults.baseURL = 'https://192.168.1.109:5000';
 axios.defaults.headers.post["Content-Type"] = 'application/json';
 
-ReactDOM.render(
+ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+  </React.StrictMode>
+)
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
