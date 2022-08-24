@@ -28,7 +28,9 @@ const Password = ({setNavigate, setShowModal, showModal, user, changePasswordReq
     const [passwords, setPasswords] = useState(initPasswords);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    useEffect(() => user && setEmail(user.email), [user]);
+    useEffect(() => {
+        user && setEmail(user.email)
+    }, [user]);
 
     const onchange = e => setPasswords({...passwords, [e.target.name]: e.target.value});
 

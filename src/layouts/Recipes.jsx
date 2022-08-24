@@ -192,6 +192,7 @@ const Recipes = ({showModal, setShowModal, getRecipes, deleteRecipe, _loading, u
                           <motion.button whileHover={hover} type='button' className='btn-red no-radius' onClick={() => setSearch('')}>
                             <i className='fa-solid fa-x'></i>  
                           </motion.button>
+                          
                           <motion.button whileHover={hover} type='button' className='btn no-radius' onClick={() => {
                             setAlert('Filter Functionality Is Not Avalible Yet', 'error', setShowModal, showModal);
                             // setShowModal({...showModal, Filter: {typeOf: 'recipe', bool: true, filter: null, type: null}})

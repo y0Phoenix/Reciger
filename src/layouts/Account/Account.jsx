@@ -19,7 +19,9 @@ const hover = {
 const Account = ({ isAuthenticated, user, updateUser, verifyEmail, setAlert, setNavigate, showModal, setShowModal }) => {
     const [formData, setFormData] = useState(initFormData);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    useEffect(() => user && setFormData({name: user.name, email: user.email}), [user]);
+    useEffect(() => {
+        user && setFormData({name: user.name, email: user.email})
+    }, [user]);
 
     const onchange = e => setFormData({...formData, [e.target.name]: e.target.value});
     
