@@ -46,8 +46,8 @@ const RecentRecs: React.FC<Props> = ({user, setShowModal, showModal, deleteRecip
                         <div className='recent-item-main recent-recs' style={{width: `${width}px`}} key={i}>
                             <div className={`recent-name recent-item`}>{rec.name}</div>
                             <div className={`recent-categories recent-item`}>Categories: {cats}</div>
-                            {/* <div className={`recent-calories recent-item`}>Calories: {rec.calories}</div>
-                            <div className={`recent-yield recent-item`}>Yield: {rec.yield}</div> */}
+                            <div className={`recent-calories recent-item`}>Calories: {JSON.stringify(rec.calories)}</div>
+                            <div className={`recent-yield recent-item`}>Yield: {JSON.stringify(rec.yield)}</div>
                             <div className={`recent-price recent-item`}>{rec.price}</div>
                             <div className={`recent-edit`}>
                                 <motion.button whileHover={hover} type="button" className='btn no-radius' onClick={() => setNavigate({...navigate, bool: true, id: rec.rec ? rec.rec : ''})}>
