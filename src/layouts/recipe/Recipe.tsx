@@ -1,16 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { MutableRefObject, SetStateAction, StrictMode, useEffect, useRef, useState} from 'react';
+import React, { MutableRefObject, SetStateAction, useEffect, useRef, useState} from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { Navigate, useLocation, useParams } from 'react-router';
 import { loading, stopLoading } from '../../actions/loading';
 import { getRecipes, postRecipe } from '../../actions/recipe';
-import PropTypes from 'prop-types';
-import { getIngredients } from '../../actions/ingredient';
 import Scale from './Scale';
 import Nutrients from './Nutrients';
 import Suggestions from './Suggestions';
 import { motion } from 'framer-motion';
-import jsPDF, { TextOptionsLight } from 'jspdf';
+import jsPDF from 'jspdf';
 import ShowModal from '../../types/ShowModal';
 import State from '../../types/State';
 import { Ingredient, RecipeIngredient } from '../../types/Ingredient';
@@ -26,7 +24,7 @@ const mapStateToProps = (state: State) => ({
   recipe: state.recipe.recipes
 });
 
-const connector = connect(mapStateToProps, {loading, stopLoading, postRecipe, getIngredients, getRecipes});
+const connector = connect(mapStateToProps, {loading, stopLoading, postRecipe, getRecipes});
 
 type ReduxProps = ConnectedProps<typeof connector>;
 
@@ -47,7 +45,7 @@ interface InitAmounts {
   Price: string
 };
 
-const Recipe: React.FC<Props> = ({ingredients, setNavigate, postRecipe, getRecipes, showModal, setShowModal, getIngredients, isAuthenticated, _loading, recipe}) => {
+const Recipe: React.FC<Props> = ({ingredients, setNavigate, postRecipe, getRecipes, showModal, setShowModal, isAuthenticated, _loading, recipe}) => {
   const params = useParams();
   const location = useLocation();
   const initIng = {
@@ -114,7 +112,7 @@ const Recipe: React.FC<Props> = ({ingredients, setNavigate, postRecipe, getRecip
         const id = params.id ? params.id : null;
         getRecipes(true, id, true, setShowModal, showModal);
       }
-      getIngredients(true, null, setShowModal, showModal, true);
+      getRecipes(true, null, true, setShowModal, showModal);
   }, [location]);
   useEffect(() => {
     if (params.id !== 'new') {

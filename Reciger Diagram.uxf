@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="15.0.0">
+  <zoom_level>8</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>320</x>
+      <y>696</y>
+      <w>496</w>
+      <h>280</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Backend&gt;&gt;
+Package::Reciger
+{Node Express}
+--
+Backend RESTful API for interacting with the database and external APIs
+--
+-- Retrieving Data from Database
+-- Retrieving from other APIs
+-- Running complex Algorithms
+-- Minnimal Error checking
+--
+Packages
+-- Axios | HTTP request framework used for communicating with external APIs
+-- Express | The API framework for the backend. Handler for incoming requests to the server
+-- Express-Validator | Built in package for validating the HTTP body of incoming requests
+-- Bcryptjs | Hashing package meant for encrypting passwords with a secret key
+-- Config | Configuration package. Makes it easy to access secret keys inside a local file
+-- Cors | Package meant to implement the CORS policy with Express
+-- Gravatar | Creating profile picture URLs from the users email address via gravatar
+-- JSONWebToken | Package used for creating a hash token (JSONWebToken)
+-- Mongoose | Framework for communicating with the MongoDB database
+-- Nodemailer | Package for sending emails
+-- uuid | Package for creating unique id's </panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>488</x>
+      <y>1024</y>
+      <w>168</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Routes&gt;&gt;
+Package::Backend
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>0</x>
+      <y>1096</y>
+      <w>376</w>
+      <h>128</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Router&gt;&gt;
+Package::Auth
+body: {email, password, token}
+--
++router.post('/') | authenticate user
++router.get('/get/:token') | authenticate user with token
++router.get('passwordreq') | init password change process
++router.post('/changepassword/:token') | finish password change process
++router.post('/email') | init email verification process
++router.post('/email/:token') | finish email verification process
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>184</x>
+      <y>1056</y>
+      <w>320</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;50.0;380.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>0</x>
+      <y>1232</y>
+      <w>376</w>
+      <h>128</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Router&gt;&gt;
+Package::Ingredient
+body: {name, price, categories,}
+--
++router.post('/') | create ingredient
++router.post('/update/:id') | update ingredient
++router.get('/') | get all ingredients for user
++router.delete('/') | delete an ingredient
++router.get('/:id') | get one ingredient by id
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>368</x>
+      <y>1056</y>
+      <w>200</w>
+      <h>256</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;300.0;50.0;300.0;50.0;40.0;230.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>768</x>
+      <y>1096</y>
+      <w>376</w>
+      <h>128</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Router&gt;&gt;
+Package::Recipe
+body: {name, ingredients, categories, yield, instructions, units}
+--
++router.post('/') | create/update recipe
++router.get('/') | get all recipes for user
++router.delete('/') | delete a recipe
++router.get('/:id') | get one recipe by id
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>648</x>
+      <y>1056</y>
+      <w>328</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>390.0;50.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>768</x>
+      <y>1232</y>
+      <w>376</w>
+      <h>128</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Router&gt;&gt;
+Package::User
+body: {name, email, password,}
+--
++router.post('/') | create user
++router.post('/update') | update user
++router.delete('/') | delete an ingredient
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>584</x>
+      <y>1056</y>
+      <w>200</w>
+      <h>248</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>230.0;290.0;190.0;290.0;190.0;50.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>560</x>
+      <y>968</y>
+      <w>24</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;70.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>320</x>
+      <y>240</y>
+      <w>496</w>
+      <h>256</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Client&gt;&gt;
+Package::Reciger
+{Node Vite React Redux}
+--
+Front-End Architecture for displaying data to the user for manipulation
+--
+-- Displaying data for the client
+-- Allowing the client to manipulate data easily
+-- Most of the error checking regarding needed data
+--
+Packages
+-- Axios | HTTP request framework used for communicating with external APIs
+-- Framer-Motion | JavaScript animation engine built for React
+-- JSPDF | Package built for creating pdf files. Used for creating a PDF of a recipe
+-- React | Main Framework of the Client
+-- React-DOM | Reacts package for manipulating the DOM
+-- React-Redux | Required for Redux to work with React
+-- React-Router-DOM | Reacts package for dynamic routing
+-- Redux | Main State management framework
+-- Redux-Devtools-Extension | Package used for viewing current Redux state inside of the app
+-- Redux-Thunk | Redux middleware package</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>512</x>
+      <y>488</y>
+      <w>24</w>
+      <h>224</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;260.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>600</x>
+      <y>488</y>
+      <w>24</w>
+      <h>224</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;260.0</additional_attributes>
+  </element>
+</diagram>
