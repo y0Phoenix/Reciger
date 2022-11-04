@@ -6,6 +6,8 @@ import user from "./user";
 import ingredient from "./ingredient";
 import recipe from "./recipe";
 import loading from "./loading";
+import modal from "./modal";
+import toast from "./toast";
 
 export default combineReducers({
     alert,
@@ -13,5 +15,7 @@ export default combineReducers({
     user,
     ingredient,
     recipe,
-    loading
+    loading,
+    modal,
+    toast
 });

@@ -1,8 +1,9 @@
 import { 
+    FILTER_INGREDIENTS,
     GET_INGREDIENT,
     GET_INGREDIENTS,
     GET_INGREDIENTS_FAIL,
-    SetShowModal
+    RESET_FILTER_INGREDIENTS
 } from "./types";
 import axios from "axios";
 import {setAlert} from "./alert";
@@ -11,52 +12,28 @@ import ShowModal from "../types/ShowModal";
 import React from "react";
 import { ThunkDispatch } from "redux-thunk";
 import State from "../types/State";
-import { IngredientAction } from "../types/Ingredient";
+import { Ingredient, IngredientAction } from "../types/Ingredient";
+import { setToast } from "./toast";
+import { Toast } from "../types/Toast";
+import setToastFromRes from "../functions/setToastFromRes";
 
-export const getIngredients = (all = false, id: string | null, setShowModal: SetShowModal, showModal: ShowModal, state = false)  => async (dispatch: ThunkDispatch<State, undefined, IngredientAction>) => {
+export const getIngredients = (all = false)  => async (dispatch: ThunkDispatch<State, undefined, IngredientAction>) => {
     try {
         var res;
         const token = localStorage.token;
         dispatch(loading());
-        if (id) {
-            res = await axios.get(`/api/ingredient/${id}`, {
-                headers: {
-                    "x-auth-token": token
-                }
-            });
-        }
-        else {
-            res = await axios.get(`/api/ingredient?all=${all}&recipe=false&name=none`, {
-                headers: {
-                    "x-auth-token": token
-                }
-            });
-        }
+        res = await axios.get(`/api/ingredient?all=${all}&recipe=false&name=none`, {
+            headers: {
+                "x-auth-token": token
+            }
+        });
         dispatch(stopLoading());
-        if (state) {
-            if (id) {
-                dispatch({
-                    type: GET_INGREDIENT,
-                    payload: {arr: res.data.data}
-                });
-            }
-            else {
-                dispatch({
-                    type: GET_INGREDIENTS,
-                    payload: id ? [res.data.data] : res.data.data
-                });
-            }
-        }
-        return res.data.data;
+        dispatch({
+            type: GET_INGREDIENTS,
+            payload: res.data.data
+        });
     } catch (err: any) {
-        const msgs = err.response.data.msgs;
         dispatch(stopLoading());
-        if (msgs) {
-            msgs.forEach((msg: any) => dispatch(setAlert(msg.msg, 'error', setShowModal, showModal)));
-        } 
-        else {
-            dispatch(setAlert('Server Error Try Again Later', 'error', setShowModal, showModal));
-        }
         dispatch({
             type: GET_INGREDIENTS_FAIL,
             payload: {}
@@ -65,86 +42,59 @@ export const getIngredients = (all = false, id: string | null, setShowModal: Set
     }
 };
 
-interface PostIngredientFormData {
-    name: string,
-    categories: string[],
-    price: string,
-    units: {
-        volume: string,
-        weight: string,
-        prefered: string
-    }
-}
-
-export const postIngredient = (formData: PostIngredientFormData, noNut = false, setShowModal: SetShowModal, showModal: ShowModal, state: boolean, all = false) => async (dispatch: ThunkDispatch<State, undefined, IngredientAction>) => {
+export const getIngredientByID = (id: string) => async (dispatch: ThunkDispatch<State, undefined, IngredientAction>) => {
     try {
         dispatch(loading());
-        const res = await axios.post(`/api/ingredient?noNut=${noNut}&all=${all}`, formData);
+        const res = await axios.get(`/api/ingredient/${id}`);
         dispatch(stopLoading());
-        if (state) {
-            dispatch({
-                type: GET_INGREDIENTS,
-                payload: res.data.data
-            });
-            const msgs = res.data.msgs;
-            if (msgs) {
-                msgs.forEach((msg: any) => dispatch(setAlert(msg.msg, 'success', setShowModal, showModal)));
-            }
-        }
-        return res.data.data;
+        
+        dispatch({
+            type: FILTER_INGREDIENTS,
+            payload: [res.data.data]
+        });
+
     } catch (err: any) {
         dispatch(stopLoading());
-        const msgs = err.response.data.msgs;
-        if (msgs) {
-            msgs.forEach((msg: any) => dispatch(setAlert(msg.msg, 'error', setShowModal, showModal)));
-        }
-        else {
-            dispatch(setAlert('Server Error Try Again Later', 'error', setShowModal, showModal));
-        } 
         dispatch({
             type: GET_INGREDIENTS_FAIL,
-            payload: {}
+            payload: err.response.data
         });
-        return null
     }
 }
 
-export const updateIngredient = (formData: PostIngredientFormData, id: string, all: boolean, noNut: boolean, setShowModal: SetShowModal, showModal: ShowModal) => async (dispatch: ThunkDispatch<State, undefined, IngredientAction>) => {
+export const postIngredient = (ingredient: Ingredient, noNut = false, all = false) => async (dispatch: ThunkDispatch<State, undefined, IngredientAction>) => {
     try {
         dispatch(loading());
-        const res = await axios.post(`/api/ingredient/update/${id}?all=${all}&noNut=${noNut}`, formData);
+        const res = await axios.post(`/api/ingredient?noNut=${noNut}&all=${all}`, ingredient);
         dispatch(stopLoading());
         dispatch({
             type: GET_INGREDIENTS,
             payload: res.data.data
         });
-        const msgs = res.data.msgs;
-        if (msgs) {
-            msgs.forEach((msg: any) => dispatch(setAlert(msg.msg, 'success', setShowModal, showModal)));
-        }
+        if (res.data.msgs) setToastFromRes(res.data.msgs, dispatch);
     } catch (err: any) {
         dispatch(stopLoading());
-        const msgs = err.response.data.msgs;
-        if (msgs) {
-            msgs.forEach((msg: any) => dispatch(setAlert(msg.msg, 'error', setShowModal, showModal)));
-        }
-        else {
-            dispatch(setAlert('Server Error Try Again Later', 'error', setShowModal, showModal));
-        }
+        if (err.response.data.msgs) setToastFromRes(err.response.data.msgs, dispatch);
+    }
+}
+
+export const updateIngredient = (ingredient: Ingredient, id: string, all: boolean, noNut: boolean) => async (dispatch: ThunkDispatch<State, undefined, IngredientAction>) => {
+    try {
+        dispatch(loading());
+        const res = await axios.post(`/api/ingredient/update/${id}?all=${all}&noNut=${noNut}`, ingredient);
+        dispatch(stopLoading());
         dispatch({
-            type: GET_INGREDIENTS_FAIL,
-            payload: {}
+            type: GET_INGREDIENTS,
+            payload: res.data.data
         });
+        if (res.data.msgs) setToastFromRes(res.data.msgs, dispatch);
+    } catch (err: any) {
+        dispatch(stopLoading());
+        if (err.response.data.msgs) setToastFromRes(err.response.data.msgs, dispatch);
     }
 };
 
-interface DeleteIngredientProps {
-    id: string,
-    setShowModal: SetShowModal,
-    showModal: ShowModal
-};
-
-export const deleteIngredient = ({id, setShowModal, showModal}: DeleteIngredientProps) => async (dispatch: ThunkDispatch<State, undefined, IngredientAction>) => {
+export const deleteIngredient = (id: string) => async (dispatch: ThunkDispatch<State, undefined, IngredientAction>) => {
     try {
         dispatch(loading());
         const res = await axios.delete(`/api/ingredient/${id}`);
@@ -154,22 +104,30 @@ export const deleteIngredient = ({id, setShowModal, showModal}: DeleteIngredient
             type: GET_INGREDIENTS,
             payload: res.data.data
         });
-        const msgs = res.data.msgs;
-        if (msgs) {
-            msgs.forEach((msg: any) => dispatch(setAlert(msg.msg, 'success', setShowModal, showModal)));
-        }
+        if (res.data.msgs) setToastFromRes(res.data.msgs, dispatch);
     } catch (err: any) {
         dispatch(stopLoading());
-        const msgs = err.response.data.msgs;
-        if (msgs) {
-            msgs.forEach((msg: any) => dispatch(setAlert(msg.msg, 'error', setShowModal, showModal)));
-        }
-        else {
-            dispatch(setAlert('Server Error Try Again Later', 'error', setShowModal, showModal));
-        }
         dispatch({
             type: GET_INGREDIENTS_FAIL,
             payload: {}
         });
+        if (err.response.data.msgs) setToastFromRes(err.response.data.msgs, dispatch);
     }
+};
+
+export const filterIngredients = (ingredients: Ingredient[], name: string | null, id?: string) => (dispatch: ThunkDispatch<State, undefined, IngredientAction>) => {
+    let newArr: Ingredient[] = [];
+    const regex = (str: string) => RegExp(str, 'gi');
+    if (id) newArr = ingredients.filter(ing => regex(id).test(ing._id) ? ing : null);
+    else if (name) newArr = ingredients.filter(ing => regex(name).test(ing.name) ? ing : null);
+    dispatch({
+        type: FILTER_INGREDIENTS,
+        payload: newArr
+    });
+}
+
+export const resetIngredientFilter = () => (dispatch: ThunkDispatch<State, undefined, IngredientAction>) => {
+    dispatch({
+        type: RESET_FILTER_INGREDIENTS
+    })
 };

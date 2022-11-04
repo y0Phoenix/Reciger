@@ -1,24 +1,26 @@
 import axios, { Axios, AxiosError } from "axios";
 import React from "react";
-import { AccountFormData } from "../layouts/Account/Account";
-import { RegisterFormData } from "../layouts/auth/Register";
+import { NavigateFunction } from "react-router-dom";
+import setToastFromRes from "../functions/setToastFromRes";
+import { RegisterFormData } from "../layout/Register";
 import ShowModal from "../types/ShowModal";
+import { Toast } from "../types/Toast";
+import { User } from "../types/User";
 import {setAlert} from "./alert";
 import { loading, stopLoading } from "./loading";
+import { setToast } from "./toast";
 import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
-  CLEAR_CATEGORIES,
   CLEAR_INGREDIENTS,
   CLEAR_RECIPES,
   USER_UPDATED,
   USER_UPDATED_FAIL,
   USER_LOADED,
-  AUTH_ERROR,
-  SetShowModal
+  AUTH_ERROR
 } from "./types";
 
 interface FormData {
@@ -28,53 +30,43 @@ interface FormData {
 };
 
 // load user if local storage token exists
-export const login = (formData: FormData, setShowModal: SetShowModal, showModal: ShowModal) => async (dispatch: any) => {
+export const login = (formData: FormData, navigate: NavigateFunction) => async (dispatch: any) => {
     try {
         dispatch(loading());
         const res = await axios.post(`/api/auth?remember=${formData.remeber}`, formData);
         dispatch(stopLoading());
-
+        navigate('/dashboard');
+        
+        if (res.data.msgs) setToastFromRes(res.data.msgs, dispatch);
+        
         dispatch({
             type: LOGIN_SUCCESS,
             payload: res.data
         });
     } catch (err: any) {
-        const msgs: any = err.response.data.msgs;
         dispatch(stopLoading());
-        if (msgs) {
-            msgs.forEach((msg: any) => dispatch(setAlert(msg.msg, 'error', setShowModal, showModal)));  
-        }
-        else {
-            dispatch(setAlert('Server Error Try Again Later', 'error', setShowModal, showModal));
-        }
-        dispatch({
-            type: LOGIN_FAIL,
-            payload: {msg: err.res, status: err.response.status}
-        });
+       console.log(err);
+       if (err.response.data?.msgs) setToastFromRes(err.response.data.msgs, dispatch);
     }
 };
 
-export const register = (formData: RegisterFormData, setShowModal: SetShowModal, showModal: ShowModal) => async (dispatch: any) => {
+export const register = (formData: RegisterFormData, navigate: NavigateFunction) => async (dispatch: any) => {
     try {
-        formData.preference.measurements.push(formData.preferedV, formData.preferedW);
         dispatch(loading());
         const res = await axios.post('/api/user', formData);
-        dispatch(verifyEmail(formData.email, null, null, setShowModal, showModal));
+        dispatch(verifyEmail(formData.email, formData.email, {name: formData.name}));
         dispatch(stopLoading());
+        navigate('/dashboard');
+
+        if (res.data.msgs) setToastFromRes(res.data.msgs, dispatch);
 
         dispatch({
             type: REGISTER_SUCCESS,
             payload: res.data
         });
     } catch (err: any) {
-        const msgs = err.response.data.msgs;
         dispatch(stopLoading());
-        if (msgs) {
-            msgs.forEach((msg: any) => dispatch(setAlert(msg.msg, 'error', setShowModal, showModal)));
-        }
-        else {
-            dispatch(setAlert('Server Error Try Again Later', 'error', setShowModal, showModal));
-        }
+        if (err.response.data.msgs) setToastFromRes(err.response.data.msgs, dispatch);
         dispatch({
             type: REGISTER_FAIL,
             payload: {msg: err.res, status: err.response.status}
@@ -82,28 +74,19 @@ export const register = (formData: RegisterFormData, setShowModal: SetShowModal,
     }
 };
 
-export const updateUser = (formData: AccountFormData, setShowModal: SetShowModal, showModal: ShowModal) => async (dispatch: any) => {
+export const updateUser = (user: User) => async (dispatch: any) => {
     try {
         dispatch(loading());
-        const res = await axios.post('/api/user/update', formData);
+        const res = await axios.post('/api/user/update', user);
         dispatch(stopLoading());
+        if (res.data.msgs) setToastFromRes(res.data.msgs, dispatch);
         dispatch({
             type: USER_UPDATED,
             payload: res.data
         });
-        const msgs = res.data.msgs;
-        if (msgs) {
-            msgs.forEach((msg: any) => dispatch(setAlert(msg.msg, 'success', setShowModal, showModal)));
-        }
     } catch (err: any) {
-        const msgs = err.response.data.msgs;
+        if (err.response.data.msgs) setToastFromRes(err.response.data.msgs, dispatch);
         dispatch(stopLoading());
-        if (msgs) {
-            msgs.forEach((msg: any) => dispatch(setAlert(msg.msg, 'error', setShowModal, showModal)));
-        }
-        else {
-            dispatch(setAlert('Server Error Try Again Later', 'error', setShowModal, showModal));
-        }
         dispatch({
             type: USER_UPDATED_FAIL,
             payload: {msg: err.res, status: err.response.status}
@@ -115,9 +98,9 @@ export const logout = () => async (dispatch: any) => {
     dispatch({
         type: LOGOUT
     });
-    dispatch({
-        type: CLEAR_CATEGORIES
-    });
+    // dispatch({
+    //     type: CLEAR_CATEGORIES
+    // });
     dispatch({
         type: CLEAR_INGREDIENTS
     });
@@ -151,47 +134,40 @@ export const loadUser = () => async (dispatch: any) => {
     }
 };
 
-interface DeleteUserProps {
-    setShowModal: SetShowModal,
-    showModal: ShowModal,
-    setNavigate: React.Dispatch<React.SetStateAction<string>>
-};
-
-export const deleteUser = ({setShowModal, showModal, setNavigate}: DeleteUserProps) => async (dispatch: any) => {
+export const deleteUser = (navigate: NavigateFunction) => async (dispatch: any) => {
     try {
         dispatch(loading());
         const res = await axios.delete('/api/user');
         dispatch(stopLoading());
-        const msgs = res.data.msgs;
-        msgs.forEach((msg: any) => dispatch(setAlert(msg.msg, 'success', setShowModal, showModal)));
-        setNavigate('/');
+        if (res.data.msgs) setToastFromRes(res.data.msgs, dispatch);
+        navigate('/');
     } catch (err: any) {
         dispatch(stopLoading());
-        if (!err?.response) return dispatch(setAlert('Error Try Again Later', 'error', setShowModal, showModal));
-        const msgs = err.response.data.msgs;
-        if (msgs.constructor !== Array) return dispatch(setAlert('Error Try Again Later', 'error', setShowModal, showModal));
-        msgs.forEach(msg => dispatch(setAlert(msg.msg, 'error', setShowModal, showModal)));
+        if (err.response.data.msgs) setToastFromRes(err.response.data.msgs, dispatch);
     }
 }
 
-export const changePasswordReq = (email: string, setShowModal: SetShowModal, showModal: ShowModal) => async (dispatch: any) => {
+export const changePasswordReq = (email: string) => async (dispatch: any) => {
     try {
         dispatch(loading());
         await axios.get(`/api/auth/passwordreq?email=${email}`);
         dispatch(stopLoading());
-        dispatch(setAlert('Please Check Your Email For A Link To Change Password', 'success', setShowModal, showModal));
+        dispatch(setToast(new Toast({
+            autoHide: false,
+            bg: 'info',
+            body: `An Email Has Been Send To ${email}
+            Check Your Email For A Link To Change Your Password`,
+            dispatcher: dispatch
+        })));
         return true;
     } catch (err: any) {
         dispatch(stopLoading());
-        if (!err?.response) return dispatch(setAlert('Error Try Again Later', 'error', setShowModal, showModal));
-        const msgs = err.response.data.msgs;
-        if (msgs.constructor !== Array) return dispatch(setAlert('Error Try Again Later', 'error', setShowModal, showModal));
-        msgs.forEach(msg => dispatch(setAlert(msg.msg, 'error', setShowModal, showModal)));
+        if (err.response.data.msgs) setToastFromRes(err.response.data.msgs, dispatch);
         return null;
     }
 };
 
-export const changePasswordToken = (token: string, newPass: string, setShowModal: SetShowModal, showModal: ShowModal) => async (dispatch: any) => {
+export const changePasswordToken = (token: string, newPass: string) => async (dispatch: any) => {
     try {
         if (!token) return;
         dispatch(loading());
@@ -201,14 +177,11 @@ export const changePasswordToken = (token: string, newPass: string, setShowModal
             }
         );
         dispatch(stopLoading());
-        res.data.msgs.forEach((msg: any) => dispatch(setAlert(msg.msg, 'success', setShowModal, showModal)));
+        if (res.data.msgs) setToastFromRes(res.data.msgs, dispatch);
         return true;
     } catch (err: any) {
         dispatch(stopLoading());
-        if (!err?.response) return dispatch(setAlert('Error Try Again Later', 'error', setShowModal, showModal));
-        const msgs = err.response.data.msgs;
-        if (msgs.constructor !== Array) return dispatch(setAlert('Error Try Again Later', 'error', setShowModal, showModal));
-        msgs.forEach(msg => dispatch(setAlert(msg.msg, 'success', setShowModal, showModal)));
+        if (err.response.data.msgs) setToastFromRes(err.response.data.msgs, dispatch);
         return null;
     }
 };
@@ -217,35 +190,33 @@ interface Update {
     name: string
 };
 
-export const verifyEmail = (email: string | undefined, original: string | null, update: Update | null, setShowModal: SetShowModal, showModal: ShowModal) => async (dispatch: any) => {
+/**
+ * 
+ * @param email the new email to set 
+ * @param original the old user email
+ * @param update the updated user info if any, giving the same info wont change anything
+ */
+export const verifyEmail = (email: string, original: string, update: Update) => async (dispatch: any) => {
     try {
         if (update) await axios.post('/api/user/update', update);
         dispatch(loading());
         const res = await axios.post('/api/auth/email', {email, original});
+        if (res.data.msgs) setToastFromRes(res.data.msgs, dispatch);
         dispatch(stopLoading());
-        const msgs = res.data.msgs;
-        if (msgs) msgs.forEach((msg: any) => dispatch(setAlert(msg.msg, 'success', setShowModal, showModal)));
     } catch (err: any) {
         dispatch(stopLoading());
-        if (!err.response) return dispatch(setAlert('Error Try Again Later', 'error', setShowModal, showModal));
-        const msgs = err.response.data.msgs;
-        if (msgs.constructor !== Array) return dispatch(setAlert('Error Try Again Later', 'error', setShowModal, showModal));
-        msgs.forEach(msg => dispatch(setAlert(msg.msg, 'error', setShowModal, showModal)));
+        if (err.response.data.msgs) setToastFromRes(err.response.data.msgs, dispatch);
     }
 };
 
-export const verifyEmailFinish = (token: string, setShowModal: SetShowModal, showModal: ShowModal) => async (dispatch: any) => {
+export const verifyEmailFinish = (token: string) => async (dispatch: any) => {
     try {
         dispatch(loading());
         const res = await axios.get(`/api/auth/email/${token}`);
         dispatch(stopLoading());
-        const msgs = res.data.msgs;
-        if (msgs) msgs.forEach((msg: any) => dispatch(setAlert(msg.msg, 'success', setShowModal, showModal)));
+        if (res.data.msgs) setToastFromRes(res.data.msgs, dispatch);
     } catch (err: any) {
         dispatch(stopLoading());
-        if (!err.response) return dispatch(setAlert('Error Try Again Later', 'error', setShowModal, showModal));
-        const msgs = err.response.data.msgs;
-        if (msgs.constructor !== Array) return dispatch(setAlert('Error Try Again Later', 'error', setShowModal, showModal));
-        msgs.forEach(msg => dispatch(setAlert(msg.msg, 'error', setShowModal, showModal)));
+        if (err.response.data.msgs) setToastFromRes(err.response.data.msgs, dispatch);
     }
 }

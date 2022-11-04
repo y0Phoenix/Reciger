@@ -4,8 +4,8 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>320</x>
-      <y>696</y>
+      <x>496</x>
+      <y>456</y>
       <w>496</w>
       <h>280</h>
     </coordinates>
@@ -37,8 +37,8 @@ Packages
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>488</x>
-      <y>1024</y>
+      <x>664</x>
+      <y>784</y>
       <w>168</w>
       <h>40</h>
     </coordinates>
@@ -50,8 +50,8 @@ Package::Backend
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>0</x>
-      <y>1096</y>
+      <x>176</x>
+      <y>856</y>
       <w>376</w>
       <h>128</h>
     </coordinates>
@@ -72,8 +72,8 @@ body: {email, password, token}
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>184</x>
-      <y>1056</y>
+      <x>360</x>
+      <y>816</y>
       <w>320</w>
       <h>56</h>
     </coordinates>
@@ -83,8 +83,8 @@ body: {email, password, token}
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>0</x>
-      <y>1232</y>
+      <x>176</x>
+      <y>992</y>
       <w>376</w>
       <h>128</h>
     </coordinates>
@@ -104,8 +104,8 @@ body: {name, price, categories,}
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>368</x>
-      <y>1056</y>
+      <x>544</x>
+      <y>816</y>
       <w>200</w>
       <h>256</h>
     </coordinates>
@@ -115,8 +115,8 @@ body: {name, price, categories,}
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>768</x>
-      <y>1096</y>
+      <x>944</x>
+      <y>856</y>
       <w>376</w>
       <h>128</h>
     </coordinates>
@@ -135,8 +135,8 @@ body: {name, ingredients, categories, yield, instructions, units}
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>648</x>
-      <y>1056</y>
+      <x>824</x>
+      <y>816</y>
       <w>328</w>
       <h>56</h>
     </coordinates>
@@ -146,8 +146,8 @@ body: {name, ingredients, categories, yield, instructions, units}
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>768</x>
-      <y>1232</y>
+      <x>944</x>
+      <y>992</y>
       <w>376</w>
       <h>128</h>
     </coordinates>
@@ -165,8 +165,8 @@ body: {name, email, password,}
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>584</x>
-      <y>1056</y>
+      <x>760</x>
+      <y>816</y>
       <w>200</w>
       <h>248</h>
     </coordinates>
@@ -176,8 +176,8 @@ body: {name, email, password,}
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>560</x>
-      <y>968</y>
+      <x>736</x>
+      <y>728</y>
       <w>24</w>
       <h>72</h>
     </coordinates>
@@ -187,10 +187,10 @@ body: {name, email, password,}
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>320</x>
-      <y>240</y>
+      <x>496</x>
+      <y>0</y>
       <w>496</w>
-      <h>256</h>
+      <h>288</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Client&gt;&gt;
 Package::Reciger
@@ -212,29 +212,32 @@ Packages
 -- React-Router-DOM | Reacts package for dynamic routing
 -- Redux | Main State management framework
 -- Redux-Devtools-Extension | Package used for viewing current Redux state inside of the app
--- Redux-Thunk | Redux middleware package</panel_attributes>
+-- Redux-Thunk | Redux middleware package
+-- Bootstrap | Bootstrap package for JSX
+-- React-Bootsrap | Required for Bootstrap to work with React with JSX elements
+-- Moment | JavaScript Date formater</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>512</x>
-      <y>488</y>
+      <x>688</x>
+      <y>280</y>
       <w>24</w>
-      <h>224</h>
+      <h>192</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;260.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;220.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>600</x>
-      <y>488</y>
+      <x>776</x>
+      <y>280</y>
       <w>24</w>
-      <h>224</h>
+      <h>192</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;260.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;220.0</additional_attributes>
   </element>
 </diagram>

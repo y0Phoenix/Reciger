@@ -14,7 +14,7 @@ import { UserAction, UserState } from '../types/User';
     
     const initialState: UserState = {
         token: localStorage.getItem('token'),
-        isAuthenticated: false,
+        isAuthenticated: null,
         user: null
     };
     
