@@ -53,20 +53,25 @@ body {
 
 .dashboard-list-container {
   display: grid;
-  grid-template-columns: 600px 225px 200px 200px 325px 200px;
+  grid-template-columns: 400px 1fr 1fr 1fr 1fr 100px;
   border: 1px solid white;
   line-height: 35px;
 }
 .dashboard-list-container-ing {
   display: grid;
-  grid-template-columns: 600px 425px 525px 100px;
+  grid-template-columns: 600px 1fr 1fr 100px;
   border: 1px solid white;
   line-height: 35px;
 }
 
 .ingredient-list-container {
   display: grid;
-  grid-template-columns: 350px 250px 250px 400px 100px;
+  grid-template-columns: 350px 1fr 1fr 300px 100px;
+  border: 1px solid white;
+}
+.ingredient-list-header {
+  display: grid;
+  grid-template-columns: 350px 1fr 1fr 300px 100px;
   border: 1px solid white;
 }
 
@@ -413,4 +418,27 @@ body {
 }
 .border-white-md {
   border: 2px solid white;
+}
+
+@media screen and (max-width: 1880px){
+  .dashboard-list-container {
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 100px;
+  }
+  .dashboard-list-container-ing {
+    grid-template-columns: 600px 1fr 1fr 100px;
+  }
+  .dashboard-content {
+    width: 1240px;
+  }
+}
+@media screen and (max-width: 1440px){
+  .dashboard-list-container {
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 100px;
+  }
+  .dashboard-list-container-ing {
+    grid-template-columns: 600px 1fr 1fr 100px;
+  }
+  .dashboard-content {
+    width: 840px;
+  }
 }

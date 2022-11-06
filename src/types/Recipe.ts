@@ -1,7 +1,7 @@
 import { AxiosResponse } from "axios"
 import { RecipeIngredient } from "./Ingredient"
 
-export interface Calories {
+export interface RecipeCalories {
     total: string,
     g: string
 };
@@ -17,7 +17,7 @@ export interface Nutrients {
 };
 
 export class Recipe {
-    calories: Calories =  {
+    calories: RecipeCalories =  {
         total: '',
         g: ''
     };
@@ -31,7 +31,7 @@ export class Recipe {
     categories: string[] = [];
     totalAmount: number = 0;
     instructions: string = '';
-    yield: Yield = {
+    Yield: Yield = {
         number: 0,
         string: ''
     };

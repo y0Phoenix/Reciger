@@ -123,7 +123,7 @@ const RecipePage: React.FC<Props> = ({recipeState, ingredients, user, getRecipeB
             // calculate the new price 
             _recipe.price = `$${(parseFloat(recipe.price.split('$').join('')) * scale).toFixed(2)}`;
             // calculate new yeild
-            _recipe.yield.number = parseFloat((recipe.yield.number * scale).toFixed(2));
+            _recipe.Yield.number = parseFloat((recipe.Yield.number * scale).toFixed(2));
             // calculate new ingredient amounts
             _recipe.ingredients.map(ing => {
                 const oldAmount = ing.quantity.amount;
@@ -200,12 +200,12 @@ const RecipePage: React.FC<Props> = ({recipeState, ingredients, user, getRecipeB
                                             <InputGroup.Text id='basic-addon1'>Yield Amount / Unit</InputGroup.Text>
                                             <Form.Control 
                                                 type={'text'} 
-                                                value={recipe.yield.number} 
+                                                value={recipe.Yield.number} 
                                                 onChange={(e) => handleChange(["yield","number"], e.target.value)}
                                             />
                                             <Form.Control 
                                                 type={'text'} 
-                                                value={recipe.yield.string} 
+                                                value={recipe.Yield.string} 
                                                 onChange={(e) => handleChange(["yield","string"], e.target.value)}
                                             />
                                         </InputGroup>
@@ -243,15 +243,15 @@ const RecipePage: React.FC<Props> = ({recipeState, ingredients, user, getRecipeB
                             </div>
                             <Card >
                                 <Card.Body className='recipe-ingredients-container'>
-                                    <div className='ingredient-list-container bg-inner padding-sm'>
-                                        <div>name</div>
-                                        <div>amount</div>
-                                        <div>unit</div>
-                                        <div>instructions</div>
-                                        <div>actions</div>
-                                    </div>
                                     <div className='Flex'>
                                         <div className='border-white-sm scroll-y'>
+                                            <div className='ingredient-list-header bg-inner padding-sm'>
+                                                <div>name</div>
+                                                <div>amount</div>
+                                                <div>unit</div>
+                                                <div>instructions</div>
+                                                <div>actions</div>
+                                            </div>
                                             <IngredientList handleChange={handleChange} removeIngredient={removeIngredient} recipe={recipe}/>
                                             <div className='Flex center padding-md'>
                                                 <button className='btn-theme black' onClick={() => addIngredient()}>

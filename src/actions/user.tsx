@@ -37,7 +37,7 @@ export const login = (formData: FormData, navigate: NavigateFunction) => async (
         dispatch(stopLoading());
         navigate('/dashboard');
         
-        if (res.data.msgs) setToastFromRes(res.data.msgs, dispatch);
+        if (res.data.toasts) setToastFromRes(res.data.toasts, dispatch);
         
         dispatch({
             type: LOGIN_SUCCESS,
@@ -46,7 +46,7 @@ export const login = (formData: FormData, navigate: NavigateFunction) => async (
     } catch (err: any) {
         dispatch(stopLoading());
        console.log(err);
-       if (err.response.data?.msgs) setToastFromRes(err.response.data.msgs, dispatch);
+       if (err.response.data?.toasts) setToastFromRes(err.response.data?.toasts, dispatch);
     }
 };
 
@@ -58,7 +58,7 @@ export const register = (formData: RegisterFormData, navigate: NavigateFunction)
         dispatch(stopLoading());
         navigate('/dashboard');
 
-        if (res.data.msgs) setToastFromRes(res.data.msgs, dispatch);
+        if (res.data.toasts) setToastFromRes(res.data.toasts, dispatch);
 
         dispatch({
             type: REGISTER_SUCCESS,
@@ -66,7 +66,7 @@ export const register = (formData: RegisterFormData, navigate: NavigateFunction)
         });
     } catch (err: any) {
         dispatch(stopLoading());
-        if (err.response.data.msgs) setToastFromRes(err.response.data.msgs, dispatch);
+        if (err.response.data?.toasts) setToastFromRes(err.response.data?.toasts, dispatch);
         dispatch({
             type: REGISTER_FAIL,
             payload: {msg: err.res, status: err.response.status}
@@ -79,13 +79,13 @@ export const updateUser = (user: User) => async (dispatch: any) => {
         dispatch(loading());
         const res = await axios.post('/api/user/update', user);
         dispatch(stopLoading());
-        if (res.data.msgs) setToastFromRes(res.data.msgs, dispatch);
+        if (res.data.toasts) setToastFromRes(res.data.toasts, dispatch);
         dispatch({
             type: USER_UPDATED,
             payload: res.data
         });
     } catch (err: any) {
-        if (err.response.data.msgs) setToastFromRes(err.response.data.msgs, dispatch);
+        if (err.response.data?.toasts) setToastFromRes(err.response.data?.toasts, dispatch);
         dispatch(stopLoading());
         dispatch({
             type: USER_UPDATED_FAIL,
@@ -139,11 +139,11 @@ export const deleteUser = (navigate: NavigateFunction) => async (dispatch: any) 
         dispatch(loading());
         const res = await axios.delete('/api/user');
         dispatch(stopLoading());
-        if (res.data.msgs) setToastFromRes(res.data.msgs, dispatch);
+        if (res.data.toasts) setToastFromRes(res.data.toasts, dispatch);
         navigate('/');
     } catch (err: any) {
         dispatch(stopLoading());
-        if (err.response.data.msgs) setToastFromRes(err.response.data.msgs, dispatch);
+        if (err.response.data?.toasts) setToastFromRes(err.response.data?.toasts, dispatch);
     }
 }
 
@@ -162,7 +162,7 @@ export const changePasswordReq = (email: string) => async (dispatch: any) => {
         return true;
     } catch (err: any) {
         dispatch(stopLoading());
-        if (err.response.data.msgs) setToastFromRes(err.response.data.msgs, dispatch);
+        if (err.response.data?.toasts) setToastFromRes(err.response.data?.toasts, dispatch);
         return null;
     }
 };
@@ -177,11 +177,11 @@ export const changePasswordToken = (token: string, newPass: string) => async (di
             }
         );
         dispatch(stopLoading());
-        if (res.data.msgs) setToastFromRes(res.data.msgs, dispatch);
+        if (res.data.toasts) setToastFromRes(res.data.toasts, dispatch);
         return true;
     } catch (err: any) {
         dispatch(stopLoading());
-        if (err.response.data.msgs) setToastFromRes(err.response.data.msgs, dispatch);
+        if (err.response.data?.toasts) setToastFromRes(err.response.data?.toasts, dispatch);
         return null;
     }
 };
@@ -201,11 +201,11 @@ export const verifyEmail = (email: string, original: string, update: Update) => 
         if (update) await axios.post('/api/user/update', update);
         dispatch(loading());
         const res = await axios.post('/api/auth/email', {email, original});
-        if (res.data.msgs) setToastFromRes(res.data.msgs, dispatch);
+        if (res.data.toasts) setToastFromRes(res.data.toasts, dispatch);
         dispatch(stopLoading());
     } catch (err: any) {
         dispatch(stopLoading());
-        if (err.response.data.msgs) setToastFromRes(err.response.data.msgs, dispatch);
+        if (err.response.data?.toasts) setToastFromRes(err.response.data?.toasts, dispatch);
     }
 };
 
@@ -214,9 +214,9 @@ export const verifyEmailFinish = (token: string) => async (dispatch: any) => {
         dispatch(loading());
         const res = await axios.get(`/api/auth/email/${token}`);
         dispatch(stopLoading());
-        if (res.data.msgs) setToastFromRes(res.data.msgs, dispatch);
+        if (res.data.toasts) setToastFromRes(res.data.toasts, dispatch);
     } catch (err: any) {
         dispatch(stopLoading());
-        if (err.response.data.msgs) setToastFromRes(err.response.data.msgs, dispatch);
+        if (err.response.data?.toasts) setToastFromRes(err.response.data?.toasts, dispatch);
     }
 }

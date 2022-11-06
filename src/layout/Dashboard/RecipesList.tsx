@@ -1,4 +1,4 @@
-import React, {Fragment, useEffect} from 'react'
+import React, {Fragment, useEffect, useState} from 'react'
 import { connect, ConnectedProps } from 'react-redux';
 import State from '../../types/State';
 import { deleteRecipe, getRecipes } from '../../actions/recipe';
@@ -8,6 +8,7 @@ import { link, linkDark } from '../../types/Style';
 import moment from 'moment';
 import isActivePage from '../../functions/isActivePage';
 import { Button } from 'react-bootstrap';
+import nameFromWidth from '../../functions/nameFromWidth';
 
 const mapStateToProps = (state: State) => ({
     recipe: state.recipe
@@ -22,14 +23,22 @@ interface Props extends ReduxProps {
 };
 
 const RecipesList: React.FC<Props> = ({activePage, recipe, deleteRecipe, getRecipes, setConfirmModal}) => {
+    // state for the window width
+    const [width, setWidth] = useState(window.innerWidth);
     const {filtered} = recipe;
-    // decides which prop to use ingredients or filter
+    // decides which prop to use recipes or filter
     // instead of having two seperate map functions just have one with a string difference
     const type = filtered ? 'filter' : 'recipes';
-    // useEffect for the initial render to retrieve ingredients from the DB
+    // useEffect for the initial render to retrieve recipes from the DB
     useEffect(() => {
         if (recipe.recipes.length == 0) getRecipes(false);
     }, []);
+    window.addEventListener('resize', (e) => {
+        if (e.type !== 'resize' || !e.target) return;
+        if (e.target instanceof Window) {
+            if (e.target.innerWidth !== width) setWidth(e.target.innerWidth);
+        }
+    });
     return (
         <>
             {recipe[type].length > 0 ?
@@ -39,8 +48,8 @@ const RecipesList: React.FC<Props> = ({activePage, recipe, deleteRecipe, getReci
                         return (
                             <Fragment key={i}>
                                 <div className='dashboard-list-container bg-dark white padding-sm'>
-                                    <Link to={`/recipe/${rec._id}`} style={link}>{rec.name}</Link>
-                                    <div>{rec.yield.number} {rec.yield.string}</div>
+                                    <Link to={`/recipe/${rec._id}`} style={link}>{nameFromWidth(width, rec.name)}</Link>
+                                    <div>{rec.Yield.number} {rec.Yield.string}</div>
                                     <div>{rec.price}</div>
                                     <div>{rec.calories.total}</div>
                                     <div>{moment(rec.lastEdit).format('MMM, D, YYYY')}</div>

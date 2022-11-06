@@ -9,14 +9,14 @@ export class Ingredient {
     type: 'recipe' | 'ingredient' = 'ingredient';
     categories: string[] = []
     img: string = ''
-    calories: Calories = {
+    calories: IngredientCalories = {
         g: 0,
         oz: 0,
         ml: 0,
         floz: 0,
         pref: 0
     }
-    nutrients: Nutrients = {
+    nutrients: IngredientNutrients = {
         protein: {
             unit: 'g',
             g: 0,
@@ -85,7 +85,7 @@ export class Ingredient {
     quantity: IngredientQuantity = {
         unit: '',
         amount: 0,
-        type: ''
+        type: 'weight'
     };
     lastEdit: number = Date.now();
     units: any = {
@@ -97,7 +97,7 @@ export class Ingredient {
 export interface IngredientQuantity {
     unit: string,
     amount: number
-    type: string
+    type: 'weight' | 'volume'
 }
 
 
@@ -109,14 +109,14 @@ export class RecipeIngredient {
     price: string = '';
     categories: string[] = [];
     instructions: string = '';
-    calories: Calories = {
+    calories: IngredientCalories = {
         g: 0,
         oz: 0,
         ml: 0,
         floz: 0,
         pref: 0
     }
-    nutrients: Nutrients = {
+    nutrients: IngredientNutrients = {
         protein: {
             unit: 'g',
             g: 0,
@@ -185,7 +185,7 @@ export class RecipeIngredient {
     quantity: IngredientQuantity = {
         unit: '',
         amount: 0,
-        type: ''
+        type: 'weight'
     };
     units: any = {
         prefered: 'g',
@@ -234,7 +234,7 @@ export interface IngredientState {
     loading: boolean
 };
 
-export interface Calories {
+export interface IngredientCalories {
     g: number,
     oz: number,
     ml: number,
@@ -242,7 +242,7 @@ export interface Calories {
     pref: number
 }
 
-export interface Nutrients {
+export interface IngredientNutrients {
     protein: {
         unit: string,
         g: number,

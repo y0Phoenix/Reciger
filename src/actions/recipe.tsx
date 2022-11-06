@@ -33,10 +33,12 @@ export const getRecipes = (all = false) => async (dispatch: ThunkDispatch<State,
                 "x-auth-token": token
             }
         };
-        var res;
         dispatch(loading());
-            res = await axios.get(`/api/recipe?all=${all}`, headers);
+        const res = await axios.get(`/api/recipe?all=${all}`, headers);
         dispatch(stopLoading());
+
+        if (res.data.toasts) setToastFromRes(res.data.toasts, dispatch);
+
         dispatch({
             type: GET_RECIPES,
             payload: res.data.data
@@ -47,6 +49,7 @@ export const getRecipes = (all = false) => async (dispatch: ThunkDispatch<State,
             type: GET_RECIPES_FAIL,
             payload: err.response.data
         });
+        if (err.response.data?.toasts) setToastFromRes(err.response.data?.toasts, dispatch);
     }
 };
 
@@ -56,6 +59,8 @@ export const getRecipeByID = (id: string) => async (dispatch: ThunkDispatch<Stat
         const res = await axios.get(`/api/recipe/${id}`);
         dispatch(stopLoading());
         
+        if (res.data.toasts) setToastFromRes(res.data.toasts, dispatch);
+
         dispatch({
             type: FILTER_RECIPES,
             payload: [res.data.data]
@@ -67,6 +72,7 @@ export const getRecipeByID = (id: string) => async (dispatch: ThunkDispatch<Stat
             type: GET_RECIPES_FAIL,
             payload: err.response.data
         });
+        if (err.response.data?.toasts) setToastFromRes(err.response.data?.toasts, dispatch);
     }
 }
 
@@ -83,7 +89,7 @@ export const postRecipe = (recipe: Recipe, ingredients: Ingredient[], update: bo
         dispatch(getRecipes(true));
         if (!update) navigate(`/recipe/${res.data.data._id}`);
         else setState(res.data.data);
-        if (res.data.msgs) setToastFromRes(res.data.msgs, dispatch);
+        if (res.data.toasts) setToastFromRes(res.data.toasts, dispatch);
     } catch (err: any) {
         dispatch(stopLoading());
         if (err?.response) {
@@ -91,28 +97,24 @@ export const postRecipe = (recipe: Recipe, ingredients: Ingredient[], update: bo
                 type: GET_RECIPES_FAIL,
                 payload: {msg: err.res, status: err.response.status}
             });
-            if (err.response.data.msgs) setToastFromRes(err.response.data.msgs, dispatch);
+            if (err.response.data?.toasts) setToastFromRes(err.response.data?.toasts, dispatch);
         }
     }
 };
 
-interface DeleteRecipeProps {
-    id: string
-}
-
-export const deleteRecipe = ({id}: DeleteRecipeProps) => async (dispatch: ThunkDispatch<State, undefined, RecipeAction>) => {
+export const deleteRecipe = (id: string) => async (dispatch: ThunkDispatch<State, undefined, RecipeAction>) => {
     try {
         dispatch(loading());
         const res = await axios.delete(`/api/recipe/${id}`);
         dispatch(stopLoading());
-        if (res.data.msgs) setToastFromRes(res.data.msgs, dispatch);
+        if (res.data.toasts) setToastFromRes(res.data.toasts, dispatch);
         dispatch({
             type: GET_RECIPES,
             payload: res.data.data
         });
     } catch (err: any) {
         dispatch(stopLoading());
-        if (err.response.data.msgs) setToastFromRes(err.response.data.msgs, dispatch);
+        if (err.response.data?.toasts) setToastFromRes(err.response.data?.toasts, dispatch);
         dispatch({
             type: GET_RECIPES_FAIL,
             payload: err.response.data

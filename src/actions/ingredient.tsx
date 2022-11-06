@@ -28,6 +28,9 @@ export const getIngredients = (all = false)  => async (dispatch: ThunkDispatch<S
             }
         });
         dispatch(stopLoading());
+
+        if (res.data.toasts) setToastFromRes(res.data.toasts, dispatch);
+
         dispatch({
             type: GET_INGREDIENTS,
             payload: res.data.data
@@ -38,7 +41,7 @@ export const getIngredients = (all = false)  => async (dispatch: ThunkDispatch<S
             type: GET_INGREDIENTS_FAIL,
             payload: {}
         });
-        return null;
+        if (err.response.data?.toasts) setToastFromRes(err.response.data?.toasts, dispatch);
     }
 };
 
@@ -48,6 +51,8 @@ export const getIngredientByID = (id: string) => async (dispatch: ThunkDispatch<
         const res = await axios.get(`/api/ingredient/${id}`);
         dispatch(stopLoading());
         
+        if (res.data.toasts) setToastFromRes(res.data.toasts, dispatch);
+
         dispatch({
             type: FILTER_INGREDIENTS,
             payload: [res.data.data]
@@ -59,6 +64,7 @@ export const getIngredientByID = (id: string) => async (dispatch: ThunkDispatch<
             type: GET_INGREDIENTS_FAIL,
             payload: err.response.data
         });
+        if (err.response.data?.toasts) setToastFromRes(err.response.data?.toasts, dispatch);
     }
 }
 
@@ -71,10 +77,10 @@ export const postIngredient = (ingredient: Ingredient, noNut = false, all = fals
             type: GET_INGREDIENTS,
             payload: res.data.data
         });
-        if (res.data.msgs) setToastFromRes(res.data.msgs, dispatch);
+        if (res.data.toasts) setToastFromRes(res.data.toasts, dispatch);
     } catch (err: any) {
         dispatch(stopLoading());
-        if (err.response.data.msgs) setToastFromRes(err.response.data.msgs, dispatch);
+        if (err.response.data?.toasts) setToastFromRes(err.response.data?.toasts, dispatch);
     }
 }
 
@@ -87,10 +93,10 @@ export const updateIngredient = (ingredient: Ingredient, id: string, all: boolea
             type: GET_INGREDIENTS,
             payload: res.data.data
         });
-        if (res.data.msgs) setToastFromRes(res.data.msgs, dispatch);
+        if (res.data.toasts) setToastFromRes(res.data.toasts, dispatch);
     } catch (err: any) {
         dispatch(stopLoading());
-        if (err.response.data.msgs) setToastFromRes(err.response.data.msgs, dispatch);
+        if (err.response.data?.toasts) setToastFromRes(err.response.data?.toasts, dispatch);
     }
 };
 
@@ -104,14 +110,14 @@ export const deleteIngredient = (id: string) => async (dispatch: ThunkDispatch<S
             type: GET_INGREDIENTS,
             payload: res.data.data
         });
-        if (res.data.msgs) setToastFromRes(res.data.msgs, dispatch);
+        if (res.data.toasts) setToastFromRes(res.data.toasts, dispatch);
     } catch (err: any) {
         dispatch(stopLoading());
         dispatch({
             type: GET_INGREDIENTS_FAIL,
             payload: {}
         });
-        if (err.response.data.msgs) setToastFromRes(err.response.data.msgs, dispatch);
+        if (err.response.data?.toasts) setToastFromRes(err.response.data?.toasts, dispatch);
     }
 };
 
