@@ -43,7 +43,7 @@ export function printPage(recipe: Recipe) {
     pdf.line(210, 25, 210, 265);
     pdf.line(5, 265, 210, 265);
     pdf.setFontSize(14);
-    pdf.text(`Yield: ${recipe.yield.number} ${recipe.yield.string}`, 35, 35, textOptions);
+    pdf.text(`Yield: ${recipe.Yield.number} ${recipe.Yield.string}`, 35, 35, textOptions);
     pdf.text(`Yield: ${recipe.price} Serving: ${servingPrice(recipe)}`, 170, 35, textOptions);
     pdf.setFontSize(20);
     pdf.text(`Ingredient`, 30, 50, textOptions);
