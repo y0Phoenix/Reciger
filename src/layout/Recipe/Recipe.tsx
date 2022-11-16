@@ -127,7 +127,7 @@ const RecipePage: React.FC<Props> = ({recipeState, ingredients, user, getRecipeB
             // calculate new ingredient amounts
             _recipe.ingredients.map(ing => {
                 const oldAmount = ing.quantity.amount;
-                const newAmount = parseFloat((oldAmount * scale).toFixed(2));
+                const newAmount = (parseFloat(oldAmount) * scale).toFixed(2);
                 let Ing = {...ing};
                 Ing.quantity.amount = newAmount;
                 return Ing;

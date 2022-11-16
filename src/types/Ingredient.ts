@@ -84,7 +84,7 @@ export class Ingredient {
     };
     quantity: IngredientQuantity = {
         unit: '',
-        amount: 0,
+        amount: '',
         type: 'weight'
     };
     lastEdit: number = Date.now();
@@ -96,7 +96,7 @@ export class Ingredient {
 };
 export interface IngredientQuantity {
     unit: string,
-    amount: number
+    amount: string
     type: 'weight' | 'volume'
 }
 
@@ -184,7 +184,7 @@ export class RecipeIngredient {
     };
     quantity: IngredientQuantity = {
         unit: '',
-        amount: 0,
+        amount: '',
         type: 'weight'
     };
     units: any = {
