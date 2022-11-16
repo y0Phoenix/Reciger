@@ -77,7 +77,7 @@ const RecipePage: React.FC<Props> = ({recipeState, ingredients, user, getRecipeB
      * @param props should be an array of strings in JSON format. contains the properties that need accessing
      * @param value the value you wish to set to the specified property
      */
-    const handleChange = (props: string[], value: string) => {
+    const handleChange = (props: string[], value: any) => {
         if (!changes) setChanges(true);
         let _recipe = {...recipe};
         // the recursive function that will keep going until it accesses the possibly deeply nested property inside the recipe object 
@@ -95,7 +95,7 @@ const RecipePage: React.FC<Props> = ({recipeState, ingredients, user, getRecipeB
     // add an ingredient into the array
     const addIngredient = () => {
         if (!changes) setChanges(true);
-        setRecipe({...recipe, ingredients: [...recipe.ingredients, new RecipeIngredient()]});
+        setRecipe({...recipe, ingredients: [...recipe.ingredients, new RecipeIngredient('new')]});
     }
 
     // the callback function for saving the recipe in the database
@@ -201,12 +201,12 @@ const RecipePage: React.FC<Props> = ({recipeState, ingredients, user, getRecipeB
                                             <Form.Control 
                                                 type={'text'} 
                                                 value={recipe.Yield.number} 
-                                                onChange={(e) => handleChange(["yield","number"], e.target.value)}
+                                                onChange={(e) => handleChange(["Yield","number"], e.target.value)}
                                             />
                                             <Form.Control 
                                                 type={'text'} 
                                                 value={recipe.Yield.string} 
-                                                onChange={(e) => handleChange(["yield","string"], e.target.value)}
+                                                onChange={(e) => handleChange(["Yield","string"], e.target.value)}
                                             />
                                         </InputGroup>
                                         <div>

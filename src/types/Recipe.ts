@@ -110,7 +110,7 @@ export class Recipe {
     constructor(id?: string) {
         this._id = id ? id : 'new';
         if (this._id == 'new') {
-            this.ingredients.push(new RecipeIngredient());
+            this.ingredients.push(new RecipeIngredient('new'));
         }
     }
 };

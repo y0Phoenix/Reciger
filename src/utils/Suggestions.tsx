@@ -6,7 +6,7 @@ interface Props {
     targetArr: any[],
     targetProperty?: string
     targetPosition: string,
-    changeCallback: (props: string[], value: string) => void,
+    changeCallback: (props: string[], name: string) => void,
     index: number,
     addCallback: () => void,
     /**
@@ -62,7 +62,7 @@ const Suggestions: React.FC<Props> = ({targetInput, targetArr, targetProperty, t
                         <Dropdown.Item 
                             id={`suggestion${item._id}`} 
                             onClick={() => {
-                                changeCallback(["ingredients",`${index}`,"name"], item[targetProperty ? targetProperty : 'name'])
+                                changeCallback(["ingredients",`${index}`], item[targetProperty ? targetProperty : 'name'])
                                 handleClose(true);
                             }}
                         >
@@ -107,7 +107,7 @@ const Suggestions: React.FC<Props> = ({targetInput, targetArr, targetProperty, t
         if (e.key == 'Escape') return handleClose(false);
         // if the user inputed enter change the input and close the dropdown
         if (e.key == 'Enter') {
-            changeCallback(["ingredients",`${index}`,"name"], filteredArr[tabIndex].props.children.props.children);
+            changeCallback(["ingredients",`${index}`], filteredArr[tabIndex].props.children.props.children);
             return handleClose(true);
         }
         // if the user didn't input ArrowUp and the user didn't inpur ArrowDown return

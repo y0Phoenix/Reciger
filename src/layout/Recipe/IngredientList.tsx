@@ -7,6 +7,7 @@ import Suggestions from '../../utils/Suggestions';
 import State from '../../types/State';
 import { setToast } from '../../actions/toast';
 import { Toast } from '../../types/Toast';
+import { Ingredient, RecipeIngredient } from '../../types/Ingredient';
 
 const mapStateToProps = (state: State) => ({
     ingredients: state.ingredient.ingredients
@@ -19,12 +20,19 @@ type ReduxProps = ConnectedProps<typeof connector>;
 interface Props extends ReduxProps{
     recipe: Recipe,
     removeIngredient: (index: number) => void,
-    handleChange: (props: string[], value: string) => void
+    handleChange: (props: string[], value: any) => void
 }
 
 const IngredientList: React.FC<Props> = ({recipe, ingredients, handleChange, removeIngredient, setIngredientModal, setToast}) => {
     const addIngredient = () => {
         setIngredientModal({id: 'new'});
+    }
+
+    const changeCallback = (props: string[], name: string) => {
+        let ingredient: Ingredient | RecipeIngredient = ingredients.filter(ing => ing.name == name ? ing : null)[0];
+        if (!ingredient) return;
+        ingredient = new RecipeIngredient(ingredient._id, ingredient);
+        handleChange(props, ingredient)
     }
     
     const handleInvalidInput = (input: string) => setToast(new Toast({
@@ -53,7 +61,7 @@ const IngredientList: React.FC<Props> = ({recipe, ingredients, handleChange, rem
                                     targetArr={ingredients} 
                                     targetProperty='name' 
                                     targetPosition='35px' 
-                                    changeCallback={handleChange} 
+                                    changeCallback={changeCallback} 
                                     index={i}
                                     addCallback={addIngredient}
                                     handleInvalidInput={handleInvalidInput}

@@ -192,8 +192,19 @@ export class RecipeIngredient {
         volume: [''],
         weight: ['']
     }
-    constructor() {
-        this.ing = 'new'
+    constructor(id: string, ing?: Ingredient) {
+        if (id === 'new' || !ing) this.ing = 'new';
+        else {
+            this.name = ing.name;
+            this._id = ing._id;
+            this.calories = ing.calories;
+            this.categories = ing.categories;
+            this.ing = ing.ing;
+            this.nutrients = ing.nutrients;
+            this.price = ing.price;
+            this.units = ing.units;
+            this.user = ing.user;
+        }
     }
 };
 
