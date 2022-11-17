@@ -49,11 +49,11 @@ const App: React.FC<Props> = ({loadUser, ingredientId, confirmShow}) => {
 					{confirmShow && <Confirm />}
 					{(ingredientId !== '') && <Ingredient />}
 					<Routes>
+						<Route path='/actions/password/:token' element={<Password />}/>
 						<Route element={<ProtectedRoutes Protected={false}/>}>
 							<Route path='/' element={<Landing />}/>
 							<Route path='/login' element={<Login />}/>
 							<Route path='/register' element={<Register />}/>
-							<Route path='/actions/password/:token' element={<Password />}/>
 						</Route>
 						<Route element={<ProtectedRoutes Protected={true}/>}>
 							<Route path='/dashboard' element={<Dashboard />}/>

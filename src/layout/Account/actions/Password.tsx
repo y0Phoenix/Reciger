@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { Card, Form, InputGroup } from 'react-bootstrap'
 import LoadingButton from '../../../components/LoadingButton';
 import { setDynamicValue } from '../../../functions/DynamicValue';
@@ -8,6 +8,8 @@ import { connect, ConnectedProps } from 'react-redux';
 import { changePasswordReq, changePasswordToken } from '../../../actions/user';
 import { setToast } from '../../../actions/toast';
 import { Toast } from '../../../types/Toast';
+import toggleShow from '../../../functions/toggleShow';
+import logo from '../../../pictures/logo-transparent-small.png';
 
 const connector = connect(null, {changePasswordReq, changePasswordToken, setToast});
 
@@ -25,6 +27,14 @@ const Password: React.FC<Props> = ({changePasswordReq, changePasswordToken, setT
 
     // local state to determine if unsaved changes are made
     const [changes, setChanges] = useState(false);
+
+    const refs = {
+        pass: useRef(null),
+        passI: useRef(null),
+        pass2: useRef(null),
+        pass2I: useRef(null)
+    }
+    const {pass, passI, pass2, pass2I} = refs;
 
     // this package prompts the user when they are trying to reload with unsaved changes
     useBeforeunload((e) => {
@@ -54,20 +64,21 @@ const Password: React.FC<Props> = ({changePasswordReq, changePasswordToken, setT
 
     return (
         <div className='Flex center margin-lg'>
-            <Card>
-                <Card.Header>
-                    {pathname.includes('/init') ? 
-                        (
-                            <div className='tx-center'>Initiate Password Change</div>
-                        ) 
-                    : 
-                        (
-                            <div className='tx-center'>Change Password</div>
-                        )
-                    }
-                </Card.Header>
+            <Card className='padding-md'>
+                <Card.Img variant='top' src={logo}></Card.Img>
                 <Card.Body>
                     <div className='Flex vertical tx-center center gap-sm'>
+                        <Card.Title as={'h1'} className='font-size-lg'>
+                            {pathname.includes('/init') ? 
+                                (
+                                    <div className='tx-center'>Initiate Password Change</div>
+                                    ) 
+                                    : 
+                                    (
+                                        <div className='tx-center'>Change Password</div>
+                                )
+                            }
+                        </Card.Title>
                         {pathname.includes('/init') ? 
                             (
                                 <div className='Flex center vertical vertical-center padding-lg gap-sm'>
@@ -96,14 +107,28 @@ const Password: React.FC<Props> = ({changePasswordReq, changePasswordToken, setT
                                             value={formData.first}
                                             placeholder='password'
                                             onChange={(e) => onchange(['first'], e.target.value)}
+                                            ref={pass}
+                                            type='password'
                                         />
+                                        <InputGroup.Text id='basic-addon2'>
+                                            <button type='button' className='eye' onClick={() => toggleShow(refs, 'pass')}>
+                                                <i className='fa-solid fa-eye' ref={passI}></i>
+                                            </button>
+                                        </InputGroup.Text>
                                     </InputGroup>
                                     <InputGroup>
                                         <Form.Control 
                                             value={formData.second}
                                             placeholder='must match first'
                                             onChange={(e) => onchange(['second'], e.target.value)}
+                                            ref={pass2}
+                                            type='password'
                                         />
+                                        <InputGroup.Text id='basic-addon2'>
+                                            <button type='button' className='eye' onClick={() => toggleShow(refs, 'pass2')}>
+                                                <i className='fa-solid fa-eye' ref={pass2I}></i>
+                                            </button>
+                                        </InputGroup.Text>
                                     </InputGroup>
                                     <div>
                                         <LoadingButton 
