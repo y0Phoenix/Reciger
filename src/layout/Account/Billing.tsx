@@ -21,7 +21,7 @@ const Billing: React.FC<Props> = ({user, setToast, setToastWithId}) => {
             <button className='btn-theme-lg black' onClick={() => setToast(new Toast({
                 body: 'Subscription Functionality Not Available Yet',
                 bg: 'info',
-                autoHide: false,
+                autoHide: true,
                 setToastWithId,
             }))}>
                 <i className='fa-solid fa-cart-shopping'></i> Open Subsciption Page  

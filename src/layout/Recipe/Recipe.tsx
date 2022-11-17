@@ -12,7 +12,6 @@ import { bgTheme } from '../../types/Style';
 import IngredientList from './IngredientList';
 import { RecipeIngredient } from '../../types/Ingredient';
 import {setDynamicValue, getDynamicValue} from '../../functions/DynamicValue';
-import { setToast } from '../../actions/toast';
 import {useBeforeunload} from 'react-beforeunload';
 import LoadingButton from '../../components/LoadingButton';
 
@@ -22,7 +21,7 @@ const mapStateToProps = (state: State) => ({
     user: state.user.user?._id,
 });
 
-const connector = connect(mapStateToProps, {filterRecipes, getIngredients, postRecipe, getRecipeByID, resetRecipeFilter, setToast});
+const connector = connect(mapStateToProps, {filterRecipes, getIngredients, postRecipe, getRecipeByID, resetRecipeFilter});
 
 type Props = ConnectedProps<typeof connector>;
 

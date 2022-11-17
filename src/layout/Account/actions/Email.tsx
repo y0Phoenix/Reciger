@@ -7,11 +7,11 @@ import LoadingButton from '../../../components/LoadingButton';
 import { setToast } from '../../../actions/toast';
 import { Toast } from '../../../types/Toast';
 
-const connector = connect(null, {verifyEmailFinish});
+const connector = connect(null, {verifyEmailFinish, setToast});
 
 type Props = ConnectedProps<typeof connector>; 
 
-const Email: React.FC<Props> = ({verifyEmailFinish}) => {
+const Email: React.FC<Props> = ({verifyEmailFinish, setToast}) => {
     // pull the token from the URL params
     const params = useParams();
     const navigate = useNavigate();

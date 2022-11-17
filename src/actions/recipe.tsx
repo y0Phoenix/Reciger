@@ -5,18 +5,12 @@ import {
     RESET_FILTER_RECIPES
 } from "./types";
 import axios from "axios";
-import {setAlert} from "./alert";
 import { loading, stopLoading } from "./loading";
-import ShowModal from "../types/ShowModal";
 import { Ingredient, RecipeIngredient } from "../types/Ingredient";
 import { ThunkDispatch } from "redux-thunk";
 import State from "../types/State";
 import { Recipe, RecipeAction } from "../types/Recipe";
 import { NavigateFunction } from "react-router-dom";
-import { setToast } from "./toast";
-import {v4 as uuid} from 'uuid';
-import moment from "moment";
-import { Toast } from "../types/Toast";
 import React from "react";
 import setToastFromRes from "../functions/setToastFromRes";
 

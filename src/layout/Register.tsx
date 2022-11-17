@@ -49,7 +49,7 @@ const Register: React.FC<Props> = ({register, setToast}) => {
     const onsubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (password !== password2) return setToast(new Toast({
-            autoHide: false,
+            autoHide: true,
             bg: 'danger',
             body: 'Passwords Must Match'
         }));

@@ -6,15 +6,10 @@ import {
     RESET_FILTER_INGREDIENTS
 } from "./types";
 import axios from "axios";
-import {setAlert} from "./alert";
 import { loading, stopLoading } from "./loading";
-import ShowModal from "../types/ShowModal";
-import React from "react";
 import { ThunkDispatch } from "redux-thunk";
 import State from "../types/State";
 import { Ingredient, IngredientAction } from "../types/Ingredient";
-import { setToast } from "./toast";
-import { Toast } from "../types/Toast";
 import setToastFromRes from "../functions/setToastFromRes";
 
 export const getIngredients = (all = false)  => async (dispatch: ThunkDispatch<State, undefined, IngredientAction>) => {
