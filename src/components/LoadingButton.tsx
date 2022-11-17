@@ -12,7 +12,7 @@ interface InnerHTMLProps {
 }
 
 const InnerHTML: React.FC<InnerHTMLProps> = ({text, iconClass, loading}) => (
-    <>
+    <div>
         {loading ? 
             (
                 <Spinner size='sm' animation='border'></Spinner>
@@ -35,7 +35,7 @@ const InnerHTML: React.FC<InnerHTMLProps> = ({text, iconClass, loading}) => (
                 </>
             )
         }
-    </>
+    </div>
 )
 
 const mapStateToProps = (state: State) => ({

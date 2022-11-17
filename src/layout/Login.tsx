@@ -77,19 +77,27 @@ const Login: React.FC<Props> = ({login}) => {
                                     </InputGroup.Text>
                                     <InputGroup.Text id='basic-addon3'>atleast 6 characters</InputGroup.Text>
                                 </InputGroup>
-                                <div>
-                                    <input type={'checkbox'} name='remeber' checked={remeber} onChange={(e) => onchange(e)}></input> Remeber Me
+                                <div className='Flex vertical gap-xsm'>
+                                    <div>
+                                        <input type={'checkbox'} name='remeber' checked={remeber} onChange={(e) => onchange(e)}></input> Remeber Me
+                                    </div>
+                                    <div>
+                                        <Link className='dark' style={linkDark} to={'/actions/password/init'}>
+                                            Trouble Logining In?
+                                        </Link>
+                                    </div>
+                                    <div>
+                                        <LoadingButton 
+                                            text='Login'
+                                            type='submit'
+                                        />
+                                    </div>
+                                    <div>
+                                        <Link to={'/register'} className='dark' style={linkDark}>
+                                            Or Create Account
+                                        </Link>
+                                    </div>
                                 </div>
-                                <div>
-                                    <Link to={'/register'} className='dark' style={linkDark}>
-                                        Or Create Account
-                                    </Link>
-                                </div>
-                                <br></br>
-                                <LoadingButton 
-                                    text='Login'
-                                    type='submit'
-                                />
                             </form>
                         </div>
                     </Card.Body>

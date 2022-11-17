@@ -23,6 +23,7 @@ import Ingredient from './components/Ingredient'
 import Account from './layout/Account/Account'
 import Email from './layout/Account/actions/Email'
 import Actions from './layout/Account/actions/Actions'
+import Password from './layout/Account/actions/Password'
 
 if (localStorage.token) setAuthToken(localStorage.token);
 
@@ -52,6 +53,7 @@ const App: React.FC<Props> = ({loadUser, ingredientId, confirmShow}) => {
 							<Route path='/' element={<Landing />}/>
 							<Route path='/login' element={<Login />}/>
 							<Route path='/register' element={<Register />}/>
+							<Route path='/actions/password/:token' element={<Password />}/>
 						</Route>
 						<Route element={<ProtectedRoutes Protected={true}/>}>
 							<Route path='/dashboard' element={<Dashboard />}/>
