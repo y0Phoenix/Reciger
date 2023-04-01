@@ -1,4 +1,4 @@
-import { REMOVE_MODAL, RESET_MODAL, SET_CONFIRM_MODAL, SET_INGREDIENT_MODAL } from "../actions/types"
+  import { REMOVE_MODAL, RESET_MODAL, SET_CONFIRM_MODAL, SET_INGREDIENT_MODAL } from "../actions/types"
 
 export interface ModalState {
     ingredient: IngredientModal,

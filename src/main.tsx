@@ -11,11 +11,9 @@ axios.defaults.baseURL = 'https://reciger-back-end.herokuapp.com';
 axios.defaults.headers.post["Content-Type"] = 'application/json';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
-    <div className='bg-dark'>
-      <Provider store={store}>
-        <App />
-      </Provider>
-    </div>
-  </React.StrictMode>
+  <div className='bg-dark'>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </div>
 )
