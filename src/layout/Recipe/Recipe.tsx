@@ -94,6 +94,7 @@ const RecipePage: React.FC<Props> = ({recipeState, ingredients, user, getRecipeB
     // add an ingredient into the array
     const addIngredient = () => {
         if (!changes) setChanges(true);
+        let newIngredient = new RecipeIngredient("new");
         setRecipe({...recipe, ingredients: [...recipe.ingredients, new RecipeIngredient('new')]});
     }
 
@@ -126,7 +127,7 @@ const RecipePage: React.FC<Props> = ({recipeState, ingredients, user, getRecipeB
             // calculate new ingredient amounts
             _recipe.ingredients.map(ing => {
                 const oldAmount = ing.quantity.amount;
-                const newAmount = (parseFloat(oldAmount) * scale).toFixed(2);
+                const newAmount = Number((oldAmount * scale).toFixed(2));
                 let Ing = {...ing};
                 Ing.quantity.amount = newAmount;
                 return Ing;

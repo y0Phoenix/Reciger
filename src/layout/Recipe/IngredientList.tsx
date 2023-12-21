@@ -70,7 +70,13 @@ const IngredientList: React.FC<Props> = ({recipe, ingredients, handleChange, rem
                             <InputGroup className='padding-right-xsm'>
                                 <Form.Control
                                     placeholder='amount...'
-                                    onChange={(e) => handleChange(["ingredients", `${i}`, "quantity", "amount"], e.target.value)}
+                                    onChange={(e) => {
+                                        let value: string | number;
+                                        if (e.target.value != "") value = Number(e.target.value);
+                                        else value = e.target.value
+                                        if (Number.isNaN(value)) return;
+                                        handleChange(["ingredients", `${i}`, "quantity", "amount"], value)
+                                    }}
                                     value={ing.quantity.amount}
                                 />
                             </InputGroup>
