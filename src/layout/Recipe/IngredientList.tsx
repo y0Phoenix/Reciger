@@ -71,11 +71,11 @@ const IngredientList: React.FC<Props> = ({recipe, ingredients, handleChange, rem
                                 <Form.Control
                                     placeholder='amount...'
                                     onChange={(e) => {
-                                        let value: string | number;
-                                        if (e.target.value != "") value = Number(e.target.value);
-                                        else value = e.target.value
-                                        if (Number.isNaN(value)) return;
-                                        handleChange(["ingredients", `${i}`, "quantity", "amount"], value)
+                                        // let value: string | number = Number(e.target.value);
+                                        // if (e.target.value != "") value = Number(e.target.value);
+                                        // else value = e.target.value
+                                        // if (Number.isNaN(value)) return;
+                                        handleChange(["ingredients", `${i}`, "quantity", "amount"], e.target.value)
                                     }}
                                     value={ing.quantity.amount}
                                 />

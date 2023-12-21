@@ -14,6 +14,9 @@ import { RecipeIngredient } from '../../types/Ingredient';
 import {setDynamicValue, getDynamicValue} from '../../functions/DynamicValue';
 import {useBeforeunload} from 'react-beforeunload';
 import LoadingButton from '../../components/LoadingButton';
+import { checkRecipe } from '../../functions/checkRecipe';
+import { setToast } from '../../actions/toast';
+import { Toast } from '../../types/Toast';
 
 const mapStateToProps = (state: State) => ({
     recipeState: state.recipe,
@@ -21,11 +24,11 @@ const mapStateToProps = (state: State) => ({
     user: state.user.user?._id,
 });
 
-const connector = connect(mapStateToProps, {filterRecipes, getIngredients, postRecipe, getRecipeByID, resetRecipeFilter});
+const connector = connect(mapStateToProps, {filterRecipes, getIngredients, postRecipe, getRecipeByID, resetRecipeFilter, setToast});
 
 type Props = ConnectedProps<typeof connector>;
 
-const RecipePage: React.FC<Props> = ({recipeState, ingredients, user, getRecipeByID, postRecipe, getIngredients, resetRecipeFilter}) => {
+const RecipePage: React.FC<Props> = ({recipeState, ingredients, user, getRecipeByID, postRecipe, getIngredients, resetRecipeFilter, setToast}) => {
     const navigate = useNavigate();
     // state that determines if there is unsaved changes
     const [changes, setChanges] = useState(false);
@@ -94,13 +97,20 @@ const RecipePage: React.FC<Props> = ({recipeState, ingredients, user, getRecipeB
     // add an ingredient into the array
     const addIngredient = () => {
         if (!changes) setChanges(true);
-        let newIngredient = new RecipeIngredient("new");
         setRecipe({...recipe, ingredients: [...recipe.ingredients, new RecipeIngredient('new')]});
     }
 
     // the callback function for saving the recipe in the database
     const handleSave = () => {
         setChanges(false);
+        let valid = checkRecipe(recipe);
+        if (!valid.isValid) {
+            return setToast(new Toast({
+                body: valid.msg,
+                autoHide: true,
+                bg: "danger",
+            }));
+        }
         postRecipe(recipe, ingredients, recipe._id !== 'new', navigate, setRecipe);
     };
 
