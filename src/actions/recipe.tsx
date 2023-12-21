@@ -78,7 +78,6 @@ export const postRecipe = (recipe: Recipe, ingredients: Ingredient[], update: bo
             return ingredient;
         });
         dispatch(loading());
-        console.log(recipe);
         const res = await axios.post(`/api/recipe?update=${update}&correlative=${recipe.type == 'ingredient'}`, recipe);
         dispatch(stopLoading());
         dispatch(getRecipes(true));
