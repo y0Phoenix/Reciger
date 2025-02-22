@@ -1,15 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<diagram program="umlet" version="15.0.0">
-  <zoom_level>8</zoom_level>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>320</x>
-      <y>696</y>
-      <w>496</w>
-      <h>280</h>
-    </coordinates>
-    <panel_attributes>&lt;&lt;Backend&gt;&gt;
+<diagram program="umletino" version="15.1"><zoom_level>8</zoom_level><element><id>UMLClass</id><coordinates><x>384</x><y>456</y><w>496</w><h>280</h></coordinates><panel_attributes>&lt;&lt;Backend&gt;&gt;
 Package::Reciger
 {Node Express}
 --
@@ -31,31 +20,9 @@ Packages
 -- JSONWebToken | Package used for creating a hash token (JSONWebToken)
 -- Mongoose | Framework for communicating with the MongoDB database
 -- Nodemailer | Package for sending emails
--- uuid | Package for creating unique id's </panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>488</x>
-      <y>1024</y>
-      <w>168</w>
-      <h>40</h>
-    </coordinates>
-    <panel_attributes>&lt;&lt;Routes&gt;&gt;
+-- uuid | Package for creating unique id's </panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>552</x><y>784</y><w>168</w><h>40</h></coordinates><panel_attributes>&lt;&lt;Routes&gt;&gt;
 Package::Backend
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>0</x>
-      <y>1096</y>
-      <w>376</w>
-      <h>128</h>
-    </coordinates>
-    <panel_attributes>&lt;&lt;Router&gt;&gt;
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>64</x><y>856</y><w>376</w><h>128</h></coordinates><panel_attributes>&lt;&lt;Router&gt;&gt;
 Package::Auth
 body: {email, password, token}
 --
@@ -66,29 +33,7 @@ body: {email, password, token}
 +router.post('/email') | init email verification process
 +router.post('/email/:token') | finish email verification process
 
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>184</x>
-      <y>1056</y>
-      <w>320</w>
-      <h>56</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;50.0;380.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>0</x>
-      <y>1232</y>
-      <w>376</w>
-      <h>128</h>
-    </coordinates>
-    <panel_attributes>&lt;&lt;Router&gt;&gt;
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>248</x><y>816</y><w>320</w><h>56</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;50;380;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>64</x><y>992</y><w>376</w><h>128</h></coordinates><panel_attributes>&lt;&lt;Router&gt;&gt;
 Package::Ingredient
 body: {name, price, categories,}
 --
@@ -98,29 +43,7 @@ body: {name, price, categories,}
 +router.delete('/') | delete an ingredient
 +router.get('/:id') | get one ingredient by id
 
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>368</x>
-      <y>1056</y>
-      <w>200</w>
-      <h>256</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;300.0;50.0;300.0;50.0;40.0;230.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>768</x>
-      <y>1096</y>
-      <w>376</w>
-      <h>128</h>
-    </coordinates>
-    <panel_attributes>&lt;&lt;Router&gt;&gt;
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>432</x><y>816</y><w>200</w><h>256</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;300;50;300;50;40;230;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>832</x><y>856</y><w>376</w><h>128</h></coordinates><panel_attributes>&lt;&lt;Router&gt;&gt;
 Package::Recipe
 body: {name, ingredients, categories, yield, instructions, units}
 --
@@ -129,29 +52,7 @@ body: {name, ingredients, categories, yield, instructions, units}
 +router.delete('/') | delete a recipe
 +router.get('/:id') | get one recipe by id
 
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>648</x>
-      <y>1056</y>
-      <w>328</w>
-      <h>56</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>390.0;50.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>768</x>
-      <y>1232</y>
-      <w>376</w>
-      <h>128</h>
-    </coordinates>
-    <panel_attributes>&lt;&lt;Router&gt;&gt;
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>712</x><y>816</y><w>328</w><h>56</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>390;50;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>832</x><y>992</y><w>376</w><h>128</h></coordinates><panel_attributes>&lt;&lt;Router&gt;&gt;
 Package::User
 body: {name, email, password,}
 --
@@ -159,40 +60,7 @@ body: {name, email, password,}
 +router.post('/update') | update user
 +router.delete('/') | delete an ingredient
 
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>584</x>
-      <y>1056</y>
-      <w>200</w>
-      <h>248</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>230.0;290.0;190.0;290.0;190.0;50.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>560</x>
-      <y>968</y>
-      <w>24</w>
-      <h>72</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;70.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>320</x>
-      <y>240</y>
-      <w>496</w>
-      <h>256</h>
-    </coordinates>
-    <panel_attributes>&lt;&lt;Client&gt;&gt;
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>648</x><y>816</y><w>200</w><h>248</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>230;290;190;290;190;50;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>624</x><y>728</y><w>24</w><h>72</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;70;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>384</x><y>0</y><w>496</w><h>288</h></coordinates><panel_attributes>&lt;&lt;Client&gt;&gt;
 Package::Reciger
 {Node Vite React Redux}
 --
@@ -212,29 +80,7 @@ Packages
 -- React-Router-DOM | Reacts package for dynamic routing
 -- Redux | Main State management framework
 -- Redux-Devtools-Extension | Package used for viewing current Redux state inside of the app
--- Redux-Thunk | Redux middleware package</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>512</x>
-      <y>488</y>
-      <w>24</w>
-      <h>224</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;260.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>600</x>
-      <y>488</y>
-      <w>24</w>
-      <h>224</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;260.0</additional_attributes>
-  </element>
-</diagram>
+-- Redux-Thunk | Redux middleware package
+-- Bootstrap | Bootstrap package for JSX
+-- React-Bootsrap | Required for Bootstrap to work with React with JSX elements
+-- Moment | JavaScript Date formater</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>576</x><y>280</y><w>24</w><h>192</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;220;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>664</x><y>280</y><w>24</w><h>192</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;220</additional_attributes></element></diagram>
