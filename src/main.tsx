@@ -5,10 +5,8 @@ import axios from 'axios';
 import { Provider } from 'react-redux';
 import store from './store';
 
-// axios.defaults.baseURL = 'https://reciger-back-end-075dc3c02403.herokuapp.com/';
-// axios.defaults.baseURL = 'http://localhost:3000';
-// axios.defaults.baseURL = 'https://192.168.1.109:5000';
-axios.defaults.baseURL = 'https://reciger.com';
+// Use environment variable for API URL
+axios.defaults.baseURL = import.meta.env.VITE_API_URL || 'https://reciger.com/api';
 axios.defaults.headers.post["Content-Type"] = 'application/json';
 axios.defaults.headers.common["Access-Control-Allow-Origin"] = "http://localhost:5173";
 
